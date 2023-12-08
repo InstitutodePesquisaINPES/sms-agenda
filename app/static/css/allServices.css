@@ -88,6 +88,7 @@ body{
 .gallery-items{
     text-decoration: none;
     width: 200px;
+    max-width: 300px;
     height: 300px;
 
     box-shadow: 5px 5px 5px #0006;
