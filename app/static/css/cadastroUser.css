@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #15457C;
+    font-family: 'Anton', sans-serif;
+
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+
+.div-main{
+    display: flex;
+}
+
+.div-main > div{
+    width: 48%;
+    margin: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.div-icons{
+    margin: -50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #15457C;
+
+    width: 600px;
+    height: 80vh;
+    border-radius: 20px;
+    
+}
+
+.logo-img{
+    max-height: 200px;
+    max-width: 400px;
+    margin-bottom: 100px;
+   
+}
+
+.icon-user{
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.div-login{
+    margin: 20px;
+    max-width: 500px;
+    height: 700px;
+    background-color: #A6C546;
+    border-radius: 20px;
+
+    align-items: center;
+    text-align: center;
+    
+}
+
+.login-name{
+    font-size: 60px;
+    color: #15457C;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-login{
+    background-color: #15457C;
+    color: #A6C546;
+    border: none;
+    border-radius: 10px;
+    font-size: 35px;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 5px;
+    width: auto;
+    
+}
+
+.button-login:hover{
+    background-color: rgb(26, 83, 148);
+    font-size: 38px;
+}
+
+input{
+    margin: 20px;
+    width: 400px;
+    height: 60px;
+    border-radius: 20px;
+    font-size: 25px;
+    font-family: 'Anton', sans-serif;
+    color: black;
+    border: none;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.no-login-div{
+    margin: 20px;
+}
+
+.no-login{
+    text-decoration: none;
+    color: #15457C;
+
+    font-size: 15px;
+}
+
+.no-login:hover{
+    font-size: 17px;
+}

@@ -1,0 +1,74 @@
+
+    <div class="popup" id="popup">
+        <div class="popup-content" id="step1">
+            <h2 class="popup-title">AGENDAMENTO</h2>
+    
+            <div class="confirmation-step1">
+                <input name="checkbox" type="checkbox" class="checkbox-popup" onchange="changed(true)">
+                <label for="checkbox" class="label-checkboxPopup"> Confirmo que li e possuo todos os documentos necessários.</label>
+            </div>
+            <div class="botoes">
+                <button class="buttons-popups" onclick="closePopup()">CANCELAR</button>
+                <button class="buttons-popups" onclick="nextStep()">PRÓXIMO</button>
+            </div>
+        </div>
+        <div class="popup-content" id="step2">
+            <h2 class="popup-title">ESCOLHA A DATA</h2>
+            <div class="div-calendar">
+                <input type="hidden" name="data_selecionada" id="data_selecionada" onchange="changed(true)">
+                <input type="text" id="datePicker" class="flatpickr-input" onchange="changed(true)">
+            </div>
+    
+            <div class="botoes">
+                <button class="buttons-popups" onclick="closePopup()">CANCELAR</button>
+                <button class="buttons-popups" onclick="prevStep()">VOLTAR</button>
+                <button class="buttons-popups" onclick="nextStep()">PRÓXIMO</button>
+            </div>
+        </div>
+        <div class="popup-content" id="step3">
+            <h2 class="popup-title">ESCOLHA O HORÁRIO</h2>
+            <div> 
+                <!-- renderizar horários -->
+                <!-- <input type="hidden" name="hora_selecionada" id="hora_selecionada"> -->
+                <input type="hidden" name="hora_selecionada" id="hora_selecionada">
+                <div class="div-hora">
+                    {% for horas in horasDisp %}
+                        <label for="hora_{{ horas }}"> {{ horas }} </label>
+                        <input type="radio" name="hora_ipt" class="input-hora" id="hora_{{ horas }}" onchange="changed(true)" value="{{ horas }}">
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="botoes">
+                <button class="buttons-popups" onclick="closePopup()">CANCELAR</button>
+                <button class="buttons-popups" onclick="prevStep()">VOLTAR</button>
+                <button class="buttons-popups" onclick="nextStep()">SALVAR</button>
+            </div>
+        </div>
+    
+        <div class="popup-content" id="step4">
+            <form method="post" action="{{('autenticaragendamento')}}">
+                <h2 class="popup-title">CONFIRME O SEU AGENDAMENTO</h2>
+                <div>
+                    <!-- confirmar agendamento -->
+                    <p>Data selecionada: <p id="data-sel"></p> </p>
+                    <p>Horário selecionado: <p id="hora-sel"></p> </p>
+                    
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <input type="hidden" name="data_agendada" id="selected-date" value="">
+                    <input type="hidden" name="horario_agendado" id="selected-time" value="">
+                    <input type="hidden" name="nome_cliente" id="nome_usuario" value="{{ session['usuario_logado'] }}">
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="{{ session['id_usuario_logado']}}">
+                    
+                </div>
+                <div class="botoes">
+                    <button class="buttons-popups" onclick="closePopup()">CANCELAR</button>
+                    <button class="buttons-popups" onclick="prevStep()">VOLTAR</button>
+                    <button class="buttons-popups" type="submit">AGENDAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+

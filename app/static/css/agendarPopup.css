@@ -1,0 +1,95 @@
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: calc(100%-200px);
+    width: 800px;
+    margin: 40px;
+    height: auto;
+
+    background-color: #d2cfca;
+    padding: 20px;
+
+    border: 2px solid #15457c;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    
+}
+
+.popup-content {
+    display: none;
+}
+
+.popup-content:first-child {
+    display: block;
+}
+
+.popup-title{
+    font-size: 30px;
+    margin: 20px;
+}
+
+.confirmation-step1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 40px;
+    border: 2px solid #15457c;
+    padding: 20px;
+    
+}
+
+.checkbox-popup{
+    margin-right: 30px;
+    width: 50px;
+    height: 50px;
+}
+
+.label-checkboxPopup{
+    font-size: 30px;
+}
+
+.div-calendar{
+    text-align: center;
+}
+
+.div-calendar .flatpickr-input {
+    display: none;
+}
+
+.div-calendar .flatpickr-calendar {
+    width: 300px; /* Ajuste o valor conforme necessário */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+.buttons-popups{
+    background-color: #15457c;
+    color: #A6C546;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.buttons-popups:hover{
+    background-color: #1b59a0;
+}
+
+.botoes{
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 20px ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.div-hora{
+    text-align: center;
+    margin: 60px;
+}
+

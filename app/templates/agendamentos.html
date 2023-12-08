@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <div class="corpo">
+        <div class="p1">MEUS AGENDAMENTOS</div>
+        <div class="tabelas">
+            <div class="pesquisa">
+                <a href="/"><img src="../static/assets/icons/lupa.png" class="icon-pesquisa" alt="" srcset=""> </a>
+                <input type="text" class="input-pesquisa" name="" id="">
+            </div>
+            <div class="tabela-agendamentos">
+                <table class="table">
+                    <thead class="thead">
+                        <tr class="tr-head">
+                            <th class="th-head">ID</th>
+                            <th class="th-head">ID_usuario</th>
+                            <th class="th-head">data_agendada</th>
+                            <th class="th-head">horario_agendado</th>
+                            <th class="th-head">nome_cliente</th>
+                            <th class="th-head">data_agendamento</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody">
+                        {% for agendamento in agendamentos %}
+                            <tr class="tr-body">
+                                <td class="td-body">{{ agendamento.id }}</td>
+                                <td class="td-body">{{ agendamento.id_usuario }}</td>
+                                <td class="td-body">{{ agendamento.data_agendada }}</td>
+                                <td class="td-body">{{ agendamento.horario_agendado }}</td>
+                                <td class="td-body">{{ agendamento.nome_cliente}}</td>
+                                <td class="td-body">{{ agendamento.data_agendamento }}</td>
+                                <!-- Adicione células adicionais conforme necessário -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,96 @@
+.slide-conteiner{
+    font-family: 'Poppins', sans-serif;
+
+    max-width: 1000px;
+    width: 100%;
+    background-color: white;
+    padding:  40px 0;
+}
+
+.slide-content{
+    padding: 45px 20px;
+    margin: 0 40px;
+    
+}
+
+.card{
+    margin: 5px;
+    border-radius: 25px;
+    background-color: #A6C546;
+    
+}
+
+
+
+.image-content, .card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+.image-content{
+    position: relative;
+    row-gap: 5px;
+    
+}
+
+
+
+.card-image{
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #A6C546;
+    padding: 20px;
+}
+
+.card-image .card-img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    
+}
+
+.card-content{
+    text-align: center;
+}
+
+.name{
+    font-size: 18px;
+    font-weight: 500;
+    color: #15457C;
+    margin-bottom: 10px;
+}
+
+.description{
+    font-size: 14px;
+    color: #15457C;
+    text-align: center;
+}
+
+.button-card{
+    border: none;
+    font-size: 16px;
+    color: #A6C546;
+    padding: 8px 16px;
+    background-color: #15457C;
+    border-radius: 6px;
+    margin: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-card:hover{
+    background: rgb(28, 89, 202);
+
+}
+
+.swiper-navBtn{
+    color: #15457C;
+    transition: color 0.3s ease;
+}
+
+.swiper-navBtn:hover{
+    color: rgb(76, 76, 218);
+}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <div>
+        <div class="card-service">
+            <div class="cabecalho-card">
+                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" >
+                <div class="categoria-name">
+                    <p> {{ info_servico.categoria }} </p>
+                </div>
+            </div>
+            <div class="service-name">
+                <p> {{ info_servico.nome }} </p>
+            </div>
+            <div class="buttons-service"> 
+                {% if not session.usuario_logado%}
+                    <a class="needLogin" href="{{ url_for('login') }}"><button class="needLogin"> LOGIN É NECESSÁRIO </button></a>
+                {% else %}
+                    <button id="open-popup"> AGENDAR </button>
+                <!--<button> SOLICITAR </button>-->
+                {% endif %}
+            </div>
+            <div class="service-details">
+                <div class="about-service">
+                    <h4 class="about"> SOBRE</h4>
+                    <p class="about-content">
+                        {{ info_servico.descricao }}
+                    </p>
+                </div>
+                <div class="documents-service">
+                    <h4 class="documents-title"> DOCUMENTOS NECESSÁRIOS </h4>
+                    <ul class="documents-list">
+                        {% for documentos in info_servico.documentos %}
+                            <li> {{ documentos }} </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        {% include "popupAgendamento.html" %}
+        
+                
+        
+
+        <script src="../static/js/pop-up-agendar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        
+    </div>
+    {% endblock %}

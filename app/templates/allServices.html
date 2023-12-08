@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div class="corpo">
+        <div class="div-pesquisa">
+            <div class="pesquisa"> 
+                <a href="/"><img src="../static/assets/icons/lupa.png" class="icon-pesquisa" alt="" srcset=""> </a>
+                <input type="text" class="input-pesquisa" name="" id="" placeholder="BUSQUE POR NOME OU CATEGORIA">
+            </div>
+        </div>
+        <div class="gallery-container">
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="gallery-items">
+                <div class="div-card">
+                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
+                    <h5 class="card-name"> {{ servico1.nome}} </h5>
+                </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=2) }}" class="gallery-items">
+                <div class="div-card">
+                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
+                    <h5 class="card-name"> {{ servico2.nome}} </h5>
+                </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=3) }}" class="gallery-items">
+                <div class="div-card">
+                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
+                    <h5 class="card-name"> {{ servico3.nome}} </h5>
+                </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=4) }}" class="gallery-items">
+                <div class="div-card">
+                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
+                    <h5 class="card-name"> {{ servico4.nome}} </h5>
+                </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=5) }}" class="gallery-items">
+                <div class="div-card">
+                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
+                    <h5 class="card-name"> {{ servico5.nome}} </h5>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

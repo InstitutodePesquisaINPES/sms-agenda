@@ -1,0 +1,46 @@
+#icon-userlogado{
+    max-height: 30px;
+    margin: 10px;
+}
+
+.buttons-logado{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: 15px;
+    background-color: #A6C546;
+
+    cursor: pointer;
+}
+
+.nome-user{
+    font-size: 20px;
+}
+
+.options-logado {
+    display:none;
+    position: absolute;
+    top: 10%;
+    margin-right: 100px;
+    margin-top: 20px;
+    background-color: #A6C546;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 15px;
+}
+
+.logado:hover options-logado {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-options {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.menu-options:hover {
+    background-color: #b8dd47;
+    border-radius: 15px;
+}

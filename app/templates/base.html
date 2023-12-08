@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Pagina Principal </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/carrosel.css">
+    <link rel="stylesheet" href="../static/css/allServices.css">
+    <link rel="stylesheet" href="../static/css/agendamentos.css">
+    <link rel="stylesheet" href="../static/css/servico.css">
+    <link rel="stylesheet" href="../static/css/agendarPopup.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="../static/css/logadoMenu.css">
+</head>
+    <body>
+        <div class="cabecalho">
+            <a href="{{ url_for('indexuser') }}"><img src="../static/assets/images/logo-pmvc-verde.png" alt="" class="logo-pmvc"></a>
+
+            
+            {% if not session.usuario_logado %}
+            <div class="buttons">
+                <a href="{{ url_for('login') }}">
+                    <button class="button-login entre"> ENTRE </button>
+                </a>
+                <a href="{{ url_for('cadastrouser') }}">
+                    <button class="button-login cadastro"> CADASTRE-SE </button>
+                </a>
+            </div>
+        {% else %}
+            <div class="logado">
+                <div class="buttons-logado">
+                    <img src="../static/assets/icons/user.png" id="icon-userlogado" alt="" srcset="">
+                    <p class="nome-user"> {{session['usuario_logado']}} </p>
+                    <img src="../static/assets/icons/menubaixo.png" id="icon-userlogado" alt="" srcset="">
+                </div>
+
+                <div class="options-logado">
+                    <div class="menu-options">
+                        <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                        <a href="{{ url_for('meusagendamentos')}}">Meus Agendamentos</a>
+                    </div>
+                    <div class="menu-options">
+                        <img src="../static/assets/icons/sair.png" id="icon-userlogado" alt="" srcset="">
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+        
+        </div> 
+
+        {% block main %} {% endblock %}
+
+        <div class="rodape">
+            <a href="#" class="rodape-text" data-toggle="modal" data-target="#myModal">VERSÃO v1.0</a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agendamentos SMS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo do seu pop-up aqui -->
+                    <p>Versão 1.0 Agendamentos SMS</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <script>
+            // Adicione um evento de clique à div do menu logado
+            document.addEventListener('DOMContentLoaded', function () {
+                var menuLogado = document.querySelector('.logado');
+                
+                if (menuLogado) {
+                    menuLogado.addEventListener('click', function () {
+                        var menu = menuLogado.querySelector('.options-logado');
+                        // Alternar a exibição do menu quando a div é clicada
+                        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+                    });
+                }
+            });
+        </script>
+
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+        <script>
+            var swiper = new Swiper(".slide-content", {
+                slidesPerView: 3,
+                spaceBetween: 41,
+                loop: true,
+                centerSlide: 'true',
+                fade: 'true',
+                grabCursor: 'true',
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    dynamicBullets: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+        </script>
+
+    </body>
+    
+
+</html>
