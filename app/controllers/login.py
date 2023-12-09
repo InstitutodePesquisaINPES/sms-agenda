@@ -21,34 +21,30 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
-   proxima = request.args.get('proxima')
+#    proxima = request.args.get('proxima')
    form_login = LoginForm()
 
-   return render_template('login.html', form_login= form_login, proxima=proxima)
+   return render_template('login.html', form_login= form_login)
 
 
 @app.route('/autenticarlogin', methods=['POST'])
 def autenticarlogin():
-        form_login = LoginForm(request.form)
+    form_login = LoginForm()
 
+    email = form_login.email.data
+    senha = form_login.senha.data
+    user = Usuario.query.filter_by(email=email, senha=senha).first()
 
-        nome = form_login.nome.data
-        senha = form_login.senha.data
+    if user:
+        session['usuario_logado'] = user.nome
+        session['id_usuario_logado'] = user.id
+        session['cpf_usuario_logado'] = user.cpf      
+        login_user(user)
+        flash('Login realizado!', 'sucesso')
 
-
-        user = Usuario.query.filter_by(nome=nome, senha=senha).first()
-
-        if user:
-            session['usuario_logado'] = nome
-            session['id_usuario_logado'] = user.id
-            session['cpf_usuario_logado'] = user.cpf      
-            login_user(user)
-            flash('Login realizado!')
-            proxima_pagina = url_for('indexuser')
-            return redirect(proxima_pagina) 
-        else:
-            flash('Falha no login. Verifique suas credenciais.', 'danger')
-            return redirect(url_for('login'))
+        return redirect(url_for('indexuser')) 
+    flash('Falha no login. Verifique suas credenciais.', 'negado')
+    return redirect(url_for('login'))
 
 
 

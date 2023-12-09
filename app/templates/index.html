@@ -3,6 +3,13 @@
 {% block main %}
 
         <div class="corpo">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <div class="box-img">
                 <img src="../static/assets/images/agenda.jpg" alt="" class="img01">
                 <div class="text-img">
