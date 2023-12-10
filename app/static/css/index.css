@@ -7,56 +7,25 @@
 }
 
 body{
-
     display: flex;
     flex-direction: column;
-    background-color: white;
-    
+    background: linear-gradient(160deg, #ffffff, #bdccdd);
+    overflow-x: hidden;
 }
 
 .cabecalho{
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    background-color: #15457c;
+    background: transparent !important;
     height: 100px;
-
     padding: 0 100px;
-
+    border-bottom: 1px solid #c7c7c7;
 }
 
 .logo-pmvc{
     max-width: 500px;
     max-height: 70px;
-}
-
-
-.button-login{
-    background-color: #A6C546;
-    color: #15457c;
-
-    border-radius: 10px;
-    
-    border: none;
-    outline: none;
-
-    font-family: 'Poppins', sans-serif;;
-    
-    font-size: 20px;
-    padding: 7px;
-    cursor: pointer; 
-}
-
-.entre:hover{
-    font-size: 23px;
-    background-color: #b5da46;
-}
-
-.cadastro:hover{
-    font-size: 23px;
-    background-color: #b5da46;
 }
 
 .box-img{
@@ -90,19 +59,7 @@ body{
 
 }
 
-.button-img{
-    background-color: #15457c;
-    color: #A6C546;
-    font-size: 40px;
-    border: none;
-    border-radius: 15px;
-    padding: 7px;
-}
 
-.button-img:hover{
-    background-color: #1a5292;
-    cursor: pointer;
-}
 
 .servicos{
     padding-top: 20px;
@@ -135,4 +92,74 @@ body{
     font-family: "Poppins", sans-serif;
 }
 
+/* Index ----- */ 
 
+
+.corpo {
+    margin-top: 80px ;
+}
+
+.text-img {
+    margin-top: 70px;
+}
+
+.text-img .text-p {
+    color: #15457c;
+    font-size: 3rem;
+}
+
+.button-img{
+    background-color: #15457c;
+    color: #A6C546;
+    font-size: 40px;
+    border: none;
+    border-radius: 15px;
+    padding: 7px;
+}
+
+
+.imgAgenda3d {
+    position: absolute;
+    max-width: 500px;
+    right: 100px;
+    top: 30px;
+}
+
+.button-img{
+    background-color: #15457c;
+    color: #fff !important;
+    font-size: 1.4rem;
+    border: none;
+    font-weight: 300 !important;
+    border-radius: 15px;
+    padding: 7px;
+    transition: 0.3s ease;
+}
+
+.button-img:hover{
+    transition: 0.3s ease;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.servicos {
+    margin-top: 130px;
+}
+
+.servicos h1 {
+    text-align: center;
+    color:#15457c;
+    font-size: 1.5rem;
+    font-weight: 300;
+    left: 50%;
+    transform: translate(-30px);
+}
+
+
+.embed-responsive {
+    width: 700px;
+    height: 400px;
+    left: 50%;
+    border-radius: 20px;
+    transform: translateX(-50%);
+}

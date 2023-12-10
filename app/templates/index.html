@@ -11,107 +11,23 @@
                 {% endif %}
             {% endwith %}
             <div class="box-img">
-                <img src="../static/assets/images/agenda.jpg" alt="" class="img01">
                 <div class="text-img">
-                    <p class="text-p">AGENDE SEUS SERVIÇOS SEM <br> PERDER TEMPO</p>
+                    <p class="text-p">AGENDE SEUS SERVIÇOS </br> SEM PERDER TEMPO</p>
                     <a href="{{url_for('allservices')}}" class="button-link"><button class="button-img">
-                        MOSTRAR SERVIÇOS DISPONÍVEIS
+                        Mostrar serviços disponíveis
                     </button></a>
                 </div>
+                <img src="../static/assets/images/Agenda 3d.png" alt="" class="imgAgenda3d">
             </div>
             <div class="servicos">
-                <h1 class="p1"> PRINCIPAIS SERVIÇOS </h1>
+                <h1 class="p1">Veja como você pode agendar seus serviços facilmente</h1>
+                <div class="embed-responsive embed-responsive-1by1">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/watch?v=qyYmS_iBcy4" allowfullscreen></iframe>
+                </div>
+                    
             </div>
         </div>
 
-        <div class="slide-conteiner swiper">
-            <div class="slide-content">
-                <div class="card-wrapper swiper-wrapper">
-                    <div class="card swiper-slide">
-                        <div class="image-content">
-
-                            <div class="card-image">
-                                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" class="card-img">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name"> {{ servico1.nome }} </h2>
-                            <p class="description"> {{ servico1.sobre }} </p>
-
-                            <a href="{{ url_for('userservicos', servico_id=1) }}" > <button class="button-card"> Agendar </button></a>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="image-content">
-
-                            <div class="card-image">
-                                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" class="card-img">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name"> {{ servico2.nome }} </h2>
-                            <p class="description"> {{ servico2.sobre }} </p>
-
-                            <a href="{{ url_for('userservicos', servico_id=2) }}" > <button class="button-card"> Agendar </button></a>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="image-content">
-
-                            <div class="card-image">
-                                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" class="card-img">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name"> {{ servico3.nome }} </h2>
-                            <p class="description"> {{ servico3.sobre }} </p>
-
-                            <a href="{{ url_for('userservicos', servico_id=3) }}" > <button class="button-card"> Agendar </button></a> 
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="image-content">
-
-                            <div class="card-image">
-                                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" class="card-img">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name"> {{ servico4.nome }} </h2>
-                            <p class="description"> {{ servico4.sobre }} </p>
-
-                            <a href="{{ url_for('userservicos', servico_id=4) }}" > <button class="button-card"> Agendar </button></a> 
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="image-content">
-
-                            <div class="card-image">
-                                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" class="card-img">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name"> {{ servico5.nome }} </h2>
-                            <p class="description"> {{ servico5.sobre }} </p>
-
-                            <a href="{{ url_for('userservicos', servico_id=5) }}" > <button class="button-card"> Agendar </button></a> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="swiper-button-next swiper-navBtn"></div>
-            <div class="swiper-button-prev swiper-navBtn"></div>
-            <div class="swiper=pagination swiper-navBtn"></div>
-            
+        
         </div>
     {% endblock %}
