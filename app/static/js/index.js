@@ -27,14 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
       } else if (currentScrollTop > lastScrollTop) {
         // Scroll para baixo
         navbar.classList.add('navbarToogle');
-      } else if (currentScrollTop < lastScrollTop) {
-        // Scroll para cima
-        navbar.classList.remove('navbarToogle');
       }
   
       lastScrollTop = currentScrollTop;
     });
   });
-  
-  
   
