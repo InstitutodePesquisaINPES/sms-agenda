@@ -39,15 +39,15 @@
 
             
             {% if not session.usuario_logado %}
-            <div class="buttons">
-                <a href="{{ url_for('login') }}">
-                    <button class="button-login entre"> Entre </button>
-                </a>
-                <a href="{{ url_for('cadastrouser') }}">
-                    <button class="button-login cadastro"> Cadastre-se </button>
-                </a>
-            </div>
-        {% else %}
+                <div class="buttons">
+                    <a href="{{ url_for('login') }}">
+                        <button class="button-login entre"> Entre </button>
+                    </a>
+                    <a href="{{ url_for('cadastrouser') }}">
+                        <button class="button-login cadastro"> Cadastre-se </button>
+                    </a>
+                </div>
+            {% else %}
             <div class="logado">
                 <div class="buttons-logado">
                     <img src="../static/assets/icons/user.png" id="icon-userlogado" alt="" srcset="">
