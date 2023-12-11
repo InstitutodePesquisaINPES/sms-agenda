@@ -4,11 +4,12 @@ from flask_login import UserMixin
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuario'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String(255), nullable=False) 
     nome = db.Column(db.String(255), nullable=False) 
-    cpf = db.Column(db.String(11), nullable=False)
-    sus = db.Column(db.String(15), nullable=False)
-    senha = db.Column(db.String(255), nullable=False)
-    user_type = db.Column(db.String(255), nullable=False)
+    cpf = db.Column(db.String(14), nullable=False)
+    sus = db.Column(db.String(19), nullable=False)
+    senha = db.Column(db.String(50), nullable=False)
+    user_type = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
         return f"<Usuario(id={self.id}, nome={self.nome}, user_type={self.user_type})>"

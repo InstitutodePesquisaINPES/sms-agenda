@@ -4,10 +4,11 @@ use agenda;
 
 CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `cpf` varchar(11),
-  `sus` varchar(15),
-  `senha` varchar(255) NOT NULL,
+  `cpf` varchar(14),
+  `sus` varchar(19),
+  `senha` varchar(50) NOT NULL,
   `user_type` varchar(20),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci; 
