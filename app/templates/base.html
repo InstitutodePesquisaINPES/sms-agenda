@@ -19,14 +19,23 @@
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+    <!-- Boostrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
     <!-- Fonts google  -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
+    <!-- Animated.Css -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
 </head>
     <body>
-        <div class="cabecalho" id="navbar">
-            <a href="{{ url_for('indexuser') }}"><img src="../static/assets/images/logo-pmvc-verde.png" alt="" class="logo-pmvc"></a>
+        <div class="" id="navbar">
+            <a href="{{ url_for('indexuser') }}"><img src="../static/assets/images/Logo Prefeitura.png" alt="" class="logo-pmvc"></a>
 
             
             {% if not session.usuario_logado %}
@@ -62,7 +71,17 @@
         
         </div> 
 
+
+
         {% block main %} {% endblock %}
+
+        <a href="#">
+            <div class="box">
+                <i class="bi bi-arrow-up-short"></i>
+            </div>
+        </a>
+       
+
 
         <div class="rodape">
             <a href="#" class="rodape-text" data-toggle="modal" data-target="#myModal">VERSÃO v1.0</a>
@@ -131,6 +150,21 @@
                 },
             });
         </script>
+
+        <script> 
+            /* Botão voltar ao topo */
+            let botao = document.querySelector(".box");
+            window.addEventListener("scroll", function () {
+            botao.style.display = "none";
+
+            if (window.scrollY < 500) {
+                botao.style.display = "none";
+            } else {
+                botao.style.display = "block";
+            }
+            });
+        </script>
+
 
     </body>
     
