@@ -4,25 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- Adicione os links para os estilos CSS, se necessário -->
     <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
-
     <div class="div-main">
         <div class="div-icons">
             <a href="/"><img src="../static/assets/images/logo-pmvc-verde.png" class="logo-img" alt="logo-pmvc-verde"></a>
             <img src="../static/assets/icons/user.png"  alt="" class="icon-user">
         </div>
         <div class="div-login">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <h2 class="login-name">LOGIN</h2> 
-            <form method="POST" action="{{('autenticarlogin')}}" class="form-login">
+            <form method="POST" action="{{url_for('autenticarlogin')}}" class="form-login">
            
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}">
+                {{ form_login.hidden_tag() }}
+                <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
                 
-                {{ form_login.nome(id="username", class="input-email", placeholder="Digite seu email") }} <br>
-                {{ form_login.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
+                {{ form_login.email.label }} {{ form_login.email(id="username", class="input-email", placeholder="digite seu email") }} <br>
+
+                {{ form_login.senha.label }} {{ form_login.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
                 {{ form_login.submit(class="button-login") }}  
   
             </form>

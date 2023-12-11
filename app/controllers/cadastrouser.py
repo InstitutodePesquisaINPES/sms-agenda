@@ -1,7 +1,8 @@
 from run import app, db
-from flask import render_template, url_for, session, request, redirect
-from complementary.flask_wtf.flaskform_cadastrouser import *
+from flask import render_template, url_for, session, request, redirect,flash
+from complementary.flask_wtf.flaskform_login import CadastroUsuarioForm
 from app.models.model_user import Usuario
+from sqlalchemy import or_
 
 @app.route('/cadastrouser')
 def cadastrouser():
@@ -10,38 +11,32 @@ def cadastrouser():
 
     return render_template('cadastrouser.html', proxima=proxima, form_cadastrouser=form_cadastrouser)
 
-
-
- 
 @app.route('/cadastrar', methods=['POST'])
 def cadastrar():
+    form_cadastrouser = CadastroUsuarioForm()
 
-    form_cadastrouser = CadastroUsuarioForm(request.form)
+    if form_cadastrouser.validate_on_submit():
+        user = Usuario.query.filter(
+            or_(Usuario.cpf == form_cadastrouser.cpf.data,
+                Usuario.nome == form_cadastrouser.email.data)).first()
+        if user:
+            flash('Usuario já cadastrado no sistema', 'negado')
+            return redirect(url_for('cadastrouser'))
 
-    user = Usuario.query.filter_by(nome=form_cadastrouser.nome.data).first()
-
-  
-    
-    if user:
-        session['error_message5'] = 'O email em questão ja se encontra cadastrado no sistema, por favor insira outro para efetuar o cadastro '
-        return redirect(url_for('cadastrouser'))
-    
-       
-    
-    if form_cadastrouser.senha.data ==  form_cadastrouser.senhanovamente.data:
         novo_usuario = Usuario(
-            nome = form_cadastrouser.nome.data,
-            cpf = form_cadastrouser.cpf.data,
-            sus = form_cadastrouser.sus.data,    
-            senha = form_cadastrouser.senha.data,
-            user_type = "usuario"
+            email=form_cadastrouser.email.data,
+            nome=form_cadastrouser.nome.data,
+            cpf=form_cadastrouser.cpf.data,
+            sus=form_cadastrouser.sus.data,
+            senha=form_cadastrouser.senha.data,
+            user_type="usuario"
         )
 
         db.session.add(novo_usuario)
         db.session.commit()
-        session['error_message5'] = 'Usuario cadastrado com sucesso'
-    else:
-        session['error_message5'] = 'Por favor, verifique se as senhas digitadas coecidem '
-        return redirect(url_for('cadastrouser'))
+
+        flash('Usuário cadastrado com sucesso!', 'successo')
+        return redirect(url_for('indexuser'))
     
-    return redirect(url_for('login'))
+    flash('Usuário não cadastrado! reveja os campos', 'negado')
+    return render_template('cadastrouser.html', form_cadastrouser=form_cadastrouser)

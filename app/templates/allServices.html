@@ -1,42 +1,151 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <div class="corpo">
-        <div class="div-pesquisa">
-            <div class="pesquisa"> 
-                <a href="/"><img src="../static/assets/icons/lupa.png" class="icon-pesquisa" alt="" srcset=""> </a>
-                <input type="text" class="input-pesquisa" name="" id="" placeholder="BUSQUE POR NOME OU CATEGORIA">
+    <div class="backgroundsMain">
+        <div class="backgroundIndexOne"></div>
+    </div>
+
+    <div class="corpoServices">
+        <div class="div-pesquisaServices">
+            <div class="pesquisaServices"> 
+                <i class="bi bi-search iconSearchServices"></i>
+                <input type="text" class="input-pesquisaServices" name="" id="" placeholder="Busque por nome e categoria">
             </div>
         </div>
-        <div class="gallery-container">
-            <a href="{{ url_for('userservicos', servico_id=1) }}" class="gallery-items">
-                <div class="div-card">
-                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
-                    <h5 class="card-name"> {{ servico1.nome}} </h5>
+        <div class="gallery-container ">
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarRed">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                        </div>
+                    </div>
                 </div>
             </a>
-            <a href="{{ url_for('userservicos', servico_id=2) }}" class="gallery-items">
-                <div class="div-card">
-                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
-                    <h5 class="card-name"> {{ servico2.nome}} </h5>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarRed">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                        </div>
+                    </div>
                 </div>
             </a>
-            <a href="{{ url_for('userservicos', servico_id=3) }}" class="gallery-items">
-                <div class="div-card">
-                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
-                    <h5 class="card-name"> {{ servico3.nome}} </h5>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+            <div class="boxContentServices animate__animated animate__fadeInUp">
+                <i class="bi bi-bicycle"></i>
+                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                <div class="contentServicesBarBlue">
+                    <p>Agenda</p>
+                    <div class="iconsReference">
+                        <i class="bi bi-person-standing"></i>
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                </div>
+            </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+            <div class="boxContentServices animate__animated animate__fadeInUp">
+                <i class="bi bi-bicycle"></i>
+                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                <div class="contentServicesBarBlue">
+                    <p>Agenda</p>
+                    <div class="iconsReference">
+                        <i class="bi bi-person-standing"></i>
+                    </div>
+                </div>
+            </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+            <div class="boxContentServices animate__animated animate__fadeInUp">
+                <i class="bi bi-bicycle"></i>
+                <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                <div class="contentServicesBarBlue">
+                    <p>Agenda</p>
+                    <div class="iconsReference">
+                        <i class="bi bi-person-standing"></i>
+                        <i class="bi bi-phone"></i>
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                </div>
+            </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarBlue">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                    </div>
                 </div>
             </a>
-            <a href="{{ url_for('userservicos', servico_id=4) }}" class="gallery-items">
-                <div class="div-card">
-                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
-                    <h5 class="card-name"> {{ servico4.nome}} </h5>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarYellow">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                    </div>
                 </div>
             </a>
-            <a href="{{ url_for('userservicos', servico_id=5) }}" class="gallery-items">
-                <div class="div-card">
-                    <img src="../static/assets/icons/remedios.png" alt="em desenvolvimento">
-                    <h5 class="card-name"> {{ servico5.nome}} </h5>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarYellow">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarYellow">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <i class="bi bi-bicycle"></i>
+                    <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    <div class="contentServicesBarYellow">
+                        <p>Agenda</p>
+                        <div class="iconsReference">
+                            <i class="bi bi-person-standing"></i>
+                            <i class="bi bi-phone"></i>
+                            <i class="bi bi-laptop"></i>
+                        </div>
+                    </div>
                 </div>
             </a>
         </div>

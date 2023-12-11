@@ -13,54 +13,61 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
-.cabecalho{
+#navbar{
     position: fixed;
     display: flex;
     height: 80px;
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    background-color: #15457c;
-    padding: 0 100px;
-    border-radius: 0px 0px 20px 20px;
+    background: transparent ;
+    padding: 0 11%;
     z-index: 1000;
     transition: all 0.4s ease-in-out;
+    border-bottom: 1px solid #ffffff79;
 }
 
 .navbarToogle{
     transition: all 0.4s ease-in-out;
     position: fixed;
-    background-color: #15457c !important;
+    background: #5272ffd0 !important;
+    border-radius: 0px 0px 20px 20px;
+    z-index: 1000;
+    border: none !important;
+    filter: drop-shadow(0px 0px 5px #00000040);
 }
 
 .navbarToogle .buttons a button {
-    color: #fff;
+    
 }
 
 .logo-pmvc{
     max-width: 250px;
-    max-height: 40px;
+    max-height: 55px;
     border-radius: 10px;
+    filter: drop-shadow(1px 1px 10px #fff);
 }
 
 
 .button-login{
-    background-color: #15457c;
-    color: #fff;
+    background-color: rgba(252,214,117,1);
+    color: #835f11;
     border-radius: 10px;
     border: none;
     outline: none;
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
+    font-weight: 500;
     padding: 7px;
     cursor: pointer; 
     transition: 0.2s ease;
-    font-weight: 500;
+    filter: drop-shadow(1px 1px 1px #00000057)
 }
 
 .entre {
-    color: #15457c;
-    background: none;
+    color: #fff;
+    background: transparent !important;
+    z-index: 10;
 }
 
 .entre:hover{
@@ -133,8 +140,6 @@ body{
     margin-left: 20px;
 }
 
-
-
 .buttons-service > button, a > button{
     background-color: #15457c;
     color: #A6C546;
@@ -153,15 +158,17 @@ body{
 }
 
 .rodape{
-    margin-top: 40px;
-    background-color: #15457c;
+    background: #f1f1f1;
+    color: #121212;
+    border-top: 2px solid #c9c9c9;
     height: 50px;
     padding: 40px 0px;
     border-radius: 10px 10px 0px 0px;
 }
 
 .rodape-text{
-    color: #fff;
+    color: #7e7e7e;
+    font-weight: 500;
     position: absolute;
     left: 50%;
     margin-top: -20px;
@@ -169,8 +176,37 @@ body{
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
 }
+.rodape-text:hover {
+    text-decoration: none;
+    color: #7e7e7e;
 
+}
 
+.box {
+    position: fixed;
+    display: none;
+    top: 80%;
+    padding: 5px 10px;
+    background-color: rgba(252,214,117,1);
+    right: 70px;
+    z-index: 100000;
+    border-radius: 10px;
+    filter: drop-shadow(1px 1px 1px #00000057);
+    transition: all 0.2s ease-in;
+}
+
+.box i {
+    color: #835f11;
+    font-size: 1.8rem;
+}
+
+/* ------- Modal ------ */ 
+
+.modal-content {
+    top: 50% !important;
+}
+
+/* ------ Modal End ------ */
 
 
 ::-webkit-scrollbar {
@@ -179,7 +215,7 @@ body{
   
   /* Estilo para o polegar (parte que você move) */
 ::-webkit-scrollbar-thumb {
-    background-color: #15457c; /* Cor do polegar */
+    background: linear-gradient(135deg, #5271ff  0%,#24a3b1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     border-radius: 6px; /* Borda arredondada do polegar */
   }
   

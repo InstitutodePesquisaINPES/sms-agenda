@@ -3,14 +3,21 @@
 {% block main %}
 
         <div class="corpo">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <div class="box-img">
-                <div class="text-img">
-                    <p class="text-p">AGENDE SEUS SERVIÇOS </br> SEM PERDER TEMPO</p>
-                    <a href="{{url_for('allservices')}}" class="button-link"><button class="button-img">
-                        Mostrar serviços disponíveis
-                    </button></a>
+                <div class=" text-img">
+                    <p class="text-p animate__animated animate__fadeInLeft"> <span> AGENDE </span> SEUS SERVIÇOS </br> SEM PERDER TEMPO</p>
+                    <a href="{{url_for('allservices')}}">
+                       <p class="text-index-button animate__animated animate__fadeInLeft" style="animation-delay: 500ms;"> Mostrar serviços disponíveis</p> 
+                    </a>
                 </div>
-                <img src="../static/assets/images/Agenda 3d.png" alt="" class="imgAgenda3d">
+                <img src="../static/assets/images/Calendário 3d.png" alt="" class="imgAgenda3d animate__animated animate__fadeInRight" style="animation-delay: 600ms;">
             </div>
             <div class="servicos">
                 <h1 class="p1">Veja como você pode agendar seus serviços facilmente</h1>
