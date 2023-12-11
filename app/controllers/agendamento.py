@@ -13,28 +13,28 @@ from complementary.functions.functionsAgendamentos import *
 from datetime import datetime, timedelta
 
 servicos = {
-    1:{'categoria': 'FARMÁCIA', 'nome': 'ATENDIMENTO FARMACÊUTICO', 
+    1:{'id': 1, 'categoria': 'FARMÁCIA', 'nome': 'ATENDIMENTO FARMACÊUTICO', 
        'descricao': 'Distribuição de medicamentos, orientação farmacêutica e monitoramento de condição glicemica', 
        'documentos': ['Receita', 'Carteira de Identidade', 'Cartão do SUS', 'CPF']},
 
-    2:{'categoria': 'EXAMES', 'nome': 'MARCAÇÃO DE EXAMES', 
+    2:{'id': 2,'categoria': 'EXAMES', 'nome': 'MARCAÇÃO DE EXAMES', 
        'descricao': '(CRPEE) – Regulação/autorização de Tomografias, Ressonâncias, Cintilografias, Biópsias/estudo anatomopatológico, Colonoscopias, Videolaringoscopias, exames pré-operatórios da ortopedia e consultas e/ou procedimentos destinados ao tratamento oncológico, tratamento de cardiopatias graves, tratamento de Insuficiência Renal Crônica e tratamento de doenças imunossupressoras.', 
        'documentos': 'Documentos do serviço B'},
 
-    3:{'categoria': 'AUTORIZAÇÕES', 'nome': 'AUTORIZAÇÃO DE PROCEDIMENTOS', 
+    3:{'id': 3,'categoria': 'AUTORIZAÇÕES', 'nome': 'AUTORIZAÇÃO DE PROCEDIMENTOS', 
        'descricao': 'AIH/APAC – processos de Autorização de Internação Hospitalar (AIH) ou Autorização de Procedimentos Ambulatoriais (APAC), previamente emitida por cirurgião.', 
        'documentos': 'Documentos do serviço C'},
 
-    4:{'categoria': 'TRATAMENTOS', 'nome': 'TRATAMENTO FORA DO DOMICÍLIO - TFD', 
+    4:{'id': 4,'categoria': 'TRATAMENTOS', 'nome': 'TRATAMENTO FORA DO DOMICÍLIO - TFD', 
        'descricao': 'Cadastro de pacientes que necessitam de atendimentos/procedimentos via TFD (tratamento fora do domicílio), quando não estão disponíveis na rede de saúde do município, com laudo já emitido previamente por profissional médico da rede assistencial pública de Vitória da Conquista.',
        'documentos': 'Documentos do serviço D'},
 
-    5:{'categoria': 'SUS', 'nome': 'CARTÃO DO SUS', 
+    5:{'id': 5,'categoria': 'SUS', 'nome': 'CARTÃO DO SUS', 
        'descricao': 'Emissão ou atualização do Cartão Nacional de Saúde - SUS.', 
        'documentos': 'Documentos do serviço E'}
 }
 
-@app.route('/meusagendamentos')
+@app.route('/meusagendamentos') 
 def meusagendamentos():
     id_usuario_logado = session.get('id_usuario_logado')
     agendamentos = Agendamento.query.filter_by(id_usuario=id_usuario_logado).all()
@@ -43,20 +43,22 @@ def meusagendamentos():
 
 @app.route('/servico/<int:servico_id>')
 def userservicos(servico_id):
-
-    horasDisp = listaHorarios() # lista de horários com vagas
     info_servico = servicos.get(servico_id)
-    servico_idb = request.args.get('servico_id')
-    servico = Servico.query.filter_by(id=servico_idb).first()
-    form_agendamento = AgendamentoForm() 
-        
-    return render_template('userservicos.html', info_servico=info_servico, servico=servico, horasDisp=horasDisp, form_agendamento=form_agendamento) 
+    return render_template('userservicos.html', info_servico=info_servico) 
+
+@app.route('/agendar/<int:servico_id>')
+def agendar(servico_id):
+    horasDisp = listaHorarios() # lista de horários com vagas
+    form_agendamento = AgendamentoForm()
+    info_servico = servicos.get(servico_id)
+
+    return render_template('formAgendamento.html', horasDisp=horasDisp, form_agendamento=form_agendamento, info_servico=info_servico)
 
 @app.route('/api/agendamentos_por_dia')
 def agendamentos_por_dia():
     # Obtém a data de hoje
     hoje = datetime.now().date()
-
+ 
     # Obtém a data daqui a 30 dias
     data_30_dias_frente = hoje + timedelta(days=30)
 
@@ -75,6 +77,28 @@ def agendamentos_por_dia():
             dias_list.append(data_agendada.day)
 
     return jsonify(dias_list)
+
+def horarios_agendados(data_recebida):
+        agendamentos = Agendamento.query.filter_by(data_agendada=data_recebida).all()
+        horarios_ocupados = [agendamento.horario for agendamento in agendamentos]
+
+        return horarios_ocupados
+
+def converter_para_time(horario_str):
+    return datetime.strptime(horario_str, '%H:%M').time()
+
+@app.route('/api/horas_disponiveis')
+def horas_disponiveis():
+    data_recebida = request.json.get('data')
+    data_recebida = datetime.strptime(data_recebida, '%Y-%m-%d').date()
+
+    horasDisp = listaHorarios()
+    horasDisp = [converter_para_time(horario_str) for horario_str in horasDisp]
+
+    horarios_ocupados = horarios_agendados(data_recebida)
+    horarios_disponiveis = [horario for horario in horasDisp if horario not in horarios_ocupados]
+
+    return jsonify(horarios_disponiveis)
 
 @app.route('/autenticaragendamento', methods=['GET', 'POST'])
 @login_required

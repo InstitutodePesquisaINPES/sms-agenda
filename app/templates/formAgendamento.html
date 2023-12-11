@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div>
+        <form action="">
+            <div class="title-forms">
+                <h1> Faça seu agendamento </h1>
+                <h3> {{ info_servico.nome }} </h3>
+            </div>
+            
+            <div class="data">
+                
+                <h2 class="popup-title">ESCOLHA A DATA</h2>
+                <div class="div-calendar">
+                    <input type="hidden" name="data_selecionada" id="data_selecionada" onchange="changed(true)">
+                    <input type="text" id="datePicker" class="flatpickr-input" onchange="changed(true)">
+                </div>
+                <button id="confirmData">CONFIRMAR DATA SELECIONADA</button>
+                
+            </div>
+            <div class="hora">
+                <h2 class="popup-title">ESCOLHA O HORÁRIO</h2>
+                <div> 
+                    <!-- renderizar horários -->
+                    <!-- <input type="hidden" name="hora_selecionada" id="hora_selecionada"> -->
+                    <input type="hidden" name="hora_selecionada" id="hora_selecionada">
+                    <div class="div-hora">
+                        {% for horas in horasDisp %}
+                            <label for="hora_{{ horas }}"> {{ horas }} </label>
+                            <input type="radio" name="hora_ipt" class="input-hora" id="hora_{{ horas }}" onchange="changed(true)" value="{{ horas }}">
+                            <br>
+                        {% endfor %} 
+                    </div>
+                </div>
+            </div>
+            <div class="documents">
+                <h2 class="popup-title"> ENVIE OS SEUS DOCUMENTOS</h2>
+                <div>
+                    <label for="updoc"> envie o seu documento </label>
+                    <input type="file" name="updoc" id="">
+                </div>
+            </div>
+            <div class="checkbox"> 
+                <h2 class="popup-title"> CONFIRMAÇÃO</h2>
+                <div>
+                    <label for="li"> Li e confirmo os documentos necessários.</label>
+                    <input type="checkbox" name="li" id="">
+                    <br>
+
+                </div>
+            </div> 
+        </form>
+
+        <script src="../static/js/pop-up-agendar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    </div>
+{% endblock %}
