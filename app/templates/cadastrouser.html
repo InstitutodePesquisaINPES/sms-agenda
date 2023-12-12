@@ -25,7 +25,12 @@
                 {% endif %}
             {% endwith %}
             <h2 class="login-name">CADASTRAR</h2>
-            <form method="POST" action="{{ url_for('cadastrar') }}" class="form-login">
+            {% if session.user_type_usuario_logado == "administrador" %}
+                <form method="POST" action="{{ url_for('cadastrar', is_administrador='True') }}" class="form-login">
+            {%else%}
+                <form method="POST" action="{{ url_for('cadastrar', is_administrador='False') }}" class="form-login">
+            {%endif%}
+
                 {{ form_cadastrouser.hidden_tag() }}
 
                 {{ form_cadastrouser.email.label }} {{ form_cadastrouser.email(id="username", class="input-email", placeholder="Digite seu email") }} <br>

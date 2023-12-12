@@ -52,4 +52,6 @@ insert into servico (categoria, nome, sobre, documentos_necessarios) values ("TE
 
 insert into horarios_disponiveis (hora_inicio, hora_pausa, tempo_pausa, hora_retomada, hora_final, tempo_atendimento) values ("07:00:00", "11:00:00", "02:00:00", "13:00:00", "17:00:00", "00:20:00");
 
+insert into usuario (id, email, nome, cpf, sus, senha, user_type) values (6, "admin@gmail.com", "admin", "211.111.111-11", "211.111.111.1111-11", "12345678", "administrador");
+
 

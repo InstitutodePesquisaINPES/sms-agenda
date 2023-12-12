@@ -9,11 +9,14 @@ def cadastrouser():
     proxima = request.args.get('proxima')
     form_cadastrouser = CadastroUsuarioForm() 
 
+    
+
     return render_template('cadastrouser.html', proxima=proxima, form_cadastrouser=form_cadastrouser)
 
-@app.route('/cadastrar', methods=['POST'])
+@app.route('/cadastrar', methods=['POST', 'GET'])
 def cadastrar():
     form_cadastrouser = CadastroUsuarioForm()
+    is_administrador = request.args.get('is_administrador', False)
 
     if form_cadastrouser.validate_on_submit():
         user = Usuario.query.filter(
@@ -22,15 +25,30 @@ def cadastrar():
         if user:
             flash('Usuario já cadastrado no sistema', 'negado')
             return redirect(url_for('cadastrouser'))
+        print(request.args)
+        
+        print(is_administrador)
+        print(type(is_administrador))
+        if is_administrador == 'True':
+            novo_usuario = Usuario(
+                email=form_cadastrouser.email.data,
+                nome=form_cadastrouser.nome.data,
+                cpf=form_cadastrouser.cpf.data,
+                sus=form_cadastrouser.sus.data,
+                senha=form_cadastrouser.senha.data,
+                user_type="servidor"
+            )
 
-        novo_usuario = Usuario(
-            email=form_cadastrouser.email.data,
-            nome=form_cadastrouser.nome.data,
-            cpf=form_cadastrouser.cpf.data,
-            sus=form_cadastrouser.sus.data,
-            senha=form_cadastrouser.senha.data,
-            user_type="usuario"
-        )
+            is_administrador = False
+        else:
+            novo_usuario = Usuario(
+                email=form_cadastrouser.email.data,
+                nome=form_cadastrouser.nome.data,
+                cpf=form_cadastrouser.cpf.data,
+                sus=form_cadastrouser.sus.data,
+                senha=form_cadastrouser.senha.data,
+                user_type="usuario"
+            )
 
         db.session.add(novo_usuario)
         db.session.commit()

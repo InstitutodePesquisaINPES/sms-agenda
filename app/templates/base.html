@@ -48,26 +48,32 @@
                     </a>
                 </div>
             {% else %}
-            <div class="logado">
-                <div class="buttons-logado">
-                    <img src="../static/assets/icons/user.png" id="icon-userlogado" alt="" srcset="">
-                    <p class="nome-user"> {{session['usuario_logado']}} </p>
-                    <img src="../static/assets/icons/menubaixo.png" id="icon-userlogado" alt="" srcset="">
+                <div class="logado">
+                    <div class="buttons-logado">
+                        <img src="../static/assets/icons/user.png" id="icon-userlogado" alt="" srcset="">
+                        <p class="nome-user"> {{session['usuario_logado']}} </p>
+                        <img src="../static/assets/icons/menubaixo.png" id="icon-userlogado" alt="" srcset="">
+                    </div>
+
+                    <div class="options-logado">
+                        <div class="menu-options">
+                            <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                            <a href="{{ url_for('meusagendamentos')}}">Meus Agendamentos</a>
+                        </div>
+                        {% if session.user_type_usuario_logado == "administrador" %}
+                            <div class="menu-options">
+                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <a href="{{ url_for('cadastrouser')}}">Cadastrar servidor</a>
+                            </div>
+                        {% endif %}
+                        <div class="menu-options">
+                            <img src="../static/assets/icons/sair.png" id="icon-userlogado" alt="" srcset="">
+                            <a href="{{ url_for('logout') }}">Logout</a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="options-logado">
-                    <div class="menu-options">
-                        <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
-                        <a href="{{ url_for('meusagendamentos')}}">Meus Agendamentos</a>
-                    </div>
-                    <div class="menu-options">
-                        <img src="../static/assets/icons/sair.png" id="icon-userlogado" alt="" srcset="">
-                        <a href="{{ url_for('logout') }}">Logout</a>
-                    </div>
-                </div>
-            </div>
-
-        {% endif %}
+            {% endif %}
         
         </div> 
 
