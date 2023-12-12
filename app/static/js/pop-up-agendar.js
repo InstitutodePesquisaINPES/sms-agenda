@@ -20,29 +20,53 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Erro ao obter dados dos agendamentos por dia:', error));
 });
 
-// API PARA BUSCA DAS HORAS, CONFORME A DATA SELECIONADA (CUIDADO AO MEXER)
-document.getElementById('confirmData').addEventListener('click', function () {
-    
-    selectedDate = document.getElementById("datePicker").value;
+function obterHorariosDisponiveis() {
+    var dataSelecionada = document.getElementById('datePicker').value;
 
-    // Fazer uma requisição AJAX para obter os dados dos horarios disponiveis
-    fetch('/api/horarios_disponiveis', {
-        method: 'POST',
+    var csrfToken = $('input[name=csrf_token]').val();
+
+    console.log(dataSelecionada)
+
+    // Faz uma requisição AJAX para obter os horários disponíveis, incluindo o token CSRF
+    $.ajax({
+        type: 'POST',
+        url: '/api/horarios_disponiveis',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'data_selecionada': dataSelecionada }),
         headers: {
-            'Content-Type': 'application/json'
+            'X-CSRFToken': csrfToken
         },
-        body: JSON.stringify({ data: dataDesejada })
-    })
-    .then(response => response.json())
-    .then(horas_list => {
-        // agora horas_list tem os dados das horas disponiveis
-        horas_disponiveis = horas_list
-        console.log(horas_disponiveis);
+        success: function(data) {
+            // Renderiza os horários disponíveis no frontend
+            console.log(data.horarios_disponiveis)
+            renderizarHorarios(data.horarios_disponiveis);
+        },
+        error: function(error) {
+            console.error('Erro ao obter horários disponíveis:', error);
+        }
+    });
+}
 
-        
-    })
-    .catch(error => console.error('Erro ao obter dados dos horarios disponiveis neste dia:', error));
-});
+function renderizarHorarios(horarios) {
+    var divHorarios = document.getElementById('divHorarios');
+    divHorarios.innerHTML = '';  // Limpa a div antes de renderizar os novos horários
+
+    // Renderiza os horários disponíveis como radio buttons
+    horarios.forEach(function(hora) {
+        var label = document.createElement('label');
+        label.textContent = hora;
+
+        var inputRadio = document.createElement('input');
+        inputRadio.type = 'radio';
+        inputRadio.name = 'hora_ipt';
+        inputRadio.className = 'input-hora';
+        inputRadio.value = hora;
+
+        divHorarios.appendChild(label);
+        divHorarios.appendChild(inputRadio);
+        divHorarios.appendChild(document.createElement('br'));
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     // Inicialize o Flatpickr
@@ -78,25 +102,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Obtém o elemento do formulário
-const div_horas = document.getElementById('div-hora');
-
-// Itera sobre a lista e cria botões de rádio
-minhaLista.forEach(function (opcao, indice) {
-  // Cria um elemento de input radio
-  const inputRadio = document.createElement('input');
-  inputRadio.type = 'radio';
-  inputRadio.name = 'opcoes'; // Certifique-se de dar o mesmo nome para agrupar os botões
-  inputRadio.value = opcao;
-
-  // Cria uma label para o botão de rádio
-  const label = document.createElement('label');
-  label.textContent = opcao;
-
-  // Adiciona o input radio e a label ao formulário
-  div_horas.appendChild(inputRadio);
-  div_horas.appendChild(label);
-
-  // Adiciona uma quebra de linha para melhorar a visualização
-  div_horas.appendChild(document.createElement('br'));
-});

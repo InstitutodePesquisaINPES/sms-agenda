@@ -1,3 +1,4 @@
+import logging
 from run import app
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -11,6 +12,8 @@ from complementary.flask_wtf.flaskform_agendamento import *
 from complementary.functions.functionsAgendamentos import *
 
 from datetime import datetime, timedelta
+
+logging.basicConfig(level=logging.DEBUG)
 
 servicos = {
     1:{'id': 1, 'categoria': 'FARMÁCIA', 'nome': 'ATENDIMENTO FARMACÊUTICO', 
@@ -71,7 +74,7 @@ def agendamentos_por_dia():
     dias_list = []
 
     # Itera sobre os resultados da consulta
-    for count, data_agendada in resultados:
+    for count, data_agendada in resultados: 
         # Extrai o dia e adiciona à lista de dias
         if count == calculaHoras():
             dias_list.append(data_agendada.day)
@@ -87,18 +90,26 @@ def horarios_agendados(data_recebida):
 def converter_para_time(horario_str):
     return datetime.strptime(horario_str, '%H:%M').time()
 
-@app.route('/api/horas_disponiveis')
+@app.route('/api/horarios_disponiveis', methods=['GET', 'POST'])
 def horas_disponiveis():
-    data_recebida = request.json.get('data')
-    data_recebida = datetime.strptime(data_recebida, '%Y-%m-%d').date()
+    try:
+        data_selecionada_str = request.json.get('data_selecionada')
+        data_selecionada = datetime.strptime(data_selecionada_str, '%Y-%m-%d').date()
+        print(data_selecionada_str, data_selecionada)
+        
 
-    horasDisp = listaHorarios()
-    horasDisp = [converter_para_time(horario_str) for horario_str in horasDisp]
+        # Consulta todos os horários já agendados para a data fornecida
+        horarios_agendados = [agendamento.horario.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada_str).all()]
 
-    horarios_ocupados = horarios_agendados(data_recebida)
-    horarios_disponiveis = [horario for horario in horasDisp if horario not in horarios_ocupados]
+        # Sua lista de horários disponíveis
+        horas_disp = listaHorarios()  # Substitua com seus próprios horários
 
-    return jsonify(horarios_disponiveis)
+        # Filtra os horários disponíveis removendo aqueles que já foram agendados
+        horarios_disponiveis = [hora for hora in horas_disp if hora not in horarios_agendados]
+
+        return jsonify({'horarios_disponiveis': horarios_disponiveis})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/autenticaragendamento', methods=['GET', 'POST'])
 @login_required
