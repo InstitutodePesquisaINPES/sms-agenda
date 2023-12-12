@@ -45,7 +45,41 @@
                     <br>
 
                 </div>
-            </div> 
+            </div>
+            <div class="enviar">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meuModal">
+                    SALVAR
+                </button>
+            </div>
+
+        
+            <!-- Modal -->
+            <div class="modal" id="meuModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">CONFIRME O SEU AGENDAMENTO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <p> NOME DO SERVIÇO </p>
+                    <P> LOCAL DO SERVIÇO: FACILITA</P>
+                    <p> DATA AGENDADA </p>
+                    <p> HORA AGENDADA </p>
+                    <p> DOCUMENTOS ENVIADOS: </p>
+                    <p> NOME DOS DOCUMENTOS ENVIADOS</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">CORRIGIR</button>
+                    <button type="button" class="btn btn-success">CONFIRMAR AGENDAMENTO</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- FIM DO MODAL -->
+
         </form>
 
         <script src="../static/js/pop-up-agendar.js"></script>
