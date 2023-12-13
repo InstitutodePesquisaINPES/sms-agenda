@@ -9,7 +9,7 @@
 body{
     display: flex;
     flex-direction: column;
-    background: linear-gradient(160deg, #ffffff, #bdccdd);
+    background: #f1f1f1;
     overflow-x: hidden;
 }
 

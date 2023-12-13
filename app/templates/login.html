@@ -22,13 +22,15 @@
             {% endwith %}
             <h2 class="login-name">LOGIN</h2> 
             <form method="POST" action="{{url_for('autenticarlogin')}}" class="form-login">
-           
+            
                 {{ form_login.hidden_tag() }}
                 <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
                 
-                {{ form_login.email.label }} {{ form_login.email(id="username", class="input-email", placeholder="digite seu email") }} <br>
+                <!-- {{ form_login.email.label }} -->
+                {{ form_login.email(id="username", class="input-email", placeholder="Digite seu email") }} <br>
 
-                {{ form_login.senha.label }} {{ form_login.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
+                <!-- {{ form_login.senha.label }} -->
+                {{ form_login.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
                 {{ form_login.submit(class="button-login") }}  
   
             </form>
@@ -37,7 +39,5 @@
             </div> 
         </div>
     </div>
-
-
 </body>
 </html>
