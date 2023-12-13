@@ -38,7 +38,10 @@ def autenticarlogin():
     if user:
         session['usuario_logado'] = user.nome
         session['id_usuario_logado'] = user.id
-        session['cpf_usuario_logado'] = user.cpf      
+        session['cpf_usuario_logado'] = user.cpf  
+        session['user_type_usuario_logado'] = user.user_type 
+        print(user.user_type ) 
+
         login_user(user)
         flash('Login realizado!', 'sucesso')
 
@@ -77,7 +80,10 @@ def login():
 @login_required
 def logout():
     logout_user()
-    session.pop('usuario_logado', None)    
+    session.pop('usuario_logado', None) 
+    session.pop('id_usuario_logado', None)     
+    session.pop('cpf_usuario_logado', None)   
+    session.pop('user_type_usuario_logado', None) 
     
     flash('Logout bem-sucedido!', 'success')
     return redirect(url_for('indexuser'))
