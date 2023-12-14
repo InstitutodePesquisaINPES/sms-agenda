@@ -1,7 +1,14 @@
+from flask import Request
 from app.models.model_user import *
 from werkzeug.utils import secure_filename #import de mexer com arquivos
 import os
 from run import app
+
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+
+from configGdrive import *
 
 def paraMinutos(hora):
     emMinutos = hora.hour * 60 + hora.minute
@@ -133,7 +140,3 @@ def upar_documentos(documentos, nome_da_pasta):
 
 
     return lista_documentos
-
-    
-
-

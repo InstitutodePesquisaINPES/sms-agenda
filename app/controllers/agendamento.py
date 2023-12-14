@@ -103,9 +103,6 @@ def horas_disponiveis():
         return jsonify({'error': str(e)}), 400
     
 
-    #EM DESENVOLVIMENTO GDRIVE E BD
-
-
 @app.route('/autenticaragendamento', methods=['POST'])
 def autenticaragendamento():
     documentos = request.files.getlist('documentos_upados[]')
@@ -149,11 +146,3 @@ def autenticaragendamentoAntigo():
         return render_template('errorPage.html', mensagem_erro=mensagem_erro)
 
     return render_template('outra_pagina.html')
-
-
-
-
-
-
-
- 
