@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(dias_list => {
             // Agora 'dias_list' contém os dados dos agendamentos por dia
-            console.log(dias_list);
+            
 
             diasDesativados = dias_list
 
-            console.log(diasDesativados)
+            
 
             
         })
@@ -25,7 +25,7 @@ function obterHorariosDisponiveis() {
 
     var csrfToken = $('input[name=csrf_token]').val();
 
-    console.log(dataSelecionada)
+    
 
     // Faz uma requisição AJAX para obter os horários disponíveis, incluindo o token CSRF
     $.ajax({
@@ -38,7 +38,7 @@ function obterHorariosDisponiveis() {
         },
         success: function(data) {
             // Renderiza os horários disponíveis no frontend
-            console.log(data.horarios_disponiveis)
+            
             renderizarHorarios(data.horarios_disponiveis);
         },
         error: function(error) {
@@ -154,3 +154,49 @@ function formatarHora(horaString) {
   
     return horaFormatada;
 }
+
+$(document).ready(function () {
+    // Evento de clique do botão "SALVAR"
+    $("#btnSalvarAgenda").click(function () {
+        // Verifique se a data, hora, pelo menos um documento e ambos os checkboxes estão marcados
+        if (validarAgendamento()) {
+            // Abra o modal programaticamente
+            $("#meuModal").modal("show");
+        } else {
+
+            // verifica se o erro é os checkbox
+            let checkbox1 = $("input[name='i-confirm']").is(":checked");
+            let checkbox2 = $("input[name='li']").is(":checked");
+            if (!checkbox1 || !checkbox2) {
+                alert("Por favor, confirme se tem consentimento do agendamento e dos documentos necessários e marque as opções abaixo antes de continuar.")         
+            } else {
+                // Caso contrário, exiba uma mensagem de erro ou tome outra ação necessária
+                alert("Por favor, preencha todos os campos necessários.");
+            }
+            
+        }
+    });
+
+    function validarAgendamento() {
+        let dataSelecionada = $("#datePicker").val();
+        if(dataSelecionada != ""){
+            
+            let radioSelecionado = $("input[name='hora_ipt']").is(":checked");
+            if(radioSelecionado){
+                
+                let documentosEnviados = $("#updoc").prop("files");
+                if(documentosEnviados.length > 0){
+                    
+                    let checkbox1 = $("input[name='i-confirm']").is(":checked");
+                    let checkbox2 = $("input[name='li']").is(":checked");
+                    if (checkbox1 && checkbox2) {
+                        
+                        return true
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+});
