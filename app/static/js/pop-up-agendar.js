@@ -112,15 +112,45 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function dadosParaModal() {
-    // Supondo que você tenha lógica para obter os valores selecionados do datePicker e dos radio buttons
+    
     var diaSelecionado = document.getElementById('datePicker').value;
-    // var horaSelecionada = document.querySelector('input[name="hora"]:checked').value;
+    var horaSelecionada = document.querySelector('input[name="hora_ipt"]:checked').value;
 
-    // Atualize os parágrafos no modal com os valores selecionados
-    document.getElementById('diaAgendado').textContent = diaSelecionado;
-    // document.getElementById('horaAgendada').textContent = horaSelecionada;
+    var dataBrasileira = converte_data_americana(diaSelecionado);
+    var horaFormatada = formatarHora(horaSelecionada);
+
+    document.getElementById('diaAgendado').textContent = dataBrasileira;
+    document.getElementById('horaAgendada').textContent = horaFormatada;
 }
 
 document.getElementById('btnSalvarAgenda').addEventListener('click', function () {
     dadosParaModal();
 });
+
+function converte_data_americana(data){
+
+    // Dividir a data em pedaços
+    var partes = data.split('-');
+    var ano = partes[0];
+    var mes = partes[1];
+    var dia = partes[2];
+
+    // Formata a data
+    var diaFormatado = dia.padStart(2, '0');
+    var mesFormatado = (mes).toString().padStart(2, '0');
+    var anoFormatado = ano;
+
+    var dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+
+    return dataFormatada
+}
+
+function formatarHora(horaString) {
+    // Dividir a string em horas e minutos
+    const [horas, minutos] = horaString.split(':');
+  
+    // Formatar a string no novo formato
+    const horaFormatada = `${horas}h${minutos}min`;
+  
+    return horaFormatada;
+}
