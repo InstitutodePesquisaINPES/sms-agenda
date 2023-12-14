@@ -51,20 +51,29 @@ function renderizarHorarios(horarios) {
     var divHorarios = document.getElementById('divHorarios');
     divHorarios.innerHTML = '';  // Limpa a div antes de renderizar os novos horários
 
+    var titulo = document.createElement('h2');
+    titulo.textContent = 'Escolha seu horário';
+    titulo.className = 'hora-title subtitle-formAgendamento'
+    divHorarios.appendChild(titulo);
+
     // Renderiza os horários disponíveis como radio buttons
     horarios.forEach(function(hora) {
-        var label = document.createElement('label');
-        label.textContent = hora;
+        var divContainer = document.createElement('div-withHoras');
+        divContainer.className = 'form-check form-check-inline';
 
         var inputRadio = document.createElement('input');
         inputRadio.type = 'radio';
         inputRadio.name = 'hora_ipt';
-        inputRadio.className = 'input-hora';
+        inputRadio.className = 'input-hora form-check-input';
         inputRadio.value = hora;
 
-        divHorarios.appendChild(label);
-        divHorarios.appendChild(inputRadio);
-        divHorarios.appendChild(document.createElement('br'));
+        var label = document.createElement('label');
+        label.className = 'form-check-label'
+        label.textContent = hora;
+
+        divContainer.appendChild(inputRadio);
+        divContainer.appendChild(label);
+        divHorarios.appendChild(divContainer);
     });
 }
 
@@ -102,3 +111,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function dadosParaModal() {
+    // Supondo que você tenha lógica para obter os valores selecionados do datePicker e dos radio buttons
+    var diaSelecionado = document.getElementById('datePicker').value;
+    // var horaSelecionada = document.querySelector('input[name="hora"]:checked').value;
+
+    // Atualize os parágrafos no modal com os valores selecionados
+    document.getElementById('diaAgendado').textContent = diaSelecionado;
+    // document.getElementById('horaAgendada').textContent = horaSelecionada;
+}
+
+document.getElementById('btnSalvarAgenda').addEventListener('click', function () {
+    dadosParaModal();
+});

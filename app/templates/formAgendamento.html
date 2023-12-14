@@ -1,28 +1,26 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <div>
+    <div class="div-form container-sm border">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <form action="">
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <div class="title-forms">
-                <h1> Faça seu agendamento </h1>
-                <h3> {{ info_servico.nome }} </h3>
+                <h2 class="display-6 title-formAgendamento"> FAÇA SEU AGENDAMENTO DE {{ info_servico.nome }} </h2>
             </div>
             
-            <div class="data">
+            <div class="mb-3 mt-3">
                 
-                <h2 class="popup-title">ESCOLHA A DATA</h2>
+                <h2 class="subtitle-formAgendamento"> Escolha a data </h2>
                 <div class="div-calendar">
-                    <input type="text" id="datePicker" class="flatpickr-input" onchange="obterHorariosDisponiveis()"> 
+                    <input type="text" id="datePicker" class="flatpickr-input form-control" onchange="obterHorariosDisponiveis()"> 
                 </div>
                 
             </div>
 
-            <div class="hora">
-                <h2 class="popup-title">ESCOLHA O HORÁRIO</h2>
+            <div class="mb-3">
                 <div> 
                     <div class="div-hora" id="divHorarios">
                     
@@ -31,23 +29,27 @@
             </div>
 
             <div class="documents">
-                <h2 class="popup-title"> ENVIE OS SEUS DOCUMENTOS</h2>
+                <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
                 <div>
-                    <label for="updoc"> envie o seu documento </label>
-                    <input type="file" name="updoc" id="">
+                    <input class="updoc" type="file" name="updoc[]" id="updoc" multiple>
                 </div>
             </div>
-            <div class="checkbox"> 
-                <h2 class="popup-title"> CONFIRMAÇÃO</h2>
-                <div>
-                    <label for="li"> Li e confirmo que enviei os documentos necessários na etapa anterior.</label>
-                    <input type="checkbox" name="li" id="">
-                    <br>
-
+            <div class="mb-3 form-check"> 
+                <div class="checkbox-div">
+                    <div>
+                        <input type="checkbox" class="form-check-input form-control" name="i-confirm" id="">
+                        <label for="i-confirm" class="form-check-label"> Eu confirmo que desejo agendar e estou ciente de que devo comparecer. </label>
+                        <br>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form-check-input form-control" name="li" id="">
+                        <label for="li" class="form-check-label"> Li e confirmo que enviei os documentos necessários na etapa anterior. </label>
+                        <br>
+                    </div>
                 </div>
             </div>
             <div class="enviar">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meuModal">
+                <button type="button" id="btnSalvarAgenda" class="btn btn-primary" data-toggle="modal" data-target="#meuModal">
                     SALVAR
                 </button>
             </div>
@@ -64,10 +66,10 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                    <p> NOME DO SERVIÇO </p>
+                    <p> {{info_servico.nome}} </p>
                     <P> LOCAL DO SERVIÇO: FACILITA</P>
-                    <p> DATA AGENDADA </p>
-                    <p> HORA AGENDADA </p>
+                    <p> DATA AGENDADO: <span id="diaAgendado"></span> </p>
+                    <p> HORA AGENDADA: <span id="horaAgendada"></span> </p>
                     <p> DOCUMENTOS ENVIADOS: </p>
                     <p> NOME DOS DOCUMENTOS ENVIADOS</p>
                     </div>
