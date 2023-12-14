@@ -1,4 +1,4 @@
-import logging
+import os
 from run import app
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -13,7 +13,7 @@ from complementary.functions.functionsAgendamentos import *
 
 from datetime import datetime, timedelta
 
-logging.basicConfig(level=logging.DEBUG)
+from werkzeug.utils import secure_filename #import de mexer com arquivos
 
 servicos = {
     1:{'id': 1, 'categoria': 'FARMÁCIA', 'nome': 'ATENDIMENTO FARMACÊUTICO', 
@@ -101,10 +101,29 @@ def horas_disponiveis():
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
 
-@app.route('/autenticaragendamento', methods=['GET', 'POST'])
-@login_required
+    #EM DESENVOLVIMENTO GDRIVE E BD
+
+
+@app.route('/autenticaragendamento', methods=['POST'])
 def autenticaragendamento():
+    documentos = request.files.getlist('documentos_upados[]')
+
+    cpf_usuario = session['cpf_usuario_logado']
+    
+    lista_documentos = upar_documentos(documentos, cpf_usuario)
+    
+
+    return redirect(url_for('allservices'))
+
+
+
+
+
+@app.route('/autenticaragendamentoantigo', methods=['GET', 'POST'])
+@login_required
+def autenticaragendamentoAntigo():
     try:
         if request.method == 'POST':
             data_atual = datetime.now().date().strftime('%Y-%m-%d')

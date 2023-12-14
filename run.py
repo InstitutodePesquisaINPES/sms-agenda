@@ -19,7 +19,12 @@ app.config.from_pyfile('config.py')
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
 
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Verificar se a pasta de uploads existe, se não, criar
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 from app.controllers.login import *      
 

@@ -3,7 +3,7 @@
 {% block main %}
     <div class="div-form container-sm border">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <form action="">
+        <form id="formAgendamento" action="/autenticaragendamento" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
@@ -31,7 +31,7 @@
             <div class="documents">
                 <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
                 <div>
-                    <input class="updoc" type="file" name="updoc[]" id="updoc" multiple>
+                    <input class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
                 </div>
             </div>
             <div class="mb-3 form-check"> 
@@ -52,6 +52,9 @@
                 <button type="button" id="btnSalvarAgenda" class="btn btn-primary">
                     SALVAR
                 </button>
+                <!-- <button type="submit" class="btn btn-primary"> 
+                    TESTE
+                </button> -->
             </div>
 
         
@@ -75,7 +78,7 @@
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">CORRIGIR</button>
-                    <button type="button" class="btn btn-success">CONFIRMAR AGENDAMENTO</button>
+                    <button type="submit" class="btn btn-success">CONFIRMAR AGENDAMENTO</button>
                     </div>
                 </div>
                 </div>

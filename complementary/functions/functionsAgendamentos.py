@@ -1,4 +1,7 @@
 from app.models.model_user import *
+from werkzeug.utils import secure_filename #import de mexer com arquivos
+import os
+from run import app
 
 def paraMinutos(hora):
     emMinutos = hora.hour * 60 + hora.minute
@@ -98,5 +101,39 @@ def listaHorarios():
             lista_horarios.append(tempo_formatado)
 
     return lista_horarios
+
+
+def upar_documentos(documentos, nome_da_pasta):
+    lista_documentos = []
+
+    # Certifique-se de que o nome da pasta é seguro
+    nome_da_pasta = secure_filename(nome_da_pasta)
+
+    # Crie o caminho completo do diretório de upload
+    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], nome_da_pasta)
+
+    if not os.path.exists(upload_path):
+        os.makedirs(upload_path)
+
+    for documento in documentos:
+        
+        # Verificar se é um arquivo seguro
+        if documento.filename != '':
+            
+            # Gerar um nome de arquivo seguro usando secure_filename
+            filename = secure_filename(documento.filename)
+
+            # Salvar o arquivo na pasta de uploads
+            destino = os.path.join(upload_path, filename)
+
+            documento.save(destino)
+
+            # Adicionar o caminho do arquivo à lista
+            lista_documentos.append(destino)
+
+
+    return lista_documentos
+
+    
 
 
