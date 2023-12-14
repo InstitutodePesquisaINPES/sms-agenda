@@ -81,15 +81,6 @@ def agendamentos_por_dia():
 
     return jsonify(dias_list)
 
-def horarios_agendados(data_recebida):
-        agendamentos = Agendamento.query.filter_by(data_agendada=data_recebida).all()
-        horarios_ocupados = [agendamento.horario for agendamento in agendamentos]
-
-        return horarios_ocupados
-
-def converter_para_time(horario_str):
-    return datetime.strptime(horario_str, '%H:%M').time()
-
 @app.route('/api/horarios_disponiveis', methods=['GET', 'POST'])
 def horas_disponiveis():
     try:
