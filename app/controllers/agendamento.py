@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import func
 from datetime import datetime
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError 
 
 from app.models.model_user import *
 from complementary.flask_wtf.flaskform_login import *
@@ -104,31 +104,22 @@ def horas_disponiveis():
     
 
 @app.route('/autenticaragendamento', methods=['POST'])
+@login_required
 def autenticaragendamento():
     documentos = request.files.getlist('documentos_upados[]')
 
     cpf_usuario = session['cpf_usuario_logado']
     
     lista_documentos = upar_documentos(documentos, cpf_usuario)
-    
 
-    return redirect(url_for('allservices'))
-
-
-
-
-
-@app.route('/autenticaragendamentoantigo', methods=['GET', 'POST'])
-@login_required
-def autenticaragendamentoAntigo():
     try:
         if request.method == 'POST':
             data_atual = datetime.now().date().strftime('%Y-%m-%d')
             data_agendamento = data_atual
-            id_usuario = request.form['id_usuario']
-            nome_cliente = request.form['nome_cliente']
+            id_usuario = session['id_usuario_logado']
+            nome_cliente = session['usuario_logado']
             data_agendada = request.form['data_agendada']
-            horario_agendado = request.form['horario_agendado']
+            horario_agendado = request.form['hora_ipt']
 
             novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento)
 
