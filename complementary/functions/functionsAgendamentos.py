@@ -99,7 +99,4 @@ def listaHorarios():
 
     return lista_horarios
 
-def horarios_agendados(data):
-    horarios_agendados = Agendamento.query.filter_by(data_agendada=data).all()
-    return horarios_agendados
 

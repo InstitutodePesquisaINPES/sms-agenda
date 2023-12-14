@@ -30,7 +30,7 @@ body{
 .navbarToogle{
     transition: all 0.4s ease-in-out;
     position: fixed;
-    background: #5272ffa8 !important;
+    background: #5272ffd0 !important;
     border-radius: 0px 0px 20px 20px;
     z-index: 1000;
     border: none !important;
@@ -140,8 +140,6 @@ body{
     margin-left: 20px;
 }
 
-
-
 .buttons-service > button, a > button{
     background-color: #15457c;
     color: #A6C546;
@@ -160,20 +158,28 @@ body{
 }
 
 .rodape{
-    background: linear-gradient(135deg,#5271ff 0%, #24a3b1 100% );
+    background: #f1f1f1;
+    color: #121212;
+    border-top: 2px solid #c9c9c9;
     height: 50px;
     padding: 40px 0px;
     border-radius: 10px 10px 0px 0px;
 }
 
 .rodape-text{
-    color: #fff;
+    color: #7e7e7e;
+    font-weight: 500;
     position: absolute;
     left: 50%;
     margin-top: -20px;
     transform: translateX(-50%);
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
+}
+.rodape-text:hover {
+    text-decoration: none;
+    color: #7e7e7e;
+
 }
 
 .box {
@@ -194,6 +200,14 @@ body{
     font-size: 1.8rem;
 }
 
+/* ------- Modal ------ */ 
+
+.modal-content {
+    top: 50% !important;
+}
+
+/* ------ Modal End ------ */
+
 
 ::-webkit-scrollbar {
     width: 8px; /* Largura da barra de rolagem */
@@ -201,7 +215,7 @@ body{
   
   /* Estilo para o polegar (parte que você move) */
 ::-webkit-scrollbar-thumb {
-    background-color: #15457c; /* Cor do polegar */
+    background: linear-gradient(135deg, #5271ff  0%,#24a3b1 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     border-radius: 6px; /* Borda arredondada do polegar */
   }
   

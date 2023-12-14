@@ -1,0 +1,53 @@
+.div-form{
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.title-formAgendamento{
+    margin: 20px;
+    margin-bottom: 50px;
+}
+
+.subtitle-formAgendamento{
+    text-align: center;
+    margin: 30px;
+}
+
+.div-calendar{
+    text-align: center;
+}
+
+.div-calendar .flatpickr-input {
+    display: none;
+}
+
+.div-calendar{
+    width: 300px; /* Ajuste o valor conforme necessário */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+#datePicker{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.documents{
+    align-items: center;
+    text-align: center;
+}
+
+.checkbox-div{
+    margin-top: 100px;
+}
+
+.form-check-label {
+    margin-left: 10px;
+} 
+
+.form-check-input {
+    margin-right: 5px;
+}
+
+.enviar{
+    text-align: center;
+}
