@@ -27,6 +27,17 @@ body{
     border-bottom: 1px solid #ffffff79;
 }
 
+.nav-logo-content {
+    display: flex;
+    align-items: center;
+    transform: translateX(-30px);
+}
+
+.nav-logo-content h3{
+    color: #ffffff70;
+    font-weight: 100;
+}
+
 .navbarToogle{
     transition: all 0.4s ease-in-out;
     position: fixed;
@@ -37,9 +48,6 @@ body{
     filter: drop-shadow(0px 0px 5px #00000040);
 }
 
-.navbarToogle .buttons a button {
-    
-}
 
 .logo-pmvc{
     max-width: 250px;
@@ -48,6 +56,9 @@ body{
     filter: drop-shadow(1px 1px 10px #fff);
 }
 
+.logo-facilita-saude {
+    transform: translate(10px, -2px) scale(1.15);
+}
 
 .button-login{
     background-color: rgba(252,214,117,1);
