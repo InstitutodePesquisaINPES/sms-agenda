@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sms-agenda-407918",
+  "private_key_id": "9625fe9ffc72cc3aea8a7ab2bbd09b2b0efff04d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCs1Suf0PNWekl2\nRE7GJO9PBvYwxNHpYeuPDbK2Gfhb15COdCLwd3IFCoaSXuT3WsqeOm++UePWl51r\nI2pvTFaDmZqMoQtWmwq2r+/zUN4fSOaktglAnwNqLdZ7XiqbMMsxICGR8pVrZ67r\nxuFygvygssuT1pelcU6WBccZn09Ob9tg1kLEXyKPWZ6udNaI/Mr9bw070naSOMrd\n7oy/unot4QZwSOkelG/f44M2NCunpxbYufSq5ozg3UfINcQyzqR3L68QsKFCXXq9\n1Sp2kUDJcOmEDwmU9nT/KgnAcsI5hQTEFLbSM12AReUY0eBXx7mq7422KYdTOZcL\nQOacd797AgMBAAECggEADtmWEPpEHjcNntLJre64fSLM/m2614GpWrZDl6/tjf6c\nlhDWe7DXpCU+YM80fyhW5neA6Gpi2CpYxT7aw0tc15vYEqM3tS5HImFFjbNyEmAS\nKS7W5q2C/pmHpzv1DzaHDuaC2+Zq/jp/ZhTFhDBLAoe6RC6ZAwcUSIGglMwCZWvE\nvE2v1BZ+tC0ODwTnDN3PkLh9uN3QrCt0v2lWpfPPj9VkDlaCXg8j+2WBao42fWKQ\niT0AdJZOPTMY47SZeVokj+qHYZMXHsDoLl/C8JbmRu/zLGD5Pa53AjFSrt2cJ1XU\nomeA0mcE3ThbR87axNeT1K31jnWFsJn8dk2WcCtfOQKBgQDjnvuymss4ZswTqp4P\nMdcvCoggSgALGPYL+nD6CcCjA4MT/tBXZuYKSPdTPzWqas2J6bOXbl/1cddjxX7A\nDVKOQm8nUt/yRtbe9FFCcYtS1kcNLG8rzpPheTw2+/Bmpd3szm3S+XuC1zYiO/uk\nYYmWL9gbAcfJ0rv27bSEglZ8JwKBgQDCYX/QUgZagvGM1IOf2Aos808Dy8pwean+\nuWNiR6mqoNg/GwVVufoLdU22k6zaFwW+Z+5UEljo1ZJGcjZk8EPxvguHsPkovQ8X\nHU4zYXS6W3HHDQN+ADoVSf6DhIetDFtPDLH4/a+/6uGjqvVN7vP1XruDDVk7Yd0Y\nE/+7z5RyjQKBgCJhgi0hGm8Df/G8hLFQ2urdEWCnLMiAVbHLe0MZNAKrZiIgDAIX\npcmJ6emmE4oRJcieByVpY48kSd9lFlcV7BFW0YlECFWFA7Gbf6akleHGQecofgZE\n5qtY75JyjYZDqXi6WXZTfqdtsFyNaN4UaX7I7UBvDWlbrk6G6wxUz5FjAoGAUIwA\nX72tnlIGcBob1N+8D7Ze9q6623K+66u8sBwMBYWTNksnIcfoAlmAc3isNs81dRoy\nGypjJ1BgxcpMGfWp4gGjW34NMUFugGCHaCkpKpP8CMSuvsavSuUXjz4azq2BJLeZ\nBBlze26EQ8Ly1XGALBwuTXb5k+7QpEqdPSEeXX0CgYBv9znK5rYkV4PbeueivL5j\nIGq+doRGf0jJNUwSkVBHFmfX18fiDLzSNzsc/hT3beHqQHOisBFVVLAhtWz9q+Ho\n8Ftb8DH1rIJsij9Q3Db12Lczpndsasd2Rlf4AeHwBV9ITFf1i3mijX+d+Tc07FJf\nTWbHuyLe3TXTrcgNXeAH9A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "sms-agendamento@sms-agenda-407918.iam.gserviceaccount.com",
+  "client_id": "102615776408852619034",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sms-agendamento%40sms-agenda-407918.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

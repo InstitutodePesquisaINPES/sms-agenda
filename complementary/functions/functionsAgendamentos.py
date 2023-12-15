@@ -4,10 +4,6 @@ from werkzeug.utils import secure_filename #import de mexer com arquivos
 import os
 from run import app
 
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-
 def paraMinutos(hora):
     emMinutos = hora.hour * 60 + hora.minute
     return emMinutos

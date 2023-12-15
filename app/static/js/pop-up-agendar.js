@@ -38,10 +38,10 @@ function obterHorariosDisponiveis() {
         },
         success: function(data) {
             // Renderiza os horários disponíveis no frontend
-            
             renderizarHorarios(data.horarios_disponiveis);
         },
         error: function(error) {
+        
             console.error('Erro ao obter horários disponíveis:', error);
         }
     });

@@ -7,6 +7,7 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError 
 
 from app.models.model_user import *
+from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
 from complementary.functions.functionsAgendamentos import *
@@ -87,10 +88,10 @@ def horas_disponiveis():
         data_selecionada_str = request.json.get('data_selecionada')
         data_selecionada = datetime.strptime(data_selecionada_str, '%Y-%m-%d').date()
         print(data_selecionada_str, data_selecionada)
-        
+         
 
         # Consulta todos os horários já agendados para a data fornecida
-        horarios_agendados = [agendamento.horario.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada_str).all()]
+        horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada_str).all()]
 
         # Sua lista de horários disponíveis
         horas_disp = listaHorarios()  # Substitua com seus próprios horários
@@ -112,6 +113,19 @@ def autenticaragendamento():
     
     lista_documentos = upar_documentos(documentos, cpf_usuario)
 
+    for documento in documentos:
+        print(documento)
+
+        # Gere um nome de arquivo único ou utilize algum identificador do seu banco de dados
+        nome_arquivo = cpf_usuario + '.jpg'
+
+        # Posicione o cursor no início do arquivo
+        documento.seek(0)
+
+        # Fazer upload para o Google Cloud Storage
+        blob = bucket.blob(nome_arquivo)
+        blob.upload_from_file(documento)
+    
     try:
         if request.method == 'POST':
             data_atual = datetime.now().date().strftime('%Y-%m-%d')
