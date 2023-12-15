@@ -26,6 +26,7 @@ class Agendamento(db.Model):
     horario_agendado = db.Column(db.Time, nullable=False)
     nome_cliente = db.Column(db.String(255), nullable=False)
     data_agendamento = db.Column(db.Date, nullable=False)
+    senha = db.Column(db.String(10), nullable=False)
     usuario = db.relationship('Usuario', backref='agendamentos')
     
 class Horarios_disponiveis(db.Model):
@@ -46,3 +47,10 @@ class Servico(db.Model):
     sobre = db.Column(db.String(255), nullable=False)
     documentos_necessarios = db.Column(db.String(255), nullable=False)
     
+class Documentos(db.Model):
+    __tablename__ = "documentos"
+    id = db.Column(db.Integer, primary_key=True)
+    id_agendamento = db.Column(db.Integer, db.ForeignKey('agendamentos.id'))
+    caminho1 = db.Column(db.String(255), nullable=True)
+    caminho2 = db.Column(db.String(255), nullable=True)
+    caminho3 = db.Column(db.String(255), nullable=True)

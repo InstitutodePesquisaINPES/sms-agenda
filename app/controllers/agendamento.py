@@ -1,4 +1,5 @@
 import os
+import uuid
 from run import app
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -113,19 +114,6 @@ def autenticaragendamento():
     
     lista_documentos = upar_documentos(documentos, cpf_usuario)
 
-    for documento in documentos:
-        print(documento)
-
-        # Gere um nome de arquivo único ou utilize algum identificador do seu banco de dados
-        nome_arquivo = cpf_usuario + '.jpg'
-
-        # Posicione o cursor no início do arquivo
-        documento.seek(0)
-
-        # Fazer upload para o Google Cloud Storage
-        blob = bucket.blob(nome_arquivo)
-        blob.upload_from_file(documento)
-    
     try:
         if request.method == 'POST':
             data_atual = datetime.now().date().strftime('%Y-%m-%d')
@@ -135,10 +123,41 @@ def autenticaragendamento():
             data_agendada = request.form['data_agendada']
             horario_agendado = request.form['hora_ipt']
 
-            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento)
+            nome_do_servico = request.form['nome_do_servico']
+
+            senha = gerarSenha(nome_do_servico, horario_agendado)
+            print(senha)
+            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha)
 
             db.session.add(novo_agendamento)
             db.session.commit()
+
+            lista_documentos_uuid = upa_pro_GCloud(documentos, cpf_usuario)
+
+            id_agendamento = (
+                db.session.query(Agendamento.id).filter(Agendamento.data_agendada == data_agendada).filter(Agendamento.horario_agendado == horario_agendado).filter(Agendamento.id_usuario == id_usuario).first()
+            )
+
+            print(id_agendamento)
+            id_formatado = id_agendamento[0]
+
+            caminho1 = ""
+            caminho2 = ""
+            caminho3 = ""
+
+            for indice, item in enumerate(lista_documentos_uuid):
+                if item and indice == 0:
+                   caminho1 = item
+                if item and indice == 1:
+                   caminho2 = item
+                if item and indice == 2:
+                   caminho3 = item
+
+            novo_caminho = Documentos(id_agendamento=id_formatado, caminho1=caminho1, caminho2=caminho2, caminho3=caminho3)
+
+            db.session.add(novo_caminho)
+            db.session.commit()
+
 
             return redirect(url_for('meusagendamentos'))
 

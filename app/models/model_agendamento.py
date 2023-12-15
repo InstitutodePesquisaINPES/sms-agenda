@@ -11,6 +11,7 @@ class Agendamento(db.Model):
     horario_agendado = db.Column(db.Time, nullable=False)
     nome_cliente = db.Column(db.String(255), nullable=False)
     data_agendamento = db.Column(db.Date, nullable=False)
+    senha = db.Column(db.String(10), nullable=False)
 
 from app.models.model_user import Usuario
 Agendamento.usuario = db.relationship('Usuario', backref='agendamentos')
