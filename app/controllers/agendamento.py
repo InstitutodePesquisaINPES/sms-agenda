@@ -5,6 +5,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from sqlalchemy import func
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import desc
 
 from app.models.model_user import *
 from complementary.flask_wtf.flaskform_login import *
@@ -13,6 +14,51 @@ from complementary.functions.functionsAgendamentos import *
 
 from datetime import datetime, timedelta
 
+def filtro(dado):
+    pesquisarBarra = request.args.get('pesquisarBarra')
+    filtro = request.args.get('filtro')
+    agendamentos = []  # Definir uma lista vazia como valor padrão
+    
+    if pesquisarBarra:
+        if filtro == 'nomeFiltro':
+            agendamentos = Agendamento.query.filter(Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).all()
+        elif filtro == 'dataFiltro':
+            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{pesquisarBarra}%")).all()
+        elif filtro == 'horarioFiltro':
+            agendamentos = Agendamento.query.filter(Agendamento.horario_agendado.ilike(f"%{pesquisarBarra}%")).all()
+    else:
+        agendamentos = dado.items
+
+    return agendamentos
+
+@app.route('/meusagendamentos') 
+def meusagendamentos():
+    id_usuario_logado = session.get('id_usuario_logado')
+    page = int(request.args.get('page', 1))
+    registros_por_pagina = 10   
+    
+    agendamentos = Agendamento.query.filter(Agendamento.id_usuario==id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+    agendamentos = filtro(agendamentos)
+
+
+    return render_template('agendamentos.html', agendamentos=agendamentos)
+
+@app.route('/editar/<int:id_usuario>', methods=['GET', 'POST'])
+def editar(id_usuario):
+        novo_agendamento = Agendamento.query.get(id_usuario)
+
+        print('editando...')
+        #pegando os inputs para substituir no html
+        novo_agendamento.nome_cliente = request.form.get('nome_cliente')
+        novo_agendamento.data_agendada =  request.form.get('data_agendada')
+        novo_agendamento.horario_agendado = request.form.get('horario_agendado')
+   
+        db.session.commit()
+
+
+
+        
+# Agendamento #
 logging.basicConfig(level=logging.DEBUG)
 
 servicos = {
@@ -29,21 +75,13 @@ servicos = {
        'documentos': 'Documentos do serviço C'},
 
     4:{'id': 4,'categoria': 'TRATAMENTOS', 'nome': 'TRATAMENTO FORA DO DOMICÍLIO - TFD', 
-       'descricao': 'Cadastro de pacientes que necessitam de atendimentos/procedimentos via TFD (tratamento fora do domicílio), quando não estão disponíveis na rede de saúde do município, com laudo já emitido previamente por profissional médico da rede assistencial pública de Vitória da Conquista.',
+       'descricao': 'Cadastro de agendamentos que necessitam de atendimentos/procedimentos via TFD (tratamento fora do domicílio), quando não estão disponíveis na rede de saúde do município, com laudo já emitido previamente por profissional médico da rede assistencial pública de Vitória da Conquista.',
        'documentos': 'Documentos do serviço D'},
 
     5:{'id': 5,'categoria': 'SUS', 'nome': 'CARTÃO DO SUS', 
        'descricao': 'Emissão ou atualização do Cartão Nacional de Saúde - SUS.', 
        'documentos': 'Documentos do serviço E'}
 }
-
-@app.route('/meusagendamentos') 
-def meusagendamentos():
-    id_usuario_logado = session.get('id_usuario_logado')
-    agendamentos = Agendamento.query.filter_by(id_usuario=id_usuario_logado).all()
-    return render_template('agendamentos.html', agendamentos=agendamentos)
-
-
 @app.route('/servico/<int:servico_id>')
 def userservicos(servico_id):
     info_servico = servicos.get(servico_id)
