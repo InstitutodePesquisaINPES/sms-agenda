@@ -5,7 +5,7 @@
     <div class="container pt-4  col-md-10">
         <div class="pb-2 mb-2 border-bottom">
             <div class="d-flex align-items-center text-dark text-decoration-none ">
-                <a style="text-decoration: none;" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
+                <a style="text-decoration: none;" href="{{url_for('meusagendamentos')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
                 viewBox="0 0 16 16">
                 <path
                     d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
@@ -228,7 +228,7 @@
             <div style="justify-content: space-between;" class=" d-flex">
 
             <div style="display: flex;"> 
-                <a href="" >
+                <a href="{{url_for('/allservices')}}" >
                     <button style="margin-right: 20px; background-color: #22487B; border: none;" type="button" class="btn btn-primary btn-gerenc-new">
                         <i class="bi bi-file-earmark-plus"></i>
                         Agendar novo serviço</button>
