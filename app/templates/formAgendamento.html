@@ -3,9 +3,10 @@
 {% block main %}
     <div class="div-form container-sm border">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <form action="">
+        <form id="formAgendamento" action="/autenticaragendamento" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="nome_do_servico" value="{{ info_servico.nome }}"> 
 
             <div class="title-forms">
                 <h2 class="display-6 title-formAgendamento"> FAÇA SEU AGENDAMENTO DE {{ info_servico.nome }} </h2>
@@ -15,7 +16,7 @@
                 
                 <h2 class="subtitle-formAgendamento"> Escolha a data </h2>
                 <div class="div-calendar">
-                    <input type="text" id="datePicker" class="flatpickr-input form-control" onchange="obterHorariosDisponiveis()"> 
+                    <input type="text" id="datePicker" name="data_agendada" class="flatpickr-input form-control" onchange="obterHorariosDisponiveis()"> 
                 </div>
                 
             </div>
@@ -31,7 +32,7 @@
             <div class="documents">
                 <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
                 <div>
-                    <input class="updoc" type="file" name="updoc[]" id="updoc" multiple>
+                    <input class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
                 </div>
             </div>
             <div class="mb-3 form-check"> 
@@ -49,9 +50,12 @@
                 </div>
             </div>
             <div class="enviar">
-                <button type="button" id="btnSalvarAgenda" class="btn btn-primary" data-toggle="modal" data-target="#meuModal">
+                <button type="button" id="btnSalvarAgenda" class="btn btn-primary">
                     SALVAR
                 </button>
+                <!-- <button type="submit" class="btn btn-primary"> 
+                    TESTE
+                </button> -->
             </div>
 
         
@@ -68,14 +72,14 @@
                     <div class="modal-body">
                     <p> {{info_servico.nome}} </p>
                     <P> LOCAL DO SERVIÇO: FACILITA</P>
-                    <p> DATA AGENDADO: <span id="diaAgendado"></span> </p>
+                    <p> DATA AGENDADA: <span id="diaAgendado"></span> </p> 
                     <p> HORA AGENDADA: <span id="horaAgendada"></span> </p>
                     <p> DOCUMENTOS ENVIADOS: </p>
                     <p> NOME DOS DOCUMENTOS ENVIADOS</p>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">CORRIGIR</button>
-                    <button type="button" class="btn btn-success">CONFIRMAR AGENDAMENTO</button>
+                    <button type="submit" class="btn btn-success">CONFIRMAR AGENDAMENTO</button>
                     </div>
                 </div>
                 </div>

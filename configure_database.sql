@@ -19,12 +19,12 @@ CREATE TABLE `agendamentos` (
   `data_agendada` date NOT NULL, 
   `horario_agendado` time NOT NULL,
   `nome_cliente` varchar(255) NOT NULL,
-  `data_agendamento` date NOT NULL, 
+  `data_agendamento` date NOT NULL,
+  `senha` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_usuario` (`id_usuario`,`data_agendada`,`horario_agendado`),
   CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 
 CREATE TABLE `horarios_disponiveis` (
     `id` int NOT NULL AUTO_INCREMENT,
@@ -44,6 +44,16 @@ CREATE TABLE `servico` (
     `sobre` varchar(255) NOT NULL,
     `documentos_necessarios` varchar(255) NOT NULL,
     PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `documentos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_agendamento` int NOT NULL,
+  `caminho1` varchar(255) DEFAULT NULL,
+  `caminho2` varchar(255) DEFAULT NULL,
+  `caminho3` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_agendamento`) REFERENCES `agendamentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 insert into servico (categoria, nome, sobre, documentos_necessarios) values ("FARMÁCIA", "BUSCAR MEDICAMENTOS", "Agende aqui para buscar os seus medicamentos.", "cpf, rg, receita" );

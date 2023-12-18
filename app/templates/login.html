@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-    <div class="div-main">
-        <div class="div-icons">
-            <a href="/"><img src="../static/assets/images/logo-pmvc-verde.png" class="logo-img" alt="logo-pmvc-verde"></a>
-            <img src="../static/assets/icons/user.png"  alt="" class="icon-user">
+    <div class="container-login">
+        <div class="img-box">
+            <img src="../static/assets/images/Brasão_Vitoria_da_Conquista.png">
         </div>
         <div class="div-login">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -20,24 +19,47 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <h2 class="login-name">LOGIN</h2> 
-            <form method="POST" action="{{url_for('autenticarlogin')}}" class="form-login">
-           
-                {{ form_login.hidden_tag() }}
-                <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
-                
-                {{ form_login.email.label }} {{ form_login.email(id="username", class="input-email", placeholder="digite seu email") }} <br>
+        <div class="content-box">
+            <div class="form-box">
+                <h2 class="login-name">LOGIN</h2> 
+                <form method="POST" action="{{url_for('autenticarlogin')}}" class="form-login">
 
-                {{ form_login.senha.label }} {{ form_login.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
-                {{ form_login.submit(class="button-login") }}  
-  
-            </form>
-            <div class="no-login-div">
-                <a class="no-login" href="{{ url_for('cadastrouser') }}"> NÃO TEM UMA CONTA? CADASTRE-SE <strong>AQUI.</strong></a>
-            </div> 
+                    {{ form_login.hidden_tag() }}
+                    <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
+
+                    <div class="input-box">
+                        <span>E-mail</span>
+                         <!-- {{ form_login.email.label }} -->
+                        {{ form_login.email(id="username", class="input-email", placeholder="Digite seu email") }} <br>
+
+                    </div>
+
+                    <div class="input-box">
+                        <span>Password</span>
+                          <!-- {{ form_login.senha.label }} -->
+                        {{ form_login.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
+                    </div>
+
+                    <div class="remember">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#">Esqueceu a Senha?</a>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="submit" value="Entrar">
+                    </div>
+
+                    <div class="input-box">
+                       <p>Não Tem Uma Conta? <a href="#">Inscrever-se</a></p>
+                    </div>
+                </form>
+                <div class="cookie-policy">
+                    <p>Ao Continuar, você aceita o Contrato do Usuário, a Política de Privacidade e a Política de Cookies.</p>
+                </div>  
+            </div>
         </div>
     </div>
-
-
 </body>
 </html>

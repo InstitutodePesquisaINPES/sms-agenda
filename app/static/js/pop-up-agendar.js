@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(dias_list => {
             // Agora 'dias_list' contém os dados dos agendamentos por dia
-            console.log(dias_list);
+            
 
             diasDesativados = dias_list
 
-            console.log(diasDesativados)
+            
 
             
         })
@@ -25,7 +25,7 @@ function obterHorariosDisponiveis() {
 
     var csrfToken = $('input[name=csrf_token]').val();
 
-    console.log(dataSelecionada)
+    
 
     // Faz uma requisição AJAX para obter os horários disponíveis, incluindo o token CSRF
     $.ajax({
@@ -38,10 +38,10 @@ function obterHorariosDisponiveis() {
         },
         success: function(data) {
             // Renderiza os horários disponíveis no frontend
-            console.log(data.horarios_disponiveis)
             renderizarHorarios(data.horarios_disponiveis);
         },
         error: function(error) {
+        
             console.error('Erro ao obter horários disponíveis:', error);
         }
     });
@@ -112,15 +112,91 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function dadosParaModal() {
-    // Supondo que você tenha lógica para obter os valores selecionados do datePicker e dos radio buttons
+    
     var diaSelecionado = document.getElementById('datePicker').value;
-    // var horaSelecionada = document.querySelector('input[name="hora"]:checked').value;
+    var horaSelecionada = document.querySelector('input[name="hora_ipt"]:checked').value;
 
-    // Atualize os parágrafos no modal com os valores selecionados
-    document.getElementById('diaAgendado').textContent = diaSelecionado;
-    // document.getElementById('horaAgendada').textContent = horaSelecionada;
+    var dataBrasileira = converte_data_americana(diaSelecionado);
+    var horaFormatada = formatarHora(horaSelecionada);
+
+    document.getElementById('diaAgendado').textContent = dataBrasileira;
+    document.getElementById('horaAgendada').textContent = horaFormatada;
 }
 
 document.getElementById('btnSalvarAgenda').addEventListener('click', function () {
     dadosParaModal();
+});
+
+function converte_data_americana(data){
+
+    // Dividir a data em pedaços
+    var partes = data.split('-');
+    var ano = partes[0];
+    var mes = partes[1];
+    var dia = partes[2];
+
+    // Formata a data
+    var diaFormatado = dia.padStart(2, '0');
+    var mesFormatado = (mes).toString().padStart(2, '0');
+    var anoFormatado = ano;
+
+    var dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+
+    return dataFormatada
+}
+
+function formatarHora(horaString) {
+    // Dividir a string em horas e minutos
+    const [horas, minutos] = horaString.split(':');
+  
+    // Formatar a string no novo formato
+    const horaFormatada = `${horas}h${minutos}min`;
+  
+    return horaFormatada;
+}
+
+$(document).ready(function () {
+    // Evento de clique do botão "SALVAR"
+    $("#btnSalvarAgenda").click(function () {
+        // Verifique se a data, hora, pelo menos um documento e ambos os checkboxes estão marcados
+        if (validarAgendamento()) {
+            // Abra o modal programaticamente
+            $("#meuModal").modal("show");
+        } else {
+
+            // verifica se o erro é os checkbox
+            let checkbox1 = $("input[name='i-confirm']").is(":checked");
+            let checkbox2 = $("input[name='li']").is(":checked");
+            if (!checkbox1 || !checkbox2) {
+                alert("Por favor, confirme se tem consentimento do agendamento e dos documentos necessários e marque as opções abaixo antes de continuar.")         
+            } else {
+                // Caso contrário, exiba uma mensagem de erro ou tome outra ação necessária
+                alert("Por favor, preencha todos os campos necessários.");
+            }
+            
+        }
+    });
+
+    function validarAgendamento() {
+        let dataSelecionada = $("#datePicker").val();
+        if(dataSelecionada != ""){
+            
+            let radioSelecionado = $("input[name='hora_ipt']").is(":checked");
+            if(radioSelecionado){
+                
+                let documentosEnviados = $("#updoc").prop("files");
+                if(documentosEnviados.length > 0){
+                    
+                    let checkbox1 = $("input[name='i-confirm']").is(":checked");
+                    let checkbox2 = $("input[name='li']").is(":checked");
+                    if (checkbox1 && checkbox2) {
+                        
+                        return true
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 });

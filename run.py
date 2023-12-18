@@ -19,7 +19,8 @@ app.config.from_pyfile('config.py')
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
 
-
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 from app.controllers.login import *      
 

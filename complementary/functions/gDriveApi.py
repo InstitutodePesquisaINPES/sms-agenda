@@ -28,3 +28,4 @@ def upload_to_drive(file_path, file_name, folder_id=None):
     ).execute()
 
     print(f'Arquivo {file_name} enviado para o Google Drive com o ID: {media["id"]}')
+

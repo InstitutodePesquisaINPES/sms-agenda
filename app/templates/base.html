@@ -34,8 +34,12 @@
 
 </head>
     <body>
-        <div class="" id="navbar">
-            <a href="{{ url_for('indexuser') }}"><img src="../static/assets/images/Logo Prefeitura.png" alt="" class="logo-pmvc"></a>
+        <div class="animate__animated animate__fadeInDown" id="navbar"style="animation-delay: 1000ms;">
+            <a href="{{ url_for('indexuser') }}" class="nav-logo-content">
+                <img src="../static/assets/images/Logo Prefeitura.png" alt="" class="logo-pmvc">
+                <h3>|</h3>
+                <img src="../static/assets/images/facilita saude logo.png" alt="" class="logo-pmvc logo-facilita-saude">
+            </a>
 
             
             {% if not session.usuario_logado %}
