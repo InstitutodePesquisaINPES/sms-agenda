@@ -1,6 +1,4 @@
 import logging
-import os
-import uuid
 from run import app
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -9,15 +7,15 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import desc
 
-from app.models.model_user import *
+from app.models.model_agendamento import *
 from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
 from complementary.functions.functionsAgendamentos import *
 
 from datetime import datetime, timedelta
-
 from werkzeug.utils import secure_filename #import de mexer com arquivos
+
 def filtro(dado):
     pesquisarBarra = request.args.get('pesquisarBarra')
     filtro = request.args.get('filtro')
@@ -49,17 +47,24 @@ def meusagendamentos():
 
 @app.route('/editar/<int:id_usuario>', methods=['GET', 'POST'])
 def editar(id_usuario):
-        novo_agendamento = Agendamento.query.get(id_usuario)
+    novo_agendamento = Agendamento.query.get(id_usuario)
+    print(f'ID do Usuário: {id_usuario}')
+    print(f'Objeto de Agendamento: {novo_agendamento}')
 
-        print('editando...')
+
+    print('editando...')
+    if novo_agendamento:
+        print('asdasd',request.form.get('data_agendamento'))
         #pegando os inputs para substituir no html
         novo_agendamento.nome_cliente = request.form.get('nome_cliente')
-        novo_agendamento.data_agendada =  request.form.get('data_agendada')
+        novo_agendamento.data_agendada =  request.form.get('data_agendamento')
         novo_agendamento.horario_agendado = request.form.get('horario_agendado')
-   
+       
         db.session.commit()
+    else:
+        print('dsfj')
 
-
+    return redirect(url_for('meusagendamentos'))
 
         
 # Agendamento #
