@@ -21,8 +21,8 @@
             {% endwith %}
         <div class="content-box">
             <div class="form-box">
-                <h2>Entrar</h2>
-                <form>
+                <h2 class="login-name">LOGIN</h2> 
+                <form method="POST" action="{{url_for('autenticarlogin')}}" class="form-login">
 
                     {{ form_login.hidden_tag() }}
                     <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
