@@ -27,6 +27,18 @@ body{
     border-bottom: 1px solid #ffffff79;
 }
 
+.background-main i{
+    z-index: -10;
+    position: absolute;
+    font-size: 20rem;
+    right: 0;
+    margin-top: 200px;
+    color: transparent;
+    background-image: linear-gradient(135deg, #b8c0ef 0%, #5271ff 21%, #24a3b1 48%, #e5e9c1 90%, #bed5e2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
 .nav-logo-content {
     display: flex;
     align-items: center;
@@ -94,37 +106,42 @@ body{
 
 
 .card-service{
-    background-color: #A6C546;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 100px 100px 40px 100px;
     padding: 50px;
     border-radius: 20px;
+    border: 1px solid #ccc;
+     /* Adiciona o efeito de vidro */
+    backdrop-filter: blur(10px); /* Ajuste o valor de acordo com o efeito desejado */
+    border-radius: 10px; /* Adapte o raio da borda conforme necessário */
 }
 
 .cabecalho-card{
-    
     display: flex;
     align-items: center;
-    background-color: #A6C546;
-
 }
 
-.cabecalho-card > img{
-    max-height: 40px;
+.cabecalho-card i{
+    font-size: 2rem;
+    color: #15457c;
 }
 
 .categoria-name{
     margin-left: 10px;
-    font-size: 20px;
+}
+
+.categoria-name p{
+    margin-left: 0px;
+    font-size: 2rem;
+    font-weight: 400;
+    font-weight: 500;
+    color: #15457c;
 }
 
 .service-name{
     margin-top: 30px;
     margin-bottom: 30px;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 1.5rem;
 }
 
 .about-service{
@@ -147,27 +164,44 @@ body{
     margin-bottom: 5px;
 }
 
-.documents-list{
-    margin-left: 20px;
-}
-
-
 
 .buttons-service > button, a > button{
-    background-color: #15457c;
-    color: #A6C546;
-    font-size: 20px;
+    color: #fff;
+    font-size: 0.8rem;
     padding: 10px;
     border-radius: 15px;
     border: none;
     margin-right: 25px;
     cursor: pointer;
+    align-items: center;
 }
 
+.needLoginButton {
+    background: linear-gradient(135deg, #b8c0ef 0%,#5271ff 40%,#24a3b1 100%);
+}
+
+.icon-button-user{
+    font-size: 1.4rem;
+}
+
+
 .buttons-service > button:hover, .needLogin{
-    background-color: #1a5497;
-    font-size: 21px;
+    font-size: 1.2rem;
     cursor: pointer;
+}
+
+.documents-list {
+    list-style: none;
+    display: flex;
+    margin: 25px 0px 0px -30px;
+}
+
+.documents-list li {
+    margin: 0px 10px;
+    padding: 5px 15px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 10px;
 }
 
 .rodape{
