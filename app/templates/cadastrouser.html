@@ -25,8 +25,12 @@
             {% endwith %}
         <div class="content-box">
             <div class="form-box">
-                <h2>Cadastro</h2>
-                <form>
+                <h2 class="login-name">CADASTRAR</h2>
+                {% if session.user_type_usuario_logado == "administrador" %}
+                    <form method="POST" action="{{ url_for('cadastrar', is_administrador='True') }}" class="form-login">
+                {%else%}
+                    <form method="POST" action="{{ url_for('cadastrar', is_administrador='False') }}" class="form-login">
+                {%endif%}
 
                     {{ form_cadastrouser.hidden_tag() }}
                     <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
