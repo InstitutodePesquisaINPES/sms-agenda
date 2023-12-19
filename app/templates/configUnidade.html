@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container pt-4 col-md-10 corpo">
+    <button type="button" class="button-configs" data-toggle="modal" data-target="#configUnidadeModal">
+        CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE
+    </button>
+
+    <button type="button" class="button-configs" data-toggle="modal" data-target="#configAtendimentoModal">
+        CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO
+    </button>
+</div>
+
+<!-- Modal para CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE -->
+<div class="modal fade" id="configUnidadeModal" tabindex="-1" role="dialog" aria-labelledby="configUnidadeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configUnidadeModalLabel">Configurações de Funcionamento da Unidade</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do modal para CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE -->
+                <form action="">
+                    <input type="text" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                    <input type="text" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                    <input type="text" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                    <input type="text" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+
+                    <button type="submit"> SALVAR ALTERAÇÃO DE HORÁRIOS </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
+<div class="modal fade" id="configAtendimentoModal" tabindex="-1" role="dialog" aria-labelledby="configAtendimentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configAtendimentoModalLabel">Configurações de Tempo de Atendimento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
+                <form action="">
+                    <input type="text" placeholder="{{ horarios.tempo_atendimento }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
