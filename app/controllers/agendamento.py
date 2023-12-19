@@ -137,12 +137,12 @@ def horas_disponiveis():
         
         servico_id = dados_json.get('servico')
         # Sua lista de horários disponíveis
-        print(servico_id)
+        
         horas_disp = listaHorarios(servico_id)  # Substitua com seus próprios horários
-        print(horas_disp)
+        
         # Filtra os horários disponíveis removendo aqueles que já foram agendados
         horarios_disponiveis = [hora for hora in horas_disp if hora not in horarios_agendados]
-        print(horarios_disponiveis)
+        
 
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
