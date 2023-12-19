@@ -13,8 +13,12 @@ from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
 from complementary.functions.functionsAgendamentos import *
 
+from complementary.servicos.servicos_data import *
+
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename #import de mexer com arquivos
+
+servicos = servicos_data_function()
 
 def filtro(dado):
     pesquisarBarra = request.args.get('pesquisarBarra')
@@ -66,31 +70,6 @@ def editar(id_usuario):
 
     return redirect(url_for('meusagendamentos'))
 
-        
-# Agendamento #
-logging.basicConfig(level=logging.DEBUG)
-
-servicos = {
-    1:{'id': 1, 'categoria': 'FARMÁCIA', 'nome': 'ATENDIMENTO FARMACÊUTICO', 
-       'descricao': 'Distribuição de medicamentos, orientação farmacêutica e monitoramento de condição glicemica', 
-       'documentos': ['Receita', 'Carteira de Identidade', 'Cartão do SUS', 'CPF']},
-
-    2:{'id': 2,'categoria': 'EXAMES', 'nome': 'MARCAÇÃO DE EXAMES', 
-       'descricao': '(CRPEE) – Regulação/autorização de Tomografias, Ressonâncias, Cintilografias, Biópsias/estudo anatomopatológico, Colonoscopias, Videolaringoscopias, exames pré-operatórios da ortopedia e consultas e/ou procedimentos destinados ao tratamento oncológico, tratamento de cardiopatias graves, tratamento de Insuficiência Renal Crônica e tratamento de doenças imunossupressoras.', 
-       'documentos': 'Documentos do serviço B'},
-
-    3:{'id': 3,'categoria': 'AUTORIZAÇÕES', 'nome': 'AUTORIZAÇÃO DE PROCEDIMENTOS', 
-       'descricao': 'AIH/APAC – processos de Autorização de Internação Hospitalar (AIH) ou Autorização de Procedimentos Ambulatoriais (APAC), previamente emitida por cirurgião.', 
-       'documentos': 'Documentos do serviço C'},
-
-    4:{'id': 4,'categoria': 'TRATAMENTOS', 'nome': 'TRATAMENTO FORA DO DOMICÍLIO - TFD', 
-       'descricao': 'Cadastro de agendamentos que necessitam de atendimentos/procedimentos via TFD (tratamento fora do domicílio), quando não estão disponíveis na rede de saúde do município, com laudo já emitido previamente por profissional médico da rede assistencial pública de Vitória da Conquista.',
-       'documentos': 'Documentos do serviço D'},
-
-    5:{'id': 5,'categoria': 'SUS', 'nome': 'CARTÃO DO SUS', 
-       'descricao': 'Emissão ou atualização do Cartão Nacional de Saúde - SUS.', 
-       'documentos': 'Documentos do serviço E'}
-}
 @app.route('/servico/<int:servico_id>')
 def userservicos(servico_id):
     info_servico = servicos.get(servico_id)
@@ -98,52 +77,72 @@ def userservicos(servico_id):
 
 @app.route('/agendar/<int:servico_id>')
 def agendar(servico_id):
-    horasDisp = listaHorarios() # lista de horários com vagas
+    # horasDisp = listaHorarios() # lista de horários com vagas
     form_agendamento = AgendamentoForm()
     info_servico = servicos.get(servico_id)
 
-    return render_template('formAgendamento.html', horasDisp=horasDisp, form_agendamento=form_agendamento, info_servico=info_servico)
+    return render_template('formAgendamento.html', form_agendamento=form_agendamento, info_servico=info_servico)
 
-@app.route('/api/agendamentos_por_dia')
+@app.route('/api/agendamentos_por_dia', methods=['GET', 'POST'])
 def agendamentos_por_dia():
     # Obtém a data de hoje
     hoje = datetime.now().date()
+    
  
     # Obtém a data daqui a 30 dias
     data_30_dias_frente = hoje + timedelta(days=30)
+    
 
     # Query para contar o número de agendamentos por dia
     resultados = db.session.query(func.count(Agendamento.id), Agendamento.data_agendada).\
         filter(Agendamento.data_agendada.between(hoje, data_30_dias_frente)).\
         group_by(Agendamento.data_agendada).all()
     
+    
+    
     # Lista para armazenar os dias
     dias_list = []
+    id_servico = request.json.get('servico_id')
+
+   
+    qntHorarios = calculaHoras(id_servico)
+    
 
     # Itera sobre os resultados da consulta
-    for count, data_agendada in resultados: 
+    for count, data_agendada in resultados:
         # Extrai o dia e adiciona à lista de dias
-        if count == calculaHoras():
+        qntHorarios = calculaHoras(id_servico)
+        
+        if count == qntHorarios:
+            
             dias_list.append(data_agendada.day)
 
-    return jsonify(dias_list)
+    
+    
+
+    return jsonify({'dias_list': dias_list})
 
 @app.route('/api/horarios_disponiveis', methods=['GET', 'POST'])
 def horas_disponiveis():
     try:
-        data_selecionada_str = request.json.get('data_selecionada')
+        dados_json = request.get_json()
+
+        data_selecionada_str = dados_json.get('data_selecionada')
         data_selecionada = datetime.strptime(data_selecionada_str, '%Y-%m-%d').date()
-        print(data_selecionada_str, data_selecionada)
+        
          
 
         # Consulta todos os horários já agendados para a data fornecida
         horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada_str).all()]
-
+        
+        servico_id = dados_json.get('servico')
         # Sua lista de horários disponíveis
-        horas_disp = listaHorarios()  # Substitua com seus próprios horários
-
+        
+        horas_disp = listaHorarios(servico_id)  # Substitua com seus próprios horários
+        
         # Filtra os horários disponíveis removendo aqueles que já foram agendados
         horarios_disponiveis = [hora for hora in horas_disp if hora not in horarios_agendados]
+        
 
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:

@@ -4,20 +4,25 @@ var horas_disponiveis = []
 
 // API PARA AS BUSCAS DAS DATAS DISPONIVEIS (CUIDADO AO MEXER)
 document.addEventListener('DOMContentLoaded', function () {
+    var id_servico = document.getElementById('id_servico').value;
+    var csrfToken = $('input[name=csrf_token]').val();
     // Fazer uma requisição AJAX para obter os dados dos agendamentos por dia
-    fetch('/api/agendamentos_por_dia')
-        .then(response => response.json())
-        .then(dias_list => {
-            // Agora 'dias_list' contém os dados dos agendamentos por dia
-            
-
-            diasDesativados = dias_list
-
-            
-
-            
-        })
-        .catch(error => console.error('Erro ao obter dados dos agendamentos por dia:', error));
+    $.ajax({
+        type: 'POST',
+        url: '/api/agendamentos_por_dia',
+        contentType: 'application/json',
+        data: JSON.stringify({'servico_id': id_servico}),
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        success: function(data) {
+            diasDesativados = data.dias_list
+        },
+        error: function(error) {
+        
+            console.error('Erro ao obter horários disponíveis:', error);
+        }
+    });
 });
 
 function obterHorariosDisponiveis() {
@@ -25,14 +30,17 @@ function obterHorariosDisponiveis() {
 
     var csrfToken = $('input[name=csrf_token]').val();
 
-    
+    var id_servico = document.getElementById('id_servico').value;
+
+    console.log(id_servico)
+    console.log(dataSelecionada)
 
     // Faz uma requisição AJAX para obter os horários disponíveis, incluindo o token CSRF
     $.ajax({
         type: 'POST',
         url: '/api/horarios_disponiveis',
         contentType: 'application/json',
-        data: JSON.stringify({ 'data_selecionada': dataSelecionada }),
+        data: JSON.stringify({ 'data_selecionada': dataSelecionada, 'servico': id_servico}),
         headers: {
             'X-CSRFToken': csrfToken
         },

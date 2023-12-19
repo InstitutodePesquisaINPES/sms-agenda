@@ -6,7 +6,8 @@
         <form id="formAgendamento" action="/autenticaragendamento" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="nome_do_servico" value="{{ info_servico.nome }}"> 
+            <input type="hidden" name="nome_do_servico" value="{{ info_servico.nome }}">
+            <input type="hidden" id="id_servico" name="id_servico" value="{{ info_servico.id }}">
 
             <div class="title-forms">
                 <h2 class="display-6 title-formAgendamento"> FAÇA SEU AGENDAMENTO DE {{ info_servico.nome }} </h2>
