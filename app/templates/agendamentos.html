@@ -4,6 +4,13 @@
 <main>
     <div class="container pt-4  col-md-10">
         <div class="pb-2 mb-2 border-bottom">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
             <div class="d-flex align-items-center text-dark text-decoration-none ">
                 <a style="text-decoration: none;" href="{{url_for('meusagendamentos')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
                 viewBox="0 0 16 16">
@@ -13,7 +20,7 @@
                 <span class="fs-4 cor1">Gerenciar agendamentos</span></a>
             </div>
         </div>
-
+        
         <span class="mb-2">Relação de todos os seus agendamentos de horario cadastrados no sistema de agendamento - Facilita Saude.</span>
 
         <div class="mt-3">
@@ -35,8 +42,9 @@
                                     <select name="filtro" class="form-select me-1" aria-label="Default select example" id="filtro">
                                         <option selected disabled hidden>Filtrar pesquisa</option>
                                         
+                                        <option value="servicoFiltro">~Serviço</option>
                                         <option value="dataFiltro">~Data</option>
-                                        <option value="horarioFiltro">~Horario</option>
+                                        
                                     </select>
                                 </div>
 
@@ -63,6 +71,7 @@
                                 <thead style="background-color:#fff;" class="">
                                     <tr class="headertr">
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Nome do usuario </a></th>
+                                        <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Nome do Serviço </a></th>
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none;">Data de agendamentos </a></th>
                                         <th class="configfont" scope="col">Horario agendado</th>
                                         <th class="configfont" scope="col">Ações</th>
@@ -73,6 +82,7 @@
                                 {% for agendamento in agendamentos %}
                                 <tr data-bs-toggle="modal" data-bs-target="#staticBackdrop2{{ agendamento.id_usuario }}">
                                     <td>{{ agendamento.nome_cliente }}</td>
+                                    <td>{{ agendamento.servico_agendado }}</td>
                                     <td>{{ agendamento.data_agendada }}</td>
                                     <td>{{ agendamento.horario_agendado }}</td>
                                     <td>
@@ -82,7 +92,7 @@
                                                 <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
                                             </button>
 
-                                            <a href="#">
+                                            <a href="{{ url_for('gerar_pdf', id=agendamento.id) }}">
                                                 <button style=" border-color: #78abee; background-color: #4179c2; border: none; "
                                                     type="button" class="btn btn-primary btn-custom btn1 mb-3 " data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop">
@@ -100,7 +110,7 @@
                                                 </button> 
                                             </a>
 
-                                            <a href="#">
+                                            <a href="{{ url_for('deletar', id=agendamento.id) }}">
                                                 <button style=" border-color: #dd5555; background-color: #dd5555; border: none; "
                                                     type="button" class="btn btn-secondary btn-custom btn1 mb-3 " data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop">
@@ -142,6 +152,15 @@
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
                                                                     value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário"disabled>
+                                                                </div>
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Nome do Serviço</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
+                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"disabled>
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -193,7 +212,16 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id='nome_cliente'
-                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário">
+                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" disabled>
+                                                                </div>
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Nome do Serviço</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
+                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"disabled>
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -213,6 +241,14 @@
                                                                     <input type="time" class="form-control" name="horario_agendado" value="{{agendamento.horario_agendado}}"
                                                                         id="horario_agendado" aria-describedby="cpfPaciente" disabled>
                                                                 </div> 
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Documentos</b>*
+                                                                    </span>
+
+                                                                    <input class="form-control" type="file" name="documentos_upados[]"  id="updoc" multiple>
+                                                                </div> 
                                                                 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
@@ -225,9 +261,7 @@
 
                                                             </fieldset>
                                                     </form>
-                                                </div>
-
-                                               
+                                                </div> 
                                             </div>
                                         </div>
                                     </div>
@@ -247,24 +281,31 @@
                         <i class="bi bi-file-earmark-plus"></i>
                         Agendar novo serviço</button>
                 </a>
-
-                <div class="pagination">
-                    <button style=" border: none; background-color: #22487B; "
-                        type="button" class="btn btn-primary btn-custom btn1 mb-3 me-3">
-                        <a style=" text-decoration: none; color: #fff !important; " href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                        </svg> <span> Anterior </span> </a>
-                    
-                    </button>
                 
-                    <button style=" border: none; background-color: #22487B; "
-                        type="button" class="btn btn-primary btn-custom btn1 mb-3 ">
-                        <a style="text-decoration: none; color: #fff !important; " href="#"> <span> Próximo </span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                        </svg> </a>
-                    </button>
-            
+                <div class="pagination">
+                    {% if agendamentos.pages > 1 %}
+                        <button style="border: none; background-color: #22487B;" type="button" class="btn btn-primary btn-custom btn1 mb-3 me-3">
+                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('meusagendamentos', page=agendamentos.prev_num) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                </svg> 
+                                <span> Anterior </span>
+                            </a>
+                        </button>
+                    {% endif %}
+                
+                    {% if agendamentos.has_next %}
+                        <button style="border: none; background-color: #22487B;" type="button" class="btn btn-primary btn-custom btn1 mb-3">
+                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('meusagendamentos', page=agendamentos.next_num) }}">
+                                <span> Próximo </span> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                            </a>
+                        </button>
+                    {% endif %}
                 </div>
+                
             </div>
 
             

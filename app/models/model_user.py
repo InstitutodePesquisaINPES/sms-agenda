@@ -27,7 +27,10 @@ class Agendamento(db.Model):
     nome_cliente = db.Column(db.String(255), nullable=False)
     data_agendamento = db.Column(db.Date, nullable=False)
     senha = db.Column(db.String(10), nullable=False)
+    
+    servico_agendado = db.Column(db.String(255), nullable=False)
     usuario = db.relationship('Usuario', backref='agendamentos')
+    documentos = db.relationship('Documentos', backref='agendamento', cascade='all, delete-orphan')
     
 class Horarios_disponiveis(db.Model):
     __tablename__ = 'horarios_disponiveis'
