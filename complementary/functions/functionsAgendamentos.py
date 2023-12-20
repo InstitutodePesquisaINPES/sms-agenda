@@ -175,13 +175,13 @@ def gerarSenhaDemandas():
 
     return letra_codigo_ano, letra_codigo_mes, texto_original
 
-def gerarSenha(nome_do_servico, horario):
+def gerarSenha(nome_do_servico, horario, id_servico):
     if ' ' in nome_do_servico:
         doisPrimeiros = ''.join(word[0] for word in nome_do_servico.split())
     else:
         doisPrimeiros = nome_do_servico[:2]
 
-    lista_de_horas = listaHorarios()
+    lista_de_horas = listaHorarios(id_servico)
 
     indiceHora = lista_de_horas.index(horario) + 1 if horario in lista_de_horas else 0
 

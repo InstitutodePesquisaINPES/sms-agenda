@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main %}
-<div class="container pt-4 col-md-10 corpo">
+<div class="container pt-4 col-md-10 corpoUnidade">
     <button type="button" class="button-configs" data-toggle="modal" data-target="#configUnidadeModal">
         CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE
     </button>
@@ -16,25 +16,34 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="configUnidadeModalLabel">Configurações de Funcionamento da Unidade</h5>
+                <h5 class="modal-title" id="configUnidadeModalLabel"> Configurações de Funcionamento da Unidade </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <!-- Conteúdo do modal para CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE -->
-                <form action="">
-                    <input type="text" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
+                <div class="alert alert-danger" role="alert">
+                    Estes dados são sensíveis, confirme que tenha certeza das alterações antes de salvar. <br>
+                    A alteração destes dados irá interferir na distribuição de horários do agendamento. <br>
+                </div>
+                <!-- <form action="/autenticarConfig1"> 
+                    <label for="hora_inicio"> HORÁRIO DE INICIO DOS ATENDIMENTOS </label>
+                    <input type="text" name="hora_inicio" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
-                    <input type="text" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
+                    <label for="hora_pausa"> HORÁRIO DE PAUSA DOS ATENDIMENTOS </label>
+                    <input type="text" name="hora_pausa" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
-                    <input type="text" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
+                    <label for="hora_retomada"> HORÁRIO DE RETOMADA DOS ATENDIMENTOS </label>
+                    <input type="text" name="hora_retomada" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
-                    <input type="text" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
+                    <label for="hora_final"> HORÁRIO DE FINALIZAR OS ATENDIMENTOS </label>
+                    <input type="text" name="hora_final" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
+                        <br>
 
-                    <button type="submit"> SALVAR ALTERAÇÃO DE HORÁRIOS </button>
-                </form>
+                    <button class="button-configs" type="submit"> SALVAR ALTERAÇÃO DE HORÁRIOS </button>
+                </form> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -54,10 +63,32 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    A alteração deste dado irá interferir na distribuição de agendamentos para os usuários, podendo permitir
+                    mais ou menos agendamentos, conforme o tempo de atendimento definido para o serviço.
+                </div>
                 <!-- Conteúdo do modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
-                <form action="">
-                    <input type="text" placeholder="{{ horarios.tempo_atendimento }}" onfocus="this.type='time'" 
-                        onblur="if (!this.value) this.type='text'">
+                <form action="/autenticarConfig2" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <label for="servicoSelect">Selecione o Serviço:</label> <br>
+                    <select id="servicoSelect" name="servicoSelect">
+                        <!-- Popule as opções do select com os nomes dos serviços -->
+                        <option value="">Selecione um Serviço</option>
+                        <!-- Adicione mais opções conforme necessário -->
+                        {% for id, servico in servicos.items() %}
+                            <option value="{{ id }}">{{ servico['nome'] }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+
+                    <div id="tempoAtendimentoContainer" style="display: none;">
+                        <label for="tempoAtendimento">Tempo de Atendimento:</label> <br>
+                        <input type="text" id="tempoAtendimento" name="tempo_atendimento" placeholder="{{ horarios.tempo_atendimento }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'"> <br>
+                        <button type="submit" class="button-configs"> SALVAR ALTERAÇÕES </button>
+                    </div>
+                    <br>
                 </form>
             </div>
             <div class="modal-footer">
@@ -66,4 +97,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    var servicos = {{ servicos|tojson|safe }};
+</script>
 {% endblock %}

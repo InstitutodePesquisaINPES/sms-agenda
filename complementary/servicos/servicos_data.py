@@ -1,5 +1,4 @@
-def servicos_data_function():
-   servicos = {
+servicos = {
          1:{'id': 1, 'categoria': 'FARMÁCIA', 'nome': 'ATENDIMENTO FARMACÊUTICO', 
             'descricao': 'Distribuição de medicamentos, orientação farmacêutica e monitoramento de condição glicemica', 
             'documentos': ['Receita', 'Carteira de Identidade', 'Cartão do SUS', 'CPF'], 'tempo_atendimento': '00:20:00'},
@@ -21,4 +20,11 @@ def servicos_data_function():
             'documentos': 'Documentos do serviço E', 'tempo_atendimento': '00:40:00'}
       }
    
+def servicos_data_function():
    return servicos
+
+def muda_tempo_atendimento(id_servico, novo_horario):
+   if id_servico in servicos:
+      servicos[id_servico]['tempo_atendimento'] = novo_horario
+      
+        
