@@ -56,10 +56,19 @@ def meusagendamentos():
 
     agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
-    
+    try:
+        # Supondo que filtro retorna uma lista de agendamentos
+        agendamentos_filtrados = filtro(agendamentos.items)
+    except Exception as e:
+        print(f"Erro no filtro: {e}")
+        flash('Algo deu errado, digite selecione o filtro desejado e verifique os campos', 'negado')
+        return redirect(url_for('meusagendamentos'))
 
+    print(f"Página atual: {agendamentos.page}")
+    print(f"Tem página anterior? {agendamentos.has_prev}")
+    print(f"Tem próxima página? {agendamentos.has_next}")
 
-    return render_template('agendamentos.html', agendamentos=agendamentos)
+    return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
 
 
 @app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
