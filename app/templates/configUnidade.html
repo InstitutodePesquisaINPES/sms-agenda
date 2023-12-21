@@ -27,23 +27,25 @@
                     Estes dados são sensíveis, confirme que tenha certeza das alterações antes de salvar. <br>
                     A alteração destes dados irá interferir na distribuição de horários do agendamento. <br>
                 </div>
-                <!-- <form action="/autenticarConfig1"> 
+                <form action="/autenticarConfig1" method='POST'>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                     <label for="hora_inicio"> HORÁRIO DE INICIO DOS ATENDIMENTOS </label>
-                    <input type="text" name="hora_inicio" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
+                    <input type="text" name="hora_inicio" value="{{horarios.hora_inicio}}" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
                     <label for="hora_pausa"> HORÁRIO DE PAUSA DOS ATENDIMENTOS </label>
-                    <input type="text" name="hora_pausa" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
+                    <input type="text" name="hora_pausa" value="{{horarios.hora_pausa}}" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
                     <label for="hora_retomada"> HORÁRIO DE RETOMADA DOS ATENDIMENTOS </label>
-                    <input type="text" name="hora_retomada" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
+                    <input type="text" name="hora_retomada" value="{{horarios.hora_retomada}}" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
                     <label for="hora_final"> HORÁRIO DE FINALIZAR OS ATENDIMENTOS </label>
-                    <input type="text" name="hora_final" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
+                    <input type="text" name="hora_final" value="{{horarios.hora_final}}" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'">
                         <br>
 
                     <button class="button-configs" type="submit"> SALVAR ALTERAÇÃO DE HORÁRIOS </button>
-                </form> -->
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -84,7 +86,7 @@
 
                     <div id="tempoAtendimentoContainer" style="display: none;">
                         <label for="tempoAtendimento">Tempo de Atendimento:</label> <br>
-                        <input type="text" id="tempoAtendimento" name="tempo_atendimento" placeholder="{{ horarios.tempo_atendimento }}" onfocus="this.type='time'" 
+                        <input type="text" id="tempoAtendimento" name="tempo_atendimento" onfocus="this.type='time'" 
                         onblur="if (!this.value) this.type='text'"> <br>
                         <button type="submit" class="button-configs"> SALVAR ALTERAÇÕES </button>
                     </div>

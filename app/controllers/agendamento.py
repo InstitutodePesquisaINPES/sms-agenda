@@ -7,7 +7,6 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import desc
 
-from app.models.model_agendamento import *
 from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
@@ -77,7 +76,7 @@ def userservicos(servico_id):
 
 @app.route('/agendar/<int:servico_id>')
 def agendar(servico_id):
-    # horasDisp = listaHorarios() # lista de horários com vagas
+    
     form_agendamento = AgendamentoForm()
     info_servico = servicos.get(servico_id)
 
