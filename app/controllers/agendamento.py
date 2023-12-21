@@ -7,7 +7,6 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import desc
 
-from app.models.model_agendamento import *
 from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
@@ -77,7 +76,7 @@ def userservicos(servico_id):
 
 @app.route('/agendar/<int:servico_id>')
 def agendar(servico_id):
-    # horasDisp = listaHorarios() # lista de horários com vagas
+    
     form_agendamento = AgendamentoForm()
     info_servico = servicos.get(servico_id)
 
@@ -166,10 +165,11 @@ def autenticaragendamento():
             nome_cliente = session['usuario_logado']
             data_agendada = request.form['data_agendada']
             horario_agendado = request.form['hora_ipt']
+            id_servico = request.form['id_servico']
 
             nome_do_servico = request.form['nome_do_servico']
 
-            senha = gerarSenha(nome_do_servico, horario_agendado)
+            senha = gerarSenha(nome_do_servico, horario_agendado, id_servico)
             print(senha)
             novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha)
 

@@ -30,7 +30,6 @@ from app.controllers.servidor import *
 from app.controllers.indexusuario import *
 from app.controllers.agendamento import *
 from app.models.model_user import *
-from app.models.model_agendamento import *
 
 
 if __name__ == '__main__':

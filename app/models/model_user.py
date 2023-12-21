@@ -42,10 +42,9 @@ class Horarios_disponiveis(db.Model):
 class Servico(db.Model):
     __tablename__ = "servico"
     id = db.Column(db.Integer, primary_key=True)
-    categoria = db.Column(db.String(30), nullable=False)
-    nome = db.Column(db.String(30), nullable=False)
-    sobre = db.Column(db.String(255), nullable=False)
-    documentos_necessarios = db.Column(db.String(255), nullable=False)
+    id_servico = db.Column(db.Integer, nullable=False)
+    tempo_atendimento = db.Column(db.Time, nullable=False)
+    
     
 class Documentos(db.Model):
     __tablename__ = "documentos"

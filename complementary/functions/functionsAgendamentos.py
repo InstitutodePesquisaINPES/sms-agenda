@@ -28,8 +28,11 @@ def calculaHoras(id_servico): # puxa do banco a quantidade de horas de cada hora
     hora_retomada = horario1.hora_retomada
     hora_final = horario1.hora_final
 
-    tempo_atendimento = servico['tempo_atendimento']
-    tempo_atendimento = datetime.strptime(tempo_atendimento, "%H:%M:%S")
+    # tempo_atendimento = servico['tempo_atendimento']
+    # tempo_atendimento = datetime.strptime(tempo_atendimento, "%H:%M:%S")
+    
+    servico_temp = Servico.query.filter_by(id_servico = id_servico).first()
+    tempo_atendimento = servico_temp.tempo_atendimento
 
     # Converta os objetos time para representações numéricas (por exemplo, minutos)
     minutos_inicio = paraMinutos(hora_inicio)
@@ -76,8 +79,8 @@ def calculaHorarios(id_servico):
     minutos_final = paraMinutos(hora_final)
 
     # tempo de duração de cada atendimento 
-    tempo_atendimento = servico['tempo_atendimento']
-    tempo_atendimento = datetime.strptime(tempo_atendimento, "%H:%M:%S")
+    servico_temp = Servico.query.filter_by(id_servico = id_servico).first()
+    tempo_atendimento = servico_temp.tempo_atendimento
     minutos_atendimento = paraMinutos(tempo_atendimento)
 
 
@@ -175,13 +178,13 @@ def gerarSenhaDemandas():
 
     return letra_codigo_ano, letra_codigo_mes, texto_original
 
-def gerarSenha(nome_do_servico, horario):
+def gerarSenha(nome_do_servico, horario, id_servico):
     if ' ' in nome_do_servico:
         doisPrimeiros = ''.join(word[0] for word in nome_do_servico.split())
     else:
         doisPrimeiros = nome_do_servico[:2]
 
-    lista_de_horas = listaHorarios()
+    lista_de_horas = listaHorarios(id_servico)
 
     indiceHora = lista_de_horas.index(horario) + 1 if horario in lista_de_horas else 0
 
@@ -217,7 +220,7 @@ def upa_pro_GCloud(documentos, cpf_usuario):
         except Exception as e:
             print(f"Ocorreu um erro durante o upload do documento: {e}")
 
-    return lista_documentos_uuid
+    return lista_documentos_uuid 
     
     
 
