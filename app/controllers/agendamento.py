@@ -131,7 +131,7 @@ def agendamentos_por_dia():
         filter(Agendamento.data_agendada.between(hoje, data_30_dias_frente)).\
         group_by(Agendamento.data_agendada).all()
     
-    
+
     
     # Lista para armazenar os dias
     dias_list = []
@@ -151,25 +151,21 @@ def agendamentos_por_dia():
             dias_list.append(data_agendada.day)
 
     
-    
-
     return jsonify({'dias_list': dias_list})
 
 @app.route('/api/horarios_disponiveis', methods=['GET', 'POST'])
 def horas_disponiveis():
     try:
         dados_json = request.get_json()
-
+        
         data_selecionada_str = dados_json.get('data_selecionada')
         data_selecionada = datetime.strptime(data_selecionada_str, '%Y-%m-%d').date()
         
 
-        # Consulta todos os horários já agendados para a data fornecida
-        horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada_str).all()]
-        
         servico_id = dados_json.get('servico')
-        # Sua lista de horários disponíveis
         
+        
+        # Sua lista de horários disponíveis
         horas_disp = listaHorarios(servico_id)  # Substitua com seus próprios horários
         
         data_atual = datetime.now()
@@ -179,9 +175,12 @@ def horas_disponiveis():
         horarios_disponiveis = [hora for hora in horas_disp
                         if datetime.combine(data_selecionada, datetime.strptime(hora, '%H:%M').time()) > data_atual]
         
+        
+
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
     
 
 @app.route('/autenticaragendamento', methods=['POST'])
