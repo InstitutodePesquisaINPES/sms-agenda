@@ -21,13 +21,13 @@ def configUnidade():
 def obter_tempo_atendimento():
     try:
         dados_json = request.get_json()
-        print(dados_json)
+        
         id_servico = dados_json.get('servico_id')
-        print(id_servico)
+        
         servico_temp = Servico.query.filter_by(id_servico = id_servico).first()
-        print(servico_temp)
+        
         tempo_atendimento = servico_temp.tempo_atendimento.isoformat()
-        print(tempo_atendimento)
+        
         return jsonify({'tempo_atendimento': tempo_atendimento})
     except Exception as e:
         return jsonify({'error': str(e)}), 400 
@@ -66,7 +66,7 @@ def autenticarConfig1(): #config de funcionamento da agencia
 @app.route('/autenticarConfig2', methods=['POST'])
 @login_required
 def autenticarConfig2(): #config de tempo_atendimento
-    print(request.form)
+    
     servico_id = request.form['servicoSelect']
     novo_horario = request.form['tempo_atendimento']
     novo_horario = novo_horario + ":00"
