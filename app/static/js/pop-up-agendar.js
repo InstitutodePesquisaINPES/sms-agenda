@@ -6,6 +6,7 @@ var horas_disponiveis = []
 document.addEventListener('DOMContentLoaded', function () {
     var id_servico = document.getElementById('id_servico').value;
     var csrfToken = $('input[name=csrf_token]').val();
+    
     // Fazer uma requisição AJAX para obter os dados dos agendamentos por dia
     $.ajax({
         type: 'POST',
@@ -17,10 +18,12 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         success: function(data) {
             diasDesativados = data.dias_list
+            
         },
         error: function(error) {
         
             console.error('Erro ao obter horários disponíveis:', error);
+            
         }
     });
 });
@@ -32,8 +35,6 @@ function obterHorariosDisponiveis() {
 
     var id_servico = document.getElementById('id_servico').value;
 
-    console.log(id_servico)
-    console.log(dataSelecionada)
 
     // Faz uma requisição AJAX para obter os horários disponíveis, incluindo o token CSRF
     $.ajax({
