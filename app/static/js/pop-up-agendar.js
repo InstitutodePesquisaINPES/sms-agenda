@@ -200,3 +200,84 @@ $(document).ready(function () {
         return false;
     }
 });
+
+// Código para puxar a data do calendar 
+document.addEventListener('DOMContentLoaded', function () {
+    // Obter a data atual
+    var dataAtual = new Date();
+    var diaAtual = dataAtual.getDate();
+    var mesAtual = dataAtual.getMonth() + 1; // Mês começa do zero, então adicionamos 1
+    var anoAtual = dataAtual.getFullYear();
+    var nomeDiaSemanaAtual = dataAtual.toLocaleDateString('pt-BR', { weekday: 'long' });
+    var nomeMesAtual = dataAtual.toLocaleDateString('pt-BR', { month: 'long' });
+
+    // Enviando os elementos para o HTML na carga inicial
+    var daySelectCalendar = document.querySelector(".getCalendarDay");
+    var dayBackSelectCalendar = document.querySelector(".getCalendarDayBackground");
+    var daySelectCalendarDescript = document.querySelector(".getCalendarDayDescription");
+    var dayBackSelectCalendarDescript = document.querySelector(".getCalendarYearBackground");
+    var monthSelectCalendar = document.querySelector(".getCalendarMonth");
+    var getSelectCalendar = document.querySelector(".getCalendarYear");
+
+    daySelectCalendar.innerText = diaAtual;
+    dayBackSelectCalendar.innerText = diaAtual;  // Atualizado
+    daySelectCalendarDescript.innerText = nomeDiaSemanaAtual;
+    dayBackSelectCalendarDescript.innerText = nomeDiaSemanaAtual;  // Atualizado
+    monthSelectCalendar.innerText = nomeMesAtual;
+    getSelectCalendar.innerText = anoAtual;
+
+    // Inicialize o Flatpickr
+    flatpickr("#datePicker", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        maxDate: new Date().fp_incr(29),
+        disableMobile: "true",
+        inline: true,
+        disable: [
+            function(date) {
+                // Desativa sábados e domingos
+                if (date.getDay() === 0 || date.getDay() === 6) {
+                    return true;
+                }
+
+                // Desativa os dias 15 e 25 de cada mês
+                if (date.getDate() === 15 || date.getDate() === 25) {
+                    return true;
+                }
+
+                var dataAtual = date.getDate();
+
+                if (diasDesativados.includes(dataAtual)) {
+                    return true;
+                }
+
+                // Mantém os outros dias habilitados
+                return false;
+            }
+        ],
+        onChange: function(selectedDates, dateStr, instance) {
+            // Aqui você obtém o valor do dia, mês e ano selecionados e exibe no console
+            if (selectedDates.length > 0) {
+                var dataSelecionada = selectedDates[0];
+                
+                var diaSelecionado = dataSelecionada.getDate();
+                var mesSelecionado = dataSelecionada.getMonth() + 1;
+                var anoSelecionado = dataSelecionada.getFullYear();
+
+                // Obtenha o nome do dia da semana e do mês
+                var nomeDiaSemana = dataSelecionada.toLocaleDateString('pt-BR', { weekday: 'long' });
+                var nomeMes = dataSelecionada.toLocaleDateString('pt-BR', { month: 'long' });
+
+                // Enviando os elementos para o HTML
+                daySelectCalendar.innerText = diaSelecionado;
+                dayBackSelectCalendar.innerText = diaSelecionado;
+                daySelectCalendarDescript.innerText = nomeDiaSemana;
+                dayBackSelectCalendarDescript.innerText = nomeDiaSemana;
+                monthSelectCalendar.innerText = nomeMes;
+                getSelectCalendar.innerText = anoSelecionado;
+            }
+        }
+    });
+
+    // ... seu código existente
+});

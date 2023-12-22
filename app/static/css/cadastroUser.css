@@ -7,6 +7,28 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+nav {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 10000;
+    display: flex;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.navbar ul li img {
+    margin-top: 10px;
+    max-width: 50px;
+}
 
 .container-login {
     position: relative;
@@ -41,10 +63,10 @@
     align-items: center;
     width: 550px;
     left: 50%;
-    height: 90%;
+    height: 88%;
     border-radius: 20px;
     filter: drop-shadow(2px 2px 2px #00000030);
-    margin-top: -400px;
+    margin: -350px 0px 0px 50px;
 }
 
 .content-box .form-box {

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <div class="div-form container-sm border">
+    <div class="div-form container-sm border agendarAgendamentoIndex">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <form id="formAgendamento" action="/autenticaragendamento" method="post" enctype="multipart/form-data">
 
@@ -13,11 +13,26 @@
             </div>
             
             <div class="mb-3 mt-3">
-                
-                <h2 class="subtitle-formAgendamento"> Escolha a data </h2>
-                <div class="div-calendar">
-                    <input type="text" id="datePicker" name="data_agendada" class="flatpickr-input form-control" onchange="obterHorariosDisponiveis()"> 
+                <div id="suaDivResultado"></div>
+                <h2 class="subtitle-formAgendamento"> Escolha a data: </h2>
+                <div class="fieldCalendarAgendamento">
+                    <div class="boxDateCalendar">
+                        <div class="divYearMonthCalendar">
+                            <p class="getCalendarMonth"></p>
+                        <p class="getCalendarYear"></p>
+                        </div>
+                        <div class="calendarBackground">
+                            <p class="getCalendarDayBackground"></p>
+                            <p class="getCalendarYearBackground"></p>
+                        </div>
+                        <p class="getCalendarDay"></p>
+                        <p class="getCalendarDayDescription"></p>
+                    </div>
+                    <div class="div-calendar">
+                        <input type="text" id="datePicker" name="data_agendada" class="flatpickr-input form-control" onchange="obterHorariosDisponiveis()"> 
+                    </div>
                 </div>
+                
                 
             </div>
 
@@ -90,6 +105,7 @@
 
         <script src="../static/js/pop-up-agendar.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="../static/js/formAgendamento.js"></script>
         
     </div>
 {% endblock %}

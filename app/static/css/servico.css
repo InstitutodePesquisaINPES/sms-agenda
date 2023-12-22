@@ -12,6 +12,7 @@ body{
     flex-direction: column;
     background-color: white;
     font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
 }
 
 .backgroundIndexOneServicos {
@@ -283,6 +284,70 @@ body{
     color: #835f11;
     font-size: 1.8rem;
 }
+.rodape {
+    background: #f1f1f1;
+    min-height: 38vh;
+    margin-top: auto;
+}
+
+.footerContentOne {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    margin: 0 5%;
+}
+
+.footerContentOne li:nth-child(1) img{
+    max-width: 170px;
+}
+
+.footerContentOne li{
+    margin: 0 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.footerContentOne li a{
+    text-decoration: none;
+    color: #121212;
+    font-weight: 400;
+}
+
+.footerContentTwo {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    margin: 0 5%;
+    padding: 10px 3% 30px 3%;
+    border-top: 1px solid #ccc;
+    align-items: center;
+}
+
+.footerContentTwo li {
+    display: flex;
+    align-items: center;
+}
+
+.footerContentTwo li a {
+    text-decoration: none;
+    color: #3b3b3b;
+    align-items: center;
+    margin: 0 5px;
+    font-weight: 600;
+}
+
+.socialMedia {
+    display: flex;
+    align-items: center;
+}
+
+.socialMedia a{
+    color: #3b3b3b;
+    font-size: 1.8rem;
+    margin: 0 5px;
+    align-items: center;
+}
+
 
 /* ------- Modal ------ */ 
 

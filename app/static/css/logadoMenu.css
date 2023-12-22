@@ -1,33 +1,73 @@
-#icon-userlogado{
-    max-height: 30px;
-    margin: 10px;
+.logado {
+    align-items: center;
+    display: flex;
+    transform: translateX(-60px);
 }
+
 
 .buttons-logado{
     display: flex;
+    padding: 5px 0px;
     align-items: center;
     justify-content: space-between;
-
-    border-radius: 15px;
-    background-color: #A6C546;
-
+    border-radius: 10px;
+    background-color: #fff;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
+    right: 50px;
 }
 
-.nome-user{
-    font-size: 20px;
+
+
+.iconFieldLogado:hover {
+    transform: scale(1.03) translateX(-5px);
+    transition: 0.3s ease-in-out;
+    position: fixed;
 }
+
+
+.iconFieldLogado {
+    background: linear-gradient(90deg, rgb(92, 166, 226) 0%, rgb(83, 151, 254) 49%, rgb(29, 127, 238) 100%);
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 50px;
+    transform: translateX(-5px);
+    border: 2px solid #f1f1f1;
+    filter: drop-shadow(0px 0px 10px #ffffff50);
+    z-index: 1000;
+    transition: 0.3s ease-in-out;
+}
+
+.iconFieldLogado p {
+    position: absolute;
+    align-items: center;
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.8rem;
+    transform: translate(14px, 1px);
+}
+
+
 
 .options-logado {
     display:none;
     position: absolute;
-    top: 10%;
-    margin-right: 100px;
+    top: 25px;
     margin-top: 20px;
-    background-color: #A6C546;
+    background: linear-gradient(140deg, rgb(233, 233, 233) 0%, rgb(238, 238, 238) 49%, rgb(196, 196, 196) 100%);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
     border-radius: 15px;
+    right: -70px;
+    width: 200px;
+    padding: 20px 0px 10px 10px;
+    filter: drop-shadow(0px 0px 20px #00000050);
+    border: 2px solid #a5a5a5;
+    z-index: 100000;
 }
 
 .logado:hover options-logado {
@@ -38,9 +78,37 @@
 .menu-options {
     padding: 10px;
     cursor: pointer;
+    align-items: center;
+    display: flex;
 }
 
-.menu-options:hover {
-    background-color: #b8dd47;
-    border-radius: 15px;
+.menu-options i {
+    font-size: 2rem;
+    margin: 0px 10px 0px 0px;
+    transition: 0.3s ease-in-out;
+    color: #121212;
+}
+
+.menu-options a {
+    text-decoration: none;
+    color: #121212;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    line-height: 18px;
+    transition: 0.3s ease-in-out;
+}
+
+.menu-options:nth-child(1):hover,
+.menu-options:nth-child(1) a:hover {
+    transition: 0.3s ease-in-out;
+    color: #190783 !important;
+    filter: drop-shadow(0px 0px 3px #ffffff40);
+}
+
+.menu-options-three:hover,
+.menu-options-three a:hover {
+    transition: 0.3s ease-in-out;
+    color: #990b0b;
+    filter: drop-shadow(0px 0px 3px #ffffff40);
 }

@@ -64,10 +64,10 @@ nav {
     align-items: center;
     width: 500px;
     left: 50%;
-    height: 85%;
+    height: 80%;
     border-radius: 20px;
     filter: drop-shadow(2px 2px 2px #00000030);
-    margin-top: -270px;
+    margin: -270px 0px 0px 60px;
 }
 
 .content-box .form-box {
@@ -124,6 +124,11 @@ nav {
     color: #32324f;
     background-color: #ecf2f7;
     border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
+.content-box .form-box .input-box input:focus {
+    background-color: #fff;
 }
 
 .content-box .form-box .input-box span {
@@ -195,6 +200,15 @@ nav {
     font-size: 0.9rem;
     color: #686880;
 }
+
+
+
+@media (max-width:1100px) {
+    .content-box {
+        margin: -270px 0px 0px -30px;
+    }
+
+}
 @media (max-width:868px) {
     .content-box {
         position: fixed;
@@ -203,6 +217,7 @@ nav {
         width: 100%;
         left: 0%;
         height: 100%;
+        margin: -270px 0px 0px 0px;    
     }
 
     .container-login .img-box{

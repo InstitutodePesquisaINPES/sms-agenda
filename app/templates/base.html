@@ -60,16 +60,19 @@
                 </div>
             {% else %}
                 <div class="logado">
+                    
                     <div class="buttons-logado">
-                        <img src="../static/assets/icons/user.png" id="icon-userlogado" alt="" srcset="">
-                        <p class="nome-user"> {{session['usuario_logado']}} </p>
-                        <img src="../static/assets/icons/menubaixo.png" id="icon-userlogado" alt="" srcset="">
+                        <div class="iconFieldLogado">
+                            <p>E</p>
+                        </div>
+                        <!-- <p class="nome-user"> {{session['usuario_logado']}} </p> -->
+                        
                     </div>
 
                     <div class="options-logado">
                         <div class="menu-options">
-                            <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
-                            <a href="{{ url_for('meusagendamentos')}}">Meus Agendamentos</a>
+                            <i class="bi bi-calendar-date"></i>
+                            <a href="{{ url_for('meusagendamentos')}}">Meus </br>Agendamentos </a>
                         </div>
                         {% if session.user_type_usuario_logado == "administrador" %}
                             <div class="menu-options">
@@ -77,8 +80,8 @@
                                 <a href="{{ url_for('cadastrouser')}}">Cadastrar servidor</a>
                             </div>
                         {% endif %}
-                        <div class="menu-options">
-                            <img src="../static/assets/icons/sair.png" id="icon-userlogado" alt="" srcset="">
+                        <div class="menu-options menu-options-three">
+                            <i class="bi bi-box-arrow-right"></i>
                             <a href="{{ url_for('logout') }}">Logout</a>
                         </div>
                     </div>
@@ -101,7 +104,38 @@
 
 
         <div class="rodape">
-            <a href="#" class="rodape-text" data-toggle="modal" data-target="#myModal">VERSÃO v1.0</a>
+            <ul class="footerContentOne">
+                <li><img src="../static/assets/images/facilita saude logo.png" alt="Facilita"></li>
+                <li><a href="">Termos</a>
+                    <a href="">Serviços</a>
+                    <a href="">Política e Privacidade</a>
+                </li>
+                <li><a href="">Termos</a>
+                    <a href="">Serviços</a>
+                    <a href="">Política e Privacidade</a>
+                </li>
+                <li><a href="">Termos</a>
+                    <a href="">Serviços</a>
+                    <a href="">Política e Privacidade</a>
+                </li>
+            </ul>
+            <ul class="footerContentTwo">
+                <li>
+                    <a href="#" class="" data-toggle="modal" data-target="#myModal">VERSÃO v1.0</a>
+                    <li><a href="">Termos</a>
+                        <a href="">Política e Privacidade</a>
+                    </li>
+                    <li><a href="">Termos</a>
+                        <a href="">Serviços</a>
+                    </li>
+                    <li class="socialMedia">
+                        <a href=""><i class="bi bi-whatsapp"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-youtube"></i></a>
+                    </li>
+            </ul>
+            
 
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -114,8 +148,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Conteúdo do seu pop-up aqui -->
-                    <p>Versão 1.0 Agendamentos SMS</p>
+                    <p>Versão 1.0 Agendamentos SMS</p></li>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
