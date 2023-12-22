@@ -97,7 +97,6 @@ def calculaHorarios(id_servico):
 def listaHorarios(id_servico):
     tempo = 0
     horarios = calculaHorarios(int(id_servico))
-    print(horarios)
     lista_horarios = []
     tempo = horarios[3] # tempo que inicia a manha
     tempo2 = horarios[4] # tempo que inicia a tarde
@@ -221,7 +220,14 @@ def upa_pro_GCloud(documentos, cpf_usuario):
             print(f"Ocorreu um erro durante o upload do documento: {e}")
 
     return lista_documentos_uuid 
-    
+
+def obter_horario_atual():
+    # Obtém o horário atual
+    horario_atual = datetime.now().strftime("%H:%M")
+    return horario_atual
+
+
+
     
 
 

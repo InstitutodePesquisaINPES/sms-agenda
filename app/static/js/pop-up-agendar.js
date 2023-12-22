@@ -193,12 +193,19 @@ $(document).ready(function () {
             if(radioSelecionado){
                 
                 let documentosEnviados = $("#updoc").prop("files");
-                if(documentosEnviados.length > 0){
-                    
-                    let checkbox1 = $("input[name='i-confirm']").is(":checked");
-                    let checkbox2 = $("input[name='li']").is(":checked");
+                var upload = $("#upload\\?").val();
+                let checkbox1 = $("input[name='i-confirm']").is(":checked");
+                let checkbox2 = $("input[name='li']").is(":checked");
+                if(upload == "True"){
+                    if(documentosEnviados.length > 0){
+                        if (checkbox1 && checkbox2) {
+                            
+                            return true
+                        }
+                    }
+                }else{
                     if (checkbox1 && checkbox2) {
-                        
+                            
                         return true
                     }
                 }
