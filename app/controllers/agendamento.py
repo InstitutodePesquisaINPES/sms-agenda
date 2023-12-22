@@ -2,7 +2,7 @@ import logging
 from run import app
 from flask import Flask, render_template, make_response
 
-from flask_weasyprint import HTML, render_pdf
+# from flask_weasyprint import HTML, render_pdf
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import func
@@ -59,28 +59,28 @@ def meusagendamentos():
     return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
 
 
-@app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
-def gerar_pdf(id):
-    agendamento = Agendamento.query.get(id)
+# @app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
+# def gerar_pdf(id):
+#     agendamento = Agendamento.query.get(id)
 
-    # Verifica se o agendamento foi encontrado
-    if agendamento is None:
-        return "Agendamento não encontrado", 404
+#     # Verifica se o agendamento foi encontrado
+#     if agendamento is None:
+#         return "Agendamento não encontrado", 404
 
-    # Renderiza o template HTML
-    html = render_template('comprovante_agendamento.html', agendamento=agendamento)
+#     # Renderiza o template HTML
+#     html = render_template('comprovante_agendamento.html', agendamento=agendamento)
 
-    # Converte o HTML para PDF usando o Flask-WeasyPrint
-    pdf = render_pdf(HTML(string=html))
+#     # Converte o HTML para PDF usando o Flask-WeasyPrint
+#     pdf = render_pdf(HTML(string=html))
 
-    # Cria uma resposta Flask
-    response = make_response(pdf)
+#     # Cria uma resposta Flask
+#     response = make_response(pdf)
 
-    # Define os cabeçalhos apropriados para PDF
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=Facilita_comprovante_de_agendamento.pdf'
+#     # Define os cabeçalhos apropriados para PDF
+#     response.headers['Content-Type'] = 'application/pdf'
+#     response.headers['Content-Disposition'] = 'inline; filename=Facilita_comprovante_de_agendamento.pdf'
 
-    return response
+#     return response
     
 
 
