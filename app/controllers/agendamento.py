@@ -1,5 +1,8 @@
 import logging
 from run import app
+from flask import Flask, render_template, make_response
+
+from flask_weasyprint import HTML, render_pdf
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import func
@@ -7,66 +10,96 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import desc
 
+
+from app.models.User import *
 from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
 from complementary.functions.functionsAgendamentos import *
 
 from complementary.servicos.servicos_data import *
-
+import os
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename #import de mexer com arquivos
 
+
+
 servicos = servicos_data_function()
 
-def filtro(dado):
+def filtro():
+    id_usuario_logado = session.get('id_usuario_logado')
+    page = int(request.args.get('page', 1))
+    registros_por_pagina = 10
+
+    
     pesquisarBarra = request.args.get('pesquisarBarra')
     filtro = request.args.get('filtro')
-    agendamentos = []  # Definir uma lista vazia como valor padrão
-    
     if pesquisarBarra:
-        if filtro == 'nomeFiltro':
-            agendamentos = Agendamento.query.filter(Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).all()
-        elif filtro == 'dataFiltro':
-            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{pesquisarBarra}%")).all()
-        elif filtro == 'horarioFiltro':
-            agendamentos = Agendamento.query.filter(Agendamento.horario_agendado.ilike(f"%{pesquisarBarra}%")).all()
+        if filtro == 'servicoFiltro':
+            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
+
+        elif filtro == 'dataFiltro':       
+            data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+            data_formatada = data_obj.strftime('%Y-%m-%d')
+            
+            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all()    
     else:
-        agendamentos = dado.items
+        agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
     return agendamentos
 
 @app.route('/meusagendamentos') 
 def meusagendamentos():
-    id_usuario_logado = session.get('id_usuario_logado')
-    page = int(request.args.get('page', 1))
-    registros_por_pagina = 10   
+    try:
+        agendamentos_filtrados = filtro()
+    except:
+        flash('digite um valor de campo valido')
+        return redirect(url_for('meusagendamentos'))
+   
+    return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
+
+
+@app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
+def gerar_pdf(id):
+    agendamento = Agendamento.query.get(id)
+
+    # Verifica se o agendamento foi encontrado
+    if agendamento is None:
+        return "Agendamento não encontrado", 404
+
+    # Renderiza o template HTML
+    html = render_template('comprovante_agendamento.html', agendamento=agendamento)
+
+    # Converte o HTML para PDF usando o Flask-WeasyPrint
+    pdf = render_pdf(HTML(string=html))
+
+    # Cria uma resposta Flask
+    response = make_response(pdf)
+
+    # Define os cabeçalhos apropriados para PDF
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=Facilita_comprovante_de_agendamento.pdf'
+
+    return response
     
-    agendamentos = Agendamento.query.filter(Agendamento.id_usuario==id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
-    agendamentos = filtro(agendamentos)
 
 
-    return render_template('agendamentos.html', agendamentos=agendamentos)
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar(id):
+   
+    return redirect(url_for('meusagendamentos'))
+@app.route('/deletar/<int:id>', methods=['GET', 'POST'])
+def deletar(id):
+    documento = Documentos.query.filter_by(id_agendamento=id).all()
+    if documento:
+        for doc in documento:
+            db.session.delete(doc)
 
-@app.route('/editar/<int:id_usuario>', methods=['GET', 'POST'])
-def editar(id_usuario):
-    novo_agendamento = Agendamento.query.get(id_usuario)
-    print(f'ID do Usuário: {id_usuario}')
-    print(f'Objeto de Agendamento: {novo_agendamento}')
+        agendamento = Agendamento.query.get(id)
+        db.session.delete(agendamento)
 
-
-    print('editando...')
-    if novo_agendamento:
-        print('asdasd',request.form.get('data_agendamento'))
-        #pegando os inputs para substituir no html
-        novo_agendamento.nome_cliente = request.form.get('nome_cliente')
-        novo_agendamento.data_agendada =  request.form.get('data_agendamento')
-        novo_agendamento.horario_agendado = request.form.get('horario_agendado')
-       
         db.session.commit()
-    else:
-        print('dsfj')
-
+    
     return redirect(url_for('meusagendamentos'))
 
 @app.route('/servico/<int:servico_id>')
@@ -174,7 +207,7 @@ def autenticaragendamento():
 
             senha = gerarSenha(nome_do_servico, horario_agendado, id_servico)
             print(senha)
-            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha)
+            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha)
 
             db.session.add(novo_agendamento)
             db.session.commit()
