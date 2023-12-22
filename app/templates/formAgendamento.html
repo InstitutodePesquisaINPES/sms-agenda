@@ -8,6 +8,7 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="nome_do_servico" value="{{ info_servico.nome }}">
             <input type="hidden" id="id_servico" name="id_servico" value="{{ info_servico.id }}">
+            <input type="hidden" id="upload?" value="{{ info_servico.upload }}">
 
             <div class="title-forms">
                 <h2 class="display-6 title-formAgendamento"> FAÇA SEU AGENDAMENTO DE {{ info_servico.nome }} </h2>
@@ -30,12 +31,15 @@
                 </div>
             </div>
 
-            <div class="documents">
-                <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
-                <div>
-                    <input class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
+            {% if info_servico.upload == "True" %}
+                <div class="documents">
+                    <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
+                    <div>
+                        <input class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+
             <div class="mb-3 form-check"> 
                 <div class="checkbox-div">
                     <div>

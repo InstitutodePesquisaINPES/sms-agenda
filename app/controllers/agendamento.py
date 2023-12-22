@@ -75,6 +75,7 @@ def userservicos(servico_id):
     return render_template('userservicos.html', info_servico=info_servico) 
 
 @app.route('/agendar/<int:servico_id>')
+@login_required
 def agendar(servico_id):
     
     form_agendamento = AgendamentoForm()
@@ -129,7 +130,6 @@ def horas_disponiveis():
         data_selecionada_str = dados_json.get('data_selecionada')
         data_selecionada = datetime.strptime(data_selecionada_str, '%Y-%m-%d').date()
         
-         
 
         # Consulta todos os horários já agendados para a data fornecida
         horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada_str).all()]
@@ -139,10 +139,13 @@ def horas_disponiveis():
         
         horas_disp = listaHorarios(servico_id)  # Substitua com seus próprios horários
         
-        # Filtra os horários disponíveis removendo aqueles que já foram agendados
-        horarios_disponiveis = [hora for hora in horas_disp if hora not in horarios_agendados]
+        data_atual = datetime.now()
         
-
+        
+        # Filtra os horários disponíveis removendo aqueles que já foram agendados
+        horarios_disponiveis = [hora for hora in horas_disp
+                        if datetime.combine(data_selecionada, datetime.strptime(hora, '%H:%M').time()) > data_atual]
+        
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -176,31 +179,33 @@ def autenticaragendamento():
             db.session.add(novo_agendamento)
             db.session.commit()
 
-            lista_documentos_uuid = upa_pro_GCloud(documentos, cpf_usuario)
+            #|----------- Função de enviar para api do GCloud Suspensa, os métodos estão comentados abaixo ------------|#
 
-            id_agendamento = (
-                db.session.query(Agendamento.id).filter(Agendamento.data_agendada == data_agendada).filter(Agendamento.horario_agendado == horario_agendado).filter(Agendamento.id_usuario == id_usuario).first()
-            )
+            # lista_documentos_uuid = upa_pro_GCloud(documentos, cpf_usuario)
 
-            print(id_agendamento)
-            id_formatado = id_agendamento[0]
+            # id_agendamento = (
+            #     db.session.query(Agendamento.id).filter(Agendamento.data_agendada == data_agendada).filter(Agendamento.horario_agendado == horario_agendado).filter(Agendamento.id_usuario == id_usuario).first()
+            # )
 
-            caminho1 = ""
-            caminho2 = ""
-            caminho3 = ""
+            
+            # id_formatado = id_agendamento[0]
 
-            for indice, item in enumerate(lista_documentos_uuid):
-                if item and indice == 0:
-                   caminho1 = item
-                if item and indice == 1:
-                   caminho2 = item
-                if item and indice == 2:
-                   caminho3 = item
+            # caminho1 = ""
+            # caminho2 = ""
+            # caminho3 = ""
 
-            novo_caminho = Documentos(id_agendamento=id_formatado, caminho1=caminho1, caminho2=caminho2, caminho3=caminho3)
+            # for indice, item in enumerate(lista_documentos_uuid):
+            #     if item and indice == 0:
+            #        caminho1 = item
+            #     if item and indice == 1:
+            #        caminho2 = item
+            #     if item and indice == 2:
+            #        caminho3 = item
 
-            db.session.add(novo_caminho)
-            db.session.commit()
+            # novo_caminho = Documentos(id_agendamento=id_formatado, caminho1=caminho1, caminho2=caminho2, caminho3=caminho3)
+
+            # db.session.add(novo_caminho)
+            # db.session.commit()
 
 
             return redirect(url_for('meusagendamentos'))
