@@ -26,48 +26,36 @@ from werkzeug.utils import secure_filename #import de mexer com arquivos
 
 servicos = servicos_data_function()
 
-def filtro(dado):
-    pesquisarBarra = request.args.get('pesquisarBarra')
-    filtro = request.args.get('filtro')
-    agendamentos = []  # Definir uma lista vazia como valor padrão
-   
-    if pesquisarBarra:
-        if filtro == 'servicoFiltro':
-           
-            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
-
-        elif filtro == 'dataFiltro':
-           
-                data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
-                data_formatada = data_obj.strftime('%Y-%m-%d')
-                
-                agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all()
-            
-    else:
-    
-        agendamentos = dado.items
-
-    return agendamentos
-@app.route('/meusagendamentos') 
-def meusagendamentos():
+def filtro():
     id_usuario_logado = session.get('id_usuario_logado')
     page = int(request.args.get('page', 1))
     registros_por_pagina = 2
 
-    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+    
+    pesquisarBarra = request.args.get('pesquisarBarra')
+    filtro = request.args.get('filtro')
+    if pesquisarBarra:
+        if filtro == 'servicoFiltro':
+            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
 
+        elif filtro == 'dataFiltro':       
+            data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+            data_formatada = data_obj.strftime('%Y-%m-%d')
+            
+            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all()    
+    else:
+        agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+    return agendamentos
+
+@app.route('/meusagendamentos') 
+def meusagendamentos():
     try:
-        # Supondo que filtro retorna uma lista de agendamentos
-        agendamentos_filtrados = filtro(agendamentos.items)
-    except Exception as e:
-        print(f"Erro no filtro: {e}")
-        flash('Algo deu errado, digite selecione o filtro desejado e verifique os campos', 'negado')
+        agendamentos_filtrados = filtro()
+    except:
+        flash('digite um valor de campo valido')
         return redirect(url_for('meusagendamentos'))
-
-    print(f"Página atual: {agendamentos.page}")
-    print(f"Tem página anterior? {agendamentos.has_prev}")
-    print(f"Tem próxima página? {agendamentos.has_next}")
-
+   
     return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
 
 
@@ -96,21 +84,9 @@ def gerar_pdf(id):
     
 
 
-@app.route('/editar/<int:id_usuario>', methods=['GET', 'POST'])
-def editar(id_usuario):
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar(id):
    
-    novo_agendamento = Agendamento.query.get(id_usuario)
-
-
-    print('editando...')
-    if novo_agendamento:
-        #novo_agendamento.nome_cliente = request.form.get('nome_cliente') - obs. tem q tirar o disable do input nome_cliente
-
-        #novo_agendamento.documentos = request.files.getlist('documentos_upados[]')
-       
-        db.session.commit()
-    
-
     return redirect(url_for('meusagendamentos'))
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
