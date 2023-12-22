@@ -1,158 +1,89 @@
 var changedValue = false // Variavel de escopo global para ser acessada pelas funções de prev e next steps
 var diasDesativados = []
+var horas_disponiveis = []
 
-
-function changed(boolean){ // saber se o usúario inseriu algum dado antes de avançar e etapa, passa esta função no onChange""
-    changedValue = boolean
-}
-
-document.getElementById('open-popup').addEventListener('click', function() {
-    showStep(1); // Certifique-se de que o primeiro passo esteja visível ao abrir o pop-up
-    showPopup();
+// API PARA AS BUSCAS DAS DATAS DISPONIVEIS (CUIDADO AO MEXER)
+document.addEventListener('DOMContentLoaded', function () {
+    var id_servico = document.getElementById('id_servico').value;
+    var csrfToken = $('input[name=csrf_token]').val();
+    // Fazer uma requisição AJAX para obter os dados dos agendamentos por dia
+    $.ajax({
+        type: 'POST',
+        url: '/api/agendamentos_por_dia',
+        contentType: 'application/json',
+        data: JSON.stringify({'servico_id': id_servico}),
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        success: function(data) {
+            diasDesativados = data.dias_list
+        },
+        error: function(error) {
+        
+            console.error('Erro ao obter horários disponíveis:', error);
+        }
+    });
 });
 
-function showPopup() {
-    var popup = document.getElementById('popup');
-    var closePopupButton = document.getElementById('close-popup');
-    popup.style.display = 'block';
-    closePopupButton.style.display = 'block';
+function obterHorariosDisponiveis() {
+    var dataSelecionada = document.getElementById('datePicker').value;
 
-    // Limpar os dados dos inputs quando o pop-up é aberto
-    clearForm();
-}
+    var csrfToken = $('input[name=csrf_token]').val();
 
-function closePopup() {
-    var popup = document.getElementById('popup');
-    var closePopupButton = document.getElementById('close-popup');
-    popup.style.display = 'none';
-    closePopupButton.style.display = 'none';
+    var id_servico = document.getElementById('id_servico').value;
 
-    // Limpar os dados dos inputs quando o pop-up é fechado
-    clearForm();
-}
+    console.log(id_servico)
+    console.log(dataSelecionada)
 
-// Função para limpar os dados dos inputs
-function clearForm() {
-    var inputs = document.querySelectorAll('.popup-content input');
-    inputs.forEach(function(input) {
-        // Verifica se o tipo do input é "checkbox" para desmarcá-lo
-        if (input.type === 'checkbox') {
-            input.checked = false;
-        } else {
-            input.value = ''; // Limpa o valor dos outros tipos de input
+    // Faz uma requisição AJAX para obter os horários disponíveis, incluindo o token CSRF
+    $.ajax({
+        type: 'POST',
+        url: '/api/horarios_disponiveis',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'data_selecionada': dataSelecionada, 'servico': id_servico}),
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        success: function(data) {
+            // Renderiza os horários disponíveis no frontend
+            renderizarHorarios(data.horarios_disponiveis);
+        },
+        error: function(error) {
+        
+            console.error('Erro ao obter horários disponíveis:', error);
         }
     });
 }
 
-// Função para avançar para o próximo passo
-function nextStep() {
-    var currentStep = getCurrentStep();
+function renderizarHorarios(horarios) {
+    var divHorarios = document.getElementById('divHorarios');
+    divHorarios.innerHTML = '';  // Limpa a div antes de renderizar os novos horários
 
-    if(changedValue){
-        changed(false); // retorna valor inicial a variável global
+    var titulo = document.createElement('h2');
+    titulo.textContent = 'Escolha seu horário';
+    titulo.className = 'hora-title subtitle-formAgendamento'
+    divHorarios.appendChild(titulo);
 
-        // Lógica para verificar em qual passo estamos
-        if (currentStep === 1) {
-            // Lógica específica para o passo 1
-            var checkboxChecked = document.querySelector('#step1 input[name="checkbox"]').checked;
-            if (!checkboxChecked) {
-                alert('Por favor, confirme que leu e possui todos os documentos necessários.');
-                return;
-            }
-        } else if (currentStep === 2) {
-            // Lógica específica para o passo 2
-            // Você pode adicionar lógica adicional aqui, se necessário
-        } else if (currentStep === 3) {
-            // Lógica específica para o passo 3
-            // Você pode adicionar lógica adicional aqui, se necessário
-        } else if (currentStep === 4) {
-            // Lógica específica para o passo 4
-            // Você pode adicionar lógica adicional aqui, se necessário
-        }
+    // Renderiza os horários disponíveis como radio buttons
+    horarios.forEach(function(hora) {
+        var divContainer = document.createElement('div-withHoras');
+        divContainer.className = 'form-check form-check-inline';
 
-        // Avance para o próximo passo
-        showStep(currentStep + 1);
+        var inputRadio = document.createElement('input');
+        inputRadio.type = 'radio';
+        inputRadio.name = 'hora_ipt';
+        inputRadio.className = 'input-hora form-check-input';
+        inputRadio.value = hora;
 
-        // Adicione lógica para avançar para o próximo passo
-        selectedDate = document.getElementById("datePicker").value;
-        radios = document.getElementsByName('hora_ipt');
+        var label = document.createElement('label');
+        label.className = 'form-check-label'
+        label.textContent = hora;
 
-        var selectedTime
-
-        for(var i = 0; i < radios.length; i++){
-            if(radios[i].checked){
-                selectedTime = radios[i].value;
-                break 
-            }
-        }
-
-        console.log(selectedDate);
-        console.log(selectedTime);
-
-        // Atualize os valores dos campos ocultos
-        document.getElementById("data_selecionada").value = selectedDate;
-        document.getElementById("hora_selecionada").value = selectedTime;
-
-        var dataElement = document.getElementById("data-sel");
-        var horaElement = document.getElementById("hora-sel");
-
-        document.getElementById("selected-date").value = selectedDate;
-        document.getElementById("selected-time").value = selectedTime;
-
-        dataElement.innerHTML = selectedDate;
-        horaElement.innerHTML = selectedTime;
-    }
+        divContainer.appendChild(inputRadio);
+        divContainer.appendChild(label);
+        divHorarios.appendChild(divContainer);
+    });
 }
-
-
-// Função para voltar para o passo anterior
-function prevStep() {
-    var currentStep = getCurrentStep();
-
-    // Volte para o passo anterior
-    showStep(currentStep - 1);
-}
-
-// Função auxiliar para mostrar um passo específico
-function showStep(stepNumber) {
-    var steps = document.querySelectorAll('.popup-content');
-    for (var i = 0; i < steps.length; i++) {
-        steps[i].style.display = i + 1 === stepNumber ? 'block' : 'none';
-    }
-}
-
-// Função auxiliar para obter o número do passo atual
-function getCurrentStep() {
-    var steps = document.querySelectorAll('.popup-content');
-    for (var i = 0; i < steps.length; i++) {
-        if (steps[i].style.display !== 'none') {
-            return i + 1;
-        }
-    }
-    return 1; // Se nenhum passo estiver visível, assuma o primeiro passo
-}
-
-function submitForm() {
-    window.location.href = "meusagendamentos"
-    closePopup();
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Fazer uma requisição AJAX para obter os dados dos agendamentos por dia
-    fetch('/api/agendamentos_por_dia')
-        .then(response => response.json())
-        .then(dias_list => {
-            // Agora 'data' contém os dados dos agendamentos por dia
-            console.log(dias_list);
-
-            diasDesativados = dias_list
-
-            console.log(diasDesativados)
-
-            
-        })
-        .catch(error => console.error('Erro ao obter dados dos agendamentos por dia:', error));
-});
 
 document.addEventListener('DOMContentLoaded', function() {
     // Inicialize o Flatpickr
@@ -186,4 +117,182 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
 
     });
+});
+
+function dadosParaModal() {
+    
+    var diaSelecionado = document.getElementById('datePicker').value;
+    var horaSelecionada = document.querySelector('input[name="hora_ipt"]:checked').value;
+
+    var dataBrasileira = converte_data_americana(diaSelecionado);
+    var horaFormatada = formatarHora(horaSelecionada);
+
+    document.getElementById('diaAgendado').textContent = dataBrasileira;
+    document.getElementById('horaAgendada').textContent = horaFormatada;
+}
+
+document.getElementById('btnSalvarAgenda').addEventListener('click', function () {
+    dadosParaModal();
+});
+
+function converte_data_americana(data){
+
+    // Dividir a data em pedaços
+    var partes = data.split('-');
+    var ano = partes[0];
+    var mes = partes[1];
+    var dia = partes[2];
+
+    // Formata a data
+    var diaFormatado = dia.padStart(2, '0');
+    var mesFormatado = (mes).toString().padStart(2, '0');
+    var anoFormatado = ano;
+
+    var dataFormatada = `${diaFormatado}-${mesFormatado}-${anoFormatado}`;
+
+    return dataFormatada
+}
+
+function formatarHora(horaString) {
+    // Dividir a string em horas e minutos
+    const [horas, minutos] = horaString.split(':');
+  
+    // Formatar a string no novo formato
+    const horaFormatada = `${horas}h${minutos}min`;
+  
+    return horaFormatada;
+}
+
+$(document).ready(function () {
+    // Evento de clique do botão "SALVAR"
+    $("#btnSalvarAgenda").click(function () {
+        // Verifique se a data, hora, pelo menos um documento e ambos os checkboxes estão marcados
+        if (validarAgendamento()) {
+            // Abra o modal programaticamente
+            $("#meuModal").modal("show");
+        } else {
+
+            // verifica se o erro é os checkbox
+            let checkbox1 = $("input[name='i-confirm']").is(":checked");
+            let checkbox2 = $("input[name='li']").is(":checked");
+            if (!checkbox1 || !checkbox2) {
+                alert("Por favor, confirme se tem consentimento do agendamento e dos documentos necessários e marque as opções abaixo antes de continuar.")         
+            } else {
+                // Caso contrário, exiba uma mensagem de erro ou tome outra ação necessária
+                alert("Por favor, preencha todos os campos necessários.");
+            }
+            
+        }
+    });
+
+    function validarAgendamento() {
+        let dataSelecionada = $("#datePicker").val();
+        if(dataSelecionada != ""){
+            
+            let radioSelecionado = $("input[name='hora_ipt']").is(":checked");
+            if(radioSelecionado){
+                
+                let documentosEnviados = $("#updoc").prop("files");
+                var upload = $("#upload\\?").val();
+                let checkbox1 = $("input[name='i-confirm']").is(":checked");
+                let checkbox2 = $("input[name='li']").is(":checked");
+                if(upload == "True"){
+                    if(documentosEnviados.length > 0){
+                        if (checkbox1 && checkbox2) {
+                            
+                            return true
+                        }
+                    }
+                }else{
+                    if (checkbox1 && checkbox2) {
+                            
+                        return true
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+});
+
+// Código para puxar a data do calendar 
+document.addEventListener('DOMContentLoaded', function () {
+    // Obter a data atual
+    var dataAtual = new Date();
+    var diaAtual = dataAtual.getDate();
+    var mesAtual = dataAtual.getMonth() + 1; // Mês começa do zero, então adicionamos 1
+    var anoAtual = dataAtual.getFullYear();
+    var nomeDiaSemanaAtual = dataAtual.toLocaleDateString('pt-BR', { weekday: 'long' });
+    var nomeMesAtual = dataAtual.toLocaleDateString('pt-BR', { month: 'long' });
+
+    // Enviando os elementos para o HTML na carga inicial
+    var daySelectCalendar = document.querySelector(".getCalendarDay");
+    var dayBackSelectCalendar = document.querySelector(".getCalendarDayBackground");
+    var daySelectCalendarDescript = document.querySelector(".getCalendarDayDescription");
+    var dayBackSelectCalendarDescript = document.querySelector(".getCalendarYearBackground");
+    var monthSelectCalendar = document.querySelector(".getCalendarMonth");
+    var getSelectCalendar = document.querySelector(".getCalendarYear");
+
+    daySelectCalendar.innerText = diaAtual;
+    dayBackSelectCalendar.innerText = diaAtual;  // Atualizado
+    daySelectCalendarDescript.innerText = nomeDiaSemanaAtual;
+    dayBackSelectCalendarDescript.innerText = nomeDiaSemanaAtual;  // Atualizado
+    monthSelectCalendar.innerText = nomeMesAtual;
+    getSelectCalendar.innerText = anoAtual;
+
+    // Inicialize o Flatpickr
+    flatpickr("#datePicker", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        maxDate: new Date().fp_incr(29),
+        disableMobile: "true",
+        inline: true,
+        disable: [
+            function(date) {
+                // Desativa sábados e domingos
+                if (date.getDay() === 0 || date.getDay() === 6) {
+                    return true;
+                }
+
+                // Desativa os dias 15 e 25 de cada mês
+                if (date.getDate() === 15 || date.getDate() === 25) {
+                    return true;
+                }
+
+                var dataAtual = date.getDate();
+
+                if (diasDesativados.includes(dataAtual)) {
+                    return true;
+                }
+
+                // Mantém os outros dias habilitados
+                return false;
+            }
+        ],
+        onChange: function(selectedDates, dateStr, instance) {
+            // Aqui você obtém o valor do dia, mês e ano selecionados e exibe no console
+            if (selectedDates.length > 0) {
+                var dataSelecionada = selectedDates[0];
+                
+                var diaSelecionado = dataSelecionada.getDate();
+                var mesSelecionado = dataSelecionada.getMonth() + 1;
+                var anoSelecionado = dataSelecionada.getFullYear();
+
+                // Obtenha o nome do dia da semana e do mês
+                var nomeDiaSemana = dataSelecionada.toLocaleDateString('pt-BR', { weekday: 'long' });
+                var nomeMes = dataSelecionada.toLocaleDateString('pt-BR', { month: 'long' });
+
+                // Enviando os elementos para o HTML
+                daySelectCalendar.innerText = diaSelecionado;
+                dayBackSelectCalendar.innerText = diaSelecionado;
+                daySelectCalendarDescript.innerText = nomeDiaSemana;
+                dayBackSelectCalendarDescript.innerText = nomeDiaSemana;
+                monthSelectCalendar.innerText = nomeMes;
+                getSelectCalendar.innerText = anoSelecionado;
+            }
+        }
+    });
+
+    // ... seu código existente
 });

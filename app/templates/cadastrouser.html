@@ -11,10 +11,18 @@
 
 </head>
 <body>
-    <div class="div-main">
-        <div class="div-icons">
-            <a href="/"><img src="../static/assets/images/logo-pmvc-verde.png" class="logo-img" alt="logo-pmvc-verde"></a>
-            <img src="{{ url_for('static', filename='assets/icons/user.png') }}"  alt="" class="icon-user">
+    <nav> 
+        <div class="navbar">
+            <ul>
+                <li>
+                    <img src="../static/assets/images/Brasão_Vitoria_da_Conquista.png" alt="Logo prefeitura">
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-login">
+        <div class="img-box">
+            <img src="../static/assets/images/Brasão_Vitoria_da_Conquista.png">
         </div>
         <div class="div-login">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -24,27 +32,62 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <h2 class="login-name">CADASTRAR</h2>
-            <form method="POST" action="{{ url_for('cadastrar') }}" class="form-login">
-                {{ form_cadastrouser.hidden_tag() }}
+        <div class="content-box">
+            <div class="form-box">
+                <h2 class="login-name">CADASTRAR</h2>
+                {% if session.user_type_usuario_logado == "administrador" %}
+                    <form method="POST" action="{{ url_for('cadastrar', is_administrador='True') }}" class="form-login">
+                {%else%}
+                    <form method="POST" action="{{ url_for('cadastrar', is_administrador='False') }}" class="form-login">
+                {%endif%}
 
-                {{ form_cadastrouser.email.label }} {{ form_cadastrouser.email(id="username", class="input-email", placeholder="Digite seu email") }} <br>
-                {{ form_cadastrouser.nome.label }} {{ form_cadastrouser.nome(id="nome", class="input-nome", placeholder="Digite seu nome") }} <br>
-                {{ form_cadastrouser.cpf.label }} {{ form_cadastrouser.cpf(id="cpf", class="input-cpf", placeholder="Digite seu CPF") }} <br>
-                {{ form_cadastrouser.sus.label }} {{ form_cadastrouser.sus(id="sus", class="input-sus", placeholder="Digite o número do seu cartão do SUS") }} <br>
+                    {{ form_cadastrouser.hidden_tag() }}
+                    <!-- <input type="hidden" name="proxima" value="{{ proxima or url_for('areaServidor') }}"> -->
 
-                {{ form_cadastrouser.senha.label }} {{ form_cadastrouser.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
-                    {% if form_cadastrouser.senha.errors %}
-                        <p style="color: red;">{{ form_cadastrouser.senha.errors[0] }}</p>
-                    {% endif %}
-                {{ form_cadastrouser.confirmar_senha.label }} {{ form_cadastrouser.confirmar_senha(id="confirmar_senha", class="input-senha", placeholder="Digite sua senha") }} <br>
-                    {% if form_cadastrouser.confirmar_senha.errors %}
-                        <p style="color: red;">{{ form_cadastrouser.confirmar_senha.errors[0] }}</p>
-                    {% endif %}
-                {{ form_cadastrouser.submit(class="button-login") }}
-            </form>
+                    <div class="input-box">
+                         {{ form_cadastrouser.email.label }} {{ form_cadastrouser.email(id="username", class="input-email", placeholder="Digite seu email") }}
+                    </div>
+
+                    <div class="input-box">
+                        {{ form_cadastrouser.nome.label }} {{ form_cadastrouser.nome(id="nome", class="input-nome", placeholder="Digite seu nome") }} 
+                    </div>
+
+                    <div class="input-box">
+                        {{ form_cadastrouser.cpf.label }} {{ form_cadastrouser.cpf(id="cpf", class="input-cpf", placeholder="Digite seu CPF") }} 
+                    </div>
+
+                    <div class="input-box">
+                        {{ form_cadastrouser.sus.label }} {{ form_cadastrouser.sus(id="sus", class="input-sus", placeholder="Digite o número do seu cartão do SUS") }}
+                    </div>
+
+                    <div class="input-box">
+                        {{ form_cadastrouser.senha.label }} {{ form_cadastrouser.senha(id="password", class="input-senha", placeholder="Digite sua senha") }} <br>
+                            {% if form_cadastrouser.senha.errors %}
+                                <p style="color: red;">{{ form_cadastrouser.senha.errors[0] }}</p>
+                            {% endif %}
+                    </div>
+
+                    <div class="input-box">
+                        {{ form_cadastrouser.confirmar_senha.label }} {{ form_cadastrouser.confirmar_senha(id="confirmar_senha", class="input-senha", placeholder="Digite sua senha") }} <br>
+                        {% if form_cadastrouser.confirmar_senha.errors %}
+                            <p style="color: red;">{{ form_cadastrouser.confirmar_senha.errors[0] }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="input-box">
+                        {{ form_cadastrouser.submit(class="button-login") }}
+                    </div>
+
+                    <div class="input-box">
+                       <p>Já possui uma conta? <a href="#">Entrar</a></p>
+                    </div>
+                </form>
+                <div class="cookie-policy">
+                    <p>Ao Continuar, você aceita o Contrato do Usuário, a Política de Privacidade e a Política de Cookies.</p>
+                </div>  
+            </div>
         </div>
-    </div> 
+    </div>
 </body>
     <script>
         $(document).ready(function(){

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div class="div-form container-sm border agendarAgendamentoIndex">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <form id="formAgendamento" action="/autenticaragendamento" method="post" enctype="multipart/form-data">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="nome_do_servico" value="{{ info_servico.nome }}">
+            <input type="hidden" id="id_servico" name="id_servico" value="{{ info_servico.id }}">
+            <input type="hidden" id="upload?" value="{{ info_servico.upload }}">
+
+            <div class="title-forms">
+                <h2 class="display-6 title-formAgendamento"> FAÇA SEU AGENDAMENTO DE {{ info_servico.nome }} </h2>
+            </div>
+            
+            <div class="mb-3 mt-3">
+                <div id="suaDivResultado"></div>
+                <h2 class="subtitle-formAgendamento"> Escolha a data: </h2>
+                <div class="fieldCalendarAgendamento">
+                    <div class="boxDateCalendar">
+                        <div class="divYearMonthCalendar">
+                            <p class="getCalendarMonth"></p>
+                        <p class="getCalendarYear"></p>
+                        </div>
+                        <div class="calendarBackground">
+                            <p class="getCalendarDayBackground"></p>
+                            <p class="getCalendarYearBackground"></p>
+                        </div>
+                        <p class="getCalendarDay"></p>
+                        <p class="getCalendarDayDescription"></p>
+                    </div>
+                    <div class="div-calendar">
+                        <input type="text" id="datePicker" name="data_agendada" class="flatpickr-input form-control" onchange="obterHorariosDisponiveis()"> 
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <div class="mb-3">
+                <div> 
+                    <div class="div-hora" id="divHorarios">
+                    
+                    </div>
+                </div>
+            </div>
+
+            {% if info_servico.upload == "True" %}
+                <div class="documents">
+                    <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
+                    <div>
+                        <input class="form-control" class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="mb-3 form-check"> 
+                <div class="checkbox-div">
+                    <div>
+                        <input type="checkbox" class="form-check-input form-control" name="i-confirm" id="">
+                        <label for="i-confirm" class="form-check-label"> Eu confirmo que desejo agendar e estou ciente de que devo comparecer. </label>
+                        <br>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form-check-input form-control" name="li" id="">
+                        <label for="li" class="form-check-label"> Li e confirmo que enviei os documentos necessários na etapa anterior. </label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="enviar">
+                <button type="button" id="btnSalvarAgenda" class="btn btn-primary">
+                    SALVAR
+                </button>
+                <!-- <button type="submit" class="btn btn-primary"> 
+                    TESTE
+                </button> -->
+            </div>
+
+        
+            <!-- Modal -->
+            <div class="modal" id="meuModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">CONFIRME O SEU AGENDAMENTO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <p> {{info_servico.nome}} </p>
+                    <P> LOCAL DO SERVIÇO: FACILITA</P>
+                    <p> DATA AGENDADA: <span id="diaAgendado"></span> </p> 
+                    <p> HORA AGENDADA: <span id="horaAgendada"></span> </p>
+                    <p> DOCUMENTOS ENVIADOS: </p>
+                    <p> NOME DOS DOCUMENTOS QUE DEVEM SER ENVIADOS</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">CORRIGIR</button>
+                    <button type="submit" class="btn btn-success">CONFIRMAR AGENDAMENTO</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- FIM DO MODAL -->
+
+        </form>
+
+        <script src="../static/js/pop-up-agendar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="../static/js/formAgendamento.js"></script>
+        
+    </div>
+{% endblock %}

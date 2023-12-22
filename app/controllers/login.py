@@ -3,7 +3,6 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from app.models.User import User
 from app.models.model_user import *
-from app.models.model_agendamento import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import *
 import pandas as pd
@@ -38,7 +37,10 @@ def autenticarlogin():
     if user:
         session['usuario_logado'] = user.nome
         session['id_usuario_logado'] = user.id
-        session['cpf_usuario_logado'] = user.cpf      
+        session['cpf_usuario_logado'] = user.cpf  
+        session['user_type_usuario_logado'] = user.user_type 
+        print(user.user_type ) 
+
         login_user(user)
         flash('Login realizado!', 'sucesso')
 
@@ -77,7 +79,10 @@ def login():
 @login_required
 def logout():
     logout_user()
-    session.pop('usuario_logado', None)    
+    session.pop('usuario_logado', None) 
+    session.pop('id_usuario_logado', None)     
+    session.pop('cpf_usuario_logado', None)   
+    session.pop('user_type_usuario_logado', None) 
     
     flash('Logout bem-sucedido!', 'success')
     return redirect(url_for('indexuser'))

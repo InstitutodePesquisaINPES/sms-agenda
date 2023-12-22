@@ -126,60 +126,78 @@ body{
 .boxContentServices {
     padding: 20px 0px 0px 0px;
     border-radius: 20px;
+    height: 250px;
     background-color: #fff;
     text-align: center;
     overflow: hidden;
-
 }
 
-.boxContentServices i {
+.boxContentServices .fieldTextBoxServices{
+    height: 175px;
+}
+
+
+
+.boxContentServices .fieldTextBoxServices i {
     font-size: 4rem;
     color: #00bbbf;
+    margin-bottom: 20px;
 }
 
-.boxContentServices p {
+.boxContentServices .fieldTextBoxServices p {
     margin: 0px 20px 10px 20px;
     font-weight: 600;
     color: #0d829b;
     font-size: 0.95rem;
 }
 
-.contentServicesBarRed,
-.contentServicesBarBlue,
-.contentServicesBarYellow {
-    padding: 10px 10px 5px 0px;
+.contentServicesBarOne,
+.contentServicesBarTwo,
+.contentServicesBarThree, 
+.contentServicesBarFour {
+    padding: 5px 10px 40px 20px;
     text-align: left;
     display: flex;
     justify-content: space-between;
+    font-size: 0.93rem;
+    font-weight: 600;
+    
 }
 
-.contentServicesBarRed {
-    background-color: #ff303b;
+.contentServicesBarOne {
+    background-color: #1d6fba;
 }
 
-.contentServicesBarBlue {
-    background-color: #47b7d6;
+.contentServicesBarTwo {
+    background-color: #d25ab2;
 }
 
-.contentServicesBarYellow {
-    background-color: #ffa800;
+.contentServicesBarThree {
+    background-color: #1eb2ea;
 }
 
-.contentServicesBarRed p,
-.contentServicesBarBlue p,
-.contentServicesBarYellow p {
-    color: #fff;
+.contentServicesBarFour {
+    background-color: #e4d61b;
+}
+
+.contentServicesBarOne p,
+.contentServicesBarTwo p,
+.contentServicesBarThree p,
+.contentServicesBarFour p {
+    color: #fff !important;
 }
 
 .iconsReference {
-    display: flex;
+    display: flex !important;
 }
 
 .iconsReference i {
-    color: #fff;
+    color: #fff !important;
     font-size: 1rem;
     margin: 0px 1px;
 }
+
+
 
 /* Media Query para ajustar o layout em telas menores */
 @media screen and (max-width: 500px) {

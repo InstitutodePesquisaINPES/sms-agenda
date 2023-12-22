@@ -31,7 +31,7 @@ body{
 .box-img{
     position: relative;
     width: 100%;
-    height: 95vh;
+    height: 85vh;
     background: linear-gradient(135deg, #b8c0ef 0%,#5271ff 21%,#24a3b1 48%,#e5e9c1 90%,#bed5e2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
@@ -147,4 +147,63 @@ body{
     left: 50%;
     border-radius: 20px;
     transform: translateX(-50%);
+}
+
+/* ------ About ----- */ 
+
+.aboutIndex {
+    margin: 3% 7%;
+}
+
+
+.cardTextIndex {
+    padding: 10px 25px;
+    width: 40%;
+    background: #fff;
+    border-radius: 10px;
+    filter: drop-shadow(8px 10px 25px #00000009);
+    margin: 50px 0px;
+    min-height: 150px;
+}
+
+.cardTextIndex:nth-child(1) {
+    margin: 50px 0px 50px 0px;
+}
+
+.cardTextIndex img {
+    position: absolute;
+    max-width: 800px;
+    top: 10%;
+    left: 100%;
+    z-index: 1000;
+}
+
+.cardTextIndex h2 {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #121212;
+    margin-bottom: 20px;
+}
+
+.cardTextIndex p {
+    font-size: 0.9rem;
+    color: #363636;
+}
+
+.textOne {
+    position: relative;
+    left: 0%;
+    border-left: 12px solid #15457c;
+}
+
+.textTwo {
+    position: relative;
+    left: 0%;
+    border-left: 12px solid #15457c;
+}
+
+.textThree {
+    position: relative;
+    left: 0%;
+    border-left: 12px solid #15457c;
 }

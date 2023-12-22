@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
 {% block main %}
+    <div class="backgroundsMainServicos">
+        <div class="backgroundIndexOneServicos"></div>
+    </div>
 
+    <div class="background-main animate__animated animate__fadeInRight" style="animation-delay: 1500ms;">
+        <i class="bi bi-hospital"></i>
+    </div>
     <div>
         <div class="card-service">
             <div class="cabecalho-card">
-                <img src="../static/assets/icons/desenvolvimento.png" alt="em desenvolvimento" >
+                <p><i class="bi bi-hospital"></i></p>
                 <div class="categoria-name">
                     <p> {{ info_servico.categoria }} </p>
                 </div>
@@ -15,10 +21,11 @@
             </div>
             <div class="buttons-service"> 
                 {% if not session.usuario_logado%}
-                    <a class="needLogin" href="{{ url_for('login') }}"><button class="needLogin"> LOGIN É NECESSÁRIO </button></a>
+                    <a class="needLogin" href="{{ url_for('login') }}"><button class="needLogin needLoginButton">
+                        Faça o login para agendar o serviço </button></a>
                 {% else %}
-                    <button id="open-popup"> AGENDAR </button>
-                <!--<button> SOLICITAR </button>-->
+                    <a href="{{ url_for('agendar', servico_id=info_servico.id) }}"><button> AGENDAR </button></a>
+                <!--<button> SOLICITAR </button>--> 
                 {% endif %}
             </div>
             <div class="service-details">
@@ -32,19 +39,15 @@
                     <h4 class="documents-title"> DOCUMENTOS NECESSÁRIOS </h4>
                     <ul class="documents-list">
                         {% for documentos in info_servico.documentos %}
-                            <li> {{ documentos }} </li>
+                            <li> 
+                                <i class="bi bi-file-person"></i>
+                                {{ documentos }} 
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
         </div>
-
-        
-        {% include "popupAgendamento.html" %}
-        
-                
-        
-
         <script src="../static/js/pop-up-agendar.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         

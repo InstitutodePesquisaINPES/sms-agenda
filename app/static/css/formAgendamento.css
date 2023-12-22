@@ -1,0 +1,218 @@
+
+
+.div-form{
+    margin-top: 80px;
+    padding: 20px;
+}
+
+
+.div-calendar{
+    text-align: center;
+}
+
+.div-calendar .flatpickr-input {
+    display: none;
+}
+
+
+
+#datePicker{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.documents{
+    align-items: center;
+    text-align: center;
+}
+
+.checkbox-div{
+    margin-top: 30px;
+}
+
+.form-check-label {
+    margin-left: 10px;
+} 
+
+.form-check-input {
+    margin-right: 5px;
+}
+
+.enviar{
+    text-align: center;
+}
+
+/* --- Style index --- */ 
+
+.agendarAgendamentoIndex {
+    border-radius: 10px;
+    background-color: #2b2b389c;   
+    margin: 100px 0px 50px 0px;
+}
+
+
+.title-forms {
+    color: #fff;
+}
+
+.title-forms h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.subtitle-formAgendamento {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 50px 0px 5px 120px;
+}
+
+.div-hora {
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #2b2b38;
+    margin: 0 200px 0px 110px;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* --- Calendar Style ----- */ 
+
+.fieldCalendarAgendamento {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0px 10%;
+    width: 71%;
+    height: 53vh;
+    justify-content: center;
+    border: 15px solid #2b2b38;
+}
+
+/* --- Calendar Description -- */ 
+.boxDateCalendar {
+    width: 61%;
+    height: 350px;
+    background-color: #2b2b38;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+}
+
+.getCalendarDay {
+    font-size: 10rem;
+    margin-top: -70px;
+    font-weight: 600;
+    filter: drop-shadow(2px 2px 2px #00000080);
+    overflow: hidden;
+}
+
+.getCalendarDayDescription {
+    font-size: 1.6rem;
+    margin-top: -60px;
+    filter: drop-shadow(2px 2px 2px #00000080);
+}
+
+.divYearMonthCalendar {
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+    margin: 10px 25px 0px 0px;
+    filter: drop-shadow(2px 2px 2px #00000080);
+}
+
+.getCalendarMonth {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.getCalendarYear {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-top: -28px;
+}
+
+.getCalendarDayBackground {
+    color: #ffffff08;
+    font-size: 14rem;
+    font-weight: 700;
+    letter-spacing: -10px;
+    transform: translate(-50px,-130px);
+    position: absolute;
+    z-index: 1000;
+}
+
+.getCalendarYearBackground {
+    color: #ffffff08;
+    font-size: 3rem;
+    font-weight: 700;
+    transform: translate(-20px,130px);
+    position: absolute;
+    z-index: 1000;
+}
+/* --- Calendar Base -- */ 
+
+.div-calendar{
+    width: 310px; /* Ajuste o valor conforme necessário */
+    height: 100%;
+    background-color: #2b2b38;
+}
+
+.flatpickr-calendar {
+    width: 100%;
+}
+
+.flatpickr-rContainer {
+    width: 100%;
+}
+
+.flatpickr-days {
+    width: 100% !important;
+
+}
+
+.dayContainer {
+    width: 100% !important;
+    font-size: 1rem;
+}
+
+
+.flatpickr-day.selected {
+    background-color: #2b2b38 !important;
+    border: none !important;
+    color: #008cff !important;
+    filter: drop-shadow(0px 0px 5px #00000070);
+}
+
+.flatpickr-monthDropdown-months {
+    background-color: #008cff !important;
+    border-radius: 5px !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+
+@media (max-width:990px) {
+    .fieldCalendarAgendamento {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        height: 95vh;
+    }
+    .boxDateCalendar {
+        width: 100%;
+        height: 350px;
+    }
+    .div-calendar{
+        width: 100%; /* Ajuste o valor conforme necessário */
+        margin: 0 auto;
+        height: 100%;
+        background-color: #2b2b38;
+    }
+    .dayContainer {
+        min-width: 523px;
+    }
+    .flatpickr-day {
+        margin: 2px 15px;
+    }
+    
+}
