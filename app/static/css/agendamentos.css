@@ -15,21 +15,21 @@ body{
 }
 
 .cabecalho{
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background-color: #15457c;
     height: 100px;
-
     padding: 0 100px;
-
 }
 
 .logo-pmvc{
     max-width: 500px;
     max-height: 80px;
+}
+
+.meusAgendamentosIndex {
+    margin: 80px 0px 60px 0px;
 }
 
 

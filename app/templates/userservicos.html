@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block main %}
+    <div class="backgroundsMainServicos">
+        <div class="backgroundIndexOneServicos"></div>
+    </div>
+
     <div class="background-main animate__animated animate__fadeInRight" style="animation-delay: 1500ms;">
         <i class="bi bi-hospital"></i>
     </div>
@@ -18,8 +22,7 @@
             <div class="buttons-service"> 
                 {% if not session.usuario_logado%}
                     <a class="needLogin" href="{{ url_for('login') }}"><button class="needLogin needLoginButton">
-                        <i class="bi bi-person icon-button-user"></i> 
-                        LOGIN É NECESSÁRIO </button></a>
+                        Faça o login para agendar o serviço </button></a>
                 {% else %}
                     <a href="{{ url_for('agendar', servico_id=info_servico.id) }}"><button> AGENDAR </button></a>
                 <!--<button> SOLICITAR </button>--> 
