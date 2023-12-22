@@ -29,7 +29,7 @@ servicos = servicos_data_function()
 def filtro():
     id_usuario_logado = session.get('id_usuario_logado')
     page = int(request.args.get('page', 1))
-    registros_por_pagina = 2
+    registros_por_pagina = 10
 
     
     pesquisarBarra = request.args.get('pesquisarBarra')
