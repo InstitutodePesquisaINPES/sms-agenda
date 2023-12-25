@@ -21,7 +21,7 @@ def cadastrar():
     if form_cadastrouser.validate_on_submit():
         user = Usuario.query.filter(
             or_(Usuario.cpf == form_cadastrouser.cpf.data,
-                Usuario.nome == form_cadastrouser.email.data)).first()
+                Usuario.email == form_cadastrouser.email.data)).first()
         if user:
             flash('Usuario já cadastrado no sistema', 'negado')
             return redirect(url_for('cadastrouser'))
