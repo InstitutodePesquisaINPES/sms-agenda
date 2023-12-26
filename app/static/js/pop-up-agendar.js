@@ -17,7 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
             'X-CSRFToken': csrfToken
         },
         success: function(data) {
-            diasDesativados = data.dias_list
+            lista_datas = data.dias_list
+            for (var i = 0; i < lista_datas.length; i++) {
+                diasDesativados.push(String(lista_datas[i]));
+            }
+            console.log(lista_datas)
+            FunctDatePicker()
             
         },
         error: function(error) {
@@ -48,6 +53,7 @@ function obterHorariosDisponiveis() {
         success: function(data) {
             // Renderiza os horários disponíveis no frontend
             renderizarHorarios(data.horarios_disponiveis);
+            
         },
         error: function(error) {
         
@@ -86,39 +92,41 @@ function renderizarHorarios(horarios) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicialize o Flatpickr
-    flatpickr("#datePicker", {
-        dateFormat: "Y-m-d", // Formato da data
-        minDate: "today",    // Define a data mínima como hoje
-        maxDate: new Date().fp_incr(29),  // Define a data máxima como 30 dias a partir de hoje
-        disableMobile: "true", // Desativa o seletor nativo em dispositivos móveis
-        inline: true, // exibe o calendario inline
-        disable: [
-            function(date) {
-                // Desativa sábados e domingos
-                if (date.getDay() === 0 || date.getDay() === 6) {
-                    return true;
-                }
+// document.addEventListener('DOMContentLoaded', function() {
 
-                // Desativa os dias 15 e 25 de cada mês
-                if (date.getDate() === 15 || date.getDate() === 25) {
-                    return true;
-                }
+//     console.log(diasDesativados),
+//     // Inicialize o Flatpickr
+//     flatpickr("#datePicker", {
+//         dateFormat: "Y-m-d", // Formato da data
+//         minDate: "today",    // Define a data mínima como hoje
+//         maxDate: new Date().fp_incr(29),  // Define a data máxima como 30 dias a partir de hoje
+//         disableMobile: "true", // Desativa o seletor nativo em dispositivos móveis
+//         inline: true, // exibe o calendario inline
+//         disable: [
+//             function(date) {
+//                 // Desativa sábados e domingos
+//                 if (date.getDay() === 0 || date.getDay() === 6) {
+//                     return true;
+//                 }
 
-                var dataAtual = date.getDate()
+//                 // // Desativa os dias 15 e 25 de cada mês
+//                 // if (date.getDate() === 15 || date.getDate() === 25) {
+//                 //     return true;
+//                 // }
 
-                if(diasDesativados.includes(dataAtual)){
-                    return true;
-                }
+//                 var dataAtual = date.getDate()
+
+//                 if(diasDesativados.includes(dataAtual)){
+//                     return true;
+//                 }
                 
-                // Mantém os outros dias habilitados
-                return false;
-            }
-        ]
+//                 // Mantém os outros dias habilitados
+//                 return false;
+//             }
+//         ]
 
-    });
-});
+//     });
+// });
 
 function dadosParaModal() {
     
@@ -218,7 +226,7 @@ $(document).ready(function () {
 });
 
 // Código para puxar a data do calendar 
-document.addEventListener('DOMContentLoaded', function () {
+function FunctDatePicker() {
     // Obter a data atual
     var dataAtual = new Date();
     var diaAtual = dataAtual.getDate();
@@ -242,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
     monthSelectCalendar.innerText = nomeMesAtual;
     getSelectCalendar.innerText = anoAtual;
 
+
     // Inicialize o Flatpickr
     flatpickr("#datePicker", {
         dateFormat: "Y-m-d",
@@ -256,22 +265,33 @@ document.addEventListener('DOMContentLoaded', function () {
                     return true;
                 }
 
-                // Desativa os dias 15 e 25 de cada mês
-                if (date.getDate() === 15 || date.getDate() === 25) {
-                    return true;
+
+                var dataAtualdt = date.getDate();
+                var mesAtualdt = date.getMonth() + 1;
+                var anoAtualdt = date.getFullYear()
+
+                
+                //console.log(anoAtualdt,mesAtualdt, dataAtualdt);
+
+                // montar string data
+
+                data_atualdt = anoAtualdt + "-" + mesAtualdt + "-" + dataAtualdt                 
+
+                console.log(data_atualdt)
+                console.log(diasDesativados)
+
+                
+
+                if(diasDesativados.includes(String(data_atualdt))){
+                     console.log('funcionou')
+                     return true
                 }
-
-                var dataAtual = date.getDate();
-
-                if (diasDesativados.includes(dataAtual)) {
-                    return true;
-                }
-
-                // Mantém os outros dias habilitados
-                return false;
             }
+
         ],
+        
         onChange: function(selectedDates, dateStr, instance) {
+
             // Aqui você obtém o valor do dia, mês e ano selecionados e exibe no console
             if (selectedDates.length > 0) {
                 var dataSelecionada = selectedDates[0];
@@ -295,5 +315,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
     // ... seu código existente
-});
+};
+
+function verificaCondicional(data) {
+    // Extrai ano, mês e dia da data fornecida
+    var partesData = data.split("-");
+    var anoAtualdt = parseInt(partesData[0]);
+    var mesAtualdt = parseInt(partesData[1]);
+    var diaAtualdt = parseInt(partesData[2]);
+
+    // Condição a ser verificada
+    if (mesAtualdt === 12 && anoAtualdt === 2023 && diaAtualdt === 27) {
+        return true;
+    }
+
+    return false;
+}
