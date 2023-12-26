@@ -118,24 +118,38 @@ def agendar(servico_id):
 
 @app.route('/api/agendamentos_por_dia', methods=['GET', 'POST'])
 def agendamentos_por_dia():
+    id_servico = request.json.get('servico_id')
+    info_servico = servicos.get(int(id_servico))
+
     # Obtém a data de hoje
     hoje = datetime.now().date()
+
+    # Número de dias a serem adicionados
+    dias_a_frente = info_servico['dias_minimos']
     
+
+    # nova data com regra de negocio de dias minimos
+    nova_data = hoje + timedelta(days=dias_a_frente)
+    print(nova_data)
  
     # Obtém a data daqui a 30 dias
-    data_30_dias_frente = hoje + timedelta(days=30)
+    data_30_dias_frente = nova_data + timedelta(days=30)
+    print(data_30_dias_frente)
     
 
     # Query para contar o número de agendamentos por dia
     resultados = db.session.query(func.count(Agendamento.id), Agendamento.data_agendada).\
-        filter(Agendamento.data_agendada.between(hoje, data_30_dias_frente)).\
+        filter(Agendamento.data_agendada.between(nova_data, data_30_dias_frente)).\
         group_by(Agendamento.data_agendada).all()
     
 
     
     # Lista para armazenar os dias
+    # dias_list = [(nova_data - timedelta(days=i)).day for i in range(dias_a_frente)]
     dias_list = []
-    id_servico = request.json.get('servico_id')
+    for i in range(dias_a_frente + 1):
+        prox_data = hoje + timedelta(days=i)
+        dias_list.append(str(prox_data.strftime('%Y-%m-%d')))
 
    
     qntHorarios = calculaHoras(id_servico)
@@ -147,8 +161,10 @@ def agendamentos_por_dia():
         qntHorarios = calculaHoras(id_servico)
         
         if count == qntHorarios:
-            
-            dias_list.append(data_agendada.day)
+            print(data_agendada.day)
+            dias_list.append(str(data_agendada))
+ 
+    print(dias_list)
 
     
     return jsonify({'dias_list': dias_list})
@@ -167,14 +183,18 @@ def horas_disponiveis():
         
         # Sua lista de horários disponíveis
         horas_disp = listaHorarios(servico_id)  # Substitua com seus próprios horários
+
+        horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada).all()]
+        
         
         data_atual = datetime.now()
         
         
         # Filtra os horários disponíveis removendo aqueles que já foram agendados
+
         horarios_disponiveis = [hora for hora in horas_disp
-                        if datetime.combine(data_selecionada, datetime.strptime(hora, '%H:%M').time()) > data_atual]
-        
+                         if datetime.combine(data_selecionada, datetime.strptime(hora, '%H:%M').time()) > data_atual and hora not in horarios_agendados]
+
         
 
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
