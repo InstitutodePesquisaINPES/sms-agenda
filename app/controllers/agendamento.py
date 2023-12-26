@@ -36,13 +36,13 @@ def filtro():
     filtro = request.args.get('filtro')
     if pesquisarBarra:
         if filtro == 'servicoFiltro':
-            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
 
         elif filtro == 'dataFiltro':       
             data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
             data_formatada = data_obj.strftime('%Y-%m-%d')
             
-            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all()    
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado,Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all()    
     else:
         agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
@@ -271,3 +271,55 @@ def autenticaragendamento():
         return render_template('errorPage.html', mensagem_erro=mensagem_erro)
 
     return render_template('outra_pagina.html')
+
+def filtroAll():
+    id_usuario_logado = session.get('id_usuario_logado')
+    page = int(request.args.get('page', 1))
+    registros_por_pagina = 10
+
+    
+    pesquisarBarra = request.args.get('pesquisarBarra')
+    filtro = request.args.get('filtro')
+    if pesquisarBarra:
+        if filtro == 'servicoFiltro':
+           
+            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
+
+        elif filtro == 'dataFiltro':       
+            data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+            data_formatada = data_obj.strftime('%Y-%m-%d')
+            
+            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all() 
+        elif filtro == 'usuarioFiltro':       
+          
+            
+            agendamentos = Agendamento.query.filter(Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).all()  
+    else:
+        agendamentos = Agendamento.query.order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+
+    return agendamentos
+
+@app.route('/areaServidor') 
+def areaServidor():
+    try:
+       
+        agendamentos_filtrados = filtroAll()
+
+    except:
+        flash('digite um valor de campo valido')
+        return redirect(url_for('areaServidor'))
+   
+    return render_template('areaServidor.html', agendamentos=agendamentos_filtrados)
+
+@app.route('/consultarMedicamento') 
+def consultarMedicamento():
+    try:
+       
+        agendamentos_filtrados = ""#Agendamento.query.filter(Agendamento.consultarMedicamento == "servico").all()
+
+    except:
+        flash('digite um valor de campo valido')
+        return redirect(url_for('consultarMedicamento'))
+   
+    return render_template('consultarMedicamento.html', agendamentos=agendamentos_filtrados)

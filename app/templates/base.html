@@ -69,12 +69,26 @@
                         <!-- <p class="nome-user"> {{session['usuario_logado']}} </p> -->
                         
                     </div>
-
+                    
                     <div class="options-logado">
+                        {% if session.user_type_usuario_logado == "usuario" %}
                         <div class="menu-options">
                             <i class="bi bi-calendar-date"></i>
-                            <a href="{{ url_for('meusagendamentos')}}">Meus </br>Agendamentos </a>
+                            <a href="{{ url_for('meusagendamentos')}}">Meus Agendamentos </a>
                         </div>
+                        {% endif %}
+                        {% if session.user_type_usuario_logado == "servidor" %}
+                            <div class="menu-options">
+                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <a href="{{ url_for('areaServidor')}}">area do servidor</a>
+                            </div>
+                        {% endif %}
+                        {% if session.user_type_usuario_logado == "administrador" %}
+                            <div class="menu-options">
+                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <a href="{{ url_for('areaServidor')}}">area do administrador</a>
+                            </div>
+                        {% endif %}
                         {% if session.user_type_usuario_logado == "administrador" %}
                             <div class="menu-options">
                                 <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
@@ -85,6 +99,10 @@
                                 <a href="{{ url_for('configUnidade')}}">Configurações de unidade</a>
                             </div>
                         {% endif %}
+                        <div class="menu-options">
+                            <i class="bi bi-calendar-date"></i>
+                            <a href="{{url_for('consultarMedicamento')}}">Gerenciar consulta medicamento </a>
+                        </div>
                         <div class="menu-options menu-options-three">
                             <i class="bi bi-box-arrow-right"></i>
                             <a href="{{ url_for('logout') }}">Logout</a>
