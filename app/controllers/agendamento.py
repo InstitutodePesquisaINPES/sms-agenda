@@ -22,9 +22,7 @@ import os
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename #import de mexer com arquivos
 
-
-
-servicos = servicos_data_function()
+servicos = servicos_data_function() # objeto com dados dos serviços
 
 def filtro():
     id_usuario_logado = session.get('id_usuario_logado')
@@ -88,6 +86,7 @@ def meusagendamentos():
 def editar(id):
    
     return redirect(url_for('meusagendamentos'))
+
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
     documento = Documentos.query.filter_by(id_agendamento=id).all()
@@ -102,11 +101,13 @@ def deletar(id):
     
     return redirect(url_for('meusagendamentos'))
 
+# rota do card de informações do serviço, recebe um id e busca os dados no objeto
 @app.route('/servico/<int:servico_id>')
 def userservicos(servico_id):
     info_servico = servicos.get(servico_id)
     return render_template('userservicos.html', info_servico=info_servico) 
 
+# rota do formulario de agendamento, recebe um id, e busca os dados do serviço, para agendar.
 @app.route('/agendar/<int:servico_id>')
 @login_required
 def agendar(servico_id):
@@ -116,6 +117,7 @@ def agendar(servico_id):
 
     return render_template('formAgendamento.html', form_agendamento=form_agendamento, info_servico=info_servico)
 
+# API de buscar quantidade de agendamentos em um único dia, acessada pelo js e retorna a lista dos dias disponiveis.
 @app.route('/api/agendamentos_por_dia', methods=['GET', 'POST'])
 def agendamentos_por_dia():
     id_servico = request.json.get('servico_id')
@@ -124,7 +126,7 @@ def agendamentos_por_dia():
     # Obtém a data de hoje
     hoje = datetime.now().date()
 
-    # Número de dias a serem adicionados
+    # Número de dias a serem adicionados (regra de negócio de dias minimos)
     dias_a_frente = info_servico['dias_minimos']
     
 
@@ -151,7 +153,7 @@ def agendamentos_por_dia():
         prox_data = hoje + timedelta(days=i)
         dias_list.append(str(prox_data.strftime('%Y-%m-%d')))
 
-   
+    # função que calcula quantos horarios pode ter agendado em um unico dia
     qntHorarios = calculaHoras(id_servico)
     
 
@@ -160,15 +162,16 @@ def agendamentos_por_dia():
         # Extrai o dia e adiciona à lista de dias
         qntHorarios = calculaHoras(id_servico)
         
-        if count == qntHorarios:
+        if count == qntHorarios: # se count(quantidade de horarios agendadas, for igual ao maximo de horarios que pode ter nesse dia)
             print(data_agendada.day)
-            dias_list.append(str(data_agendada))
+            dias_list.append(str(data_agendada)) # esse dia não estará disponivel
  
     print(dias_list)
 
     
     return jsonify({'dias_list': dias_list})
 
+# API de horarios por dia selecionada, envia a data pelo js e retorna os horarios disponiveis do dia especifico
 @app.route('/api/horarios_disponiveis', methods=['GET', 'POST'])
 def horas_disponiveis():
     try:
@@ -182,27 +185,21 @@ def horas_disponiveis():
         
         
         # Sua lista de horários disponíveis
-        horas_disp = listaHorarios(servico_id)  # Substitua com seus próprios horários
+        horas_disp = listaHorarios(servico_id)
 
         horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada).all()]
         
-        
         data_atual = datetime.now()
         
-        
         # Filtra os horários disponíveis removendo aqueles que já foram agendados
-
         horarios_disponiveis = [hora for hora in horas_disp
                          if datetime.combine(data_selecionada, datetime.strptime(hora, '%H:%M').time()) > data_atual and hora not in horarios_agendados]
-
-        
 
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
     
-    
-
+# rota para autenticar o agendamento     
 @app.route('/autenticaragendamento', methods=['POST'])
 @login_required
 def autenticaragendamento():
@@ -210,7 +207,7 @@ def autenticaragendamento():
 
     cpf_usuario = session['cpf_usuario_logado']
     
-    lista_documentos = upar_documentos(documentos, cpf_usuario)
+    lista_documentos = upar_documentos(documentos, cpf_usuario) # salvar documentos agendados na pasta raíz
 
     try:
         if request.method == 'POST':
