@@ -4,19 +4,16 @@ from run import app
 from app.models.model_user import *
 from complementary.servicos.servicos_data import *
 
-@app.route('/areaAdmin')
-@login_required
-def areaAdmin():
-    return render_template('areaAdmin.html')
-
+# painel de configurações da unidade de atendimento
 @app.route('/configUnidade')
 @login_required
 def configUnidade():
     horarios = Horarios_disponiveis.query.filter_by(id=1).first()
-    servicos = servicos_data_function()
+    servicos = servicos_data_function() # objeto dos serviços
 
     return render_template('configUnidade.html', horarios=horarios, servicos=servicos)
 
+# API para buscar os dados de tempo de atendimento em cada serviço em tempo real
 @app.route('/api/obter_tempo_atendimento', methods=['GET', 'POST'])
 def obter_tempo_atendimento():
     try:
@@ -32,9 +29,11 @@ def obter_tempo_atendimento():
     except Exception as e:
         return jsonify({'error': str(e)}), 400 
 
+# Configurações de funcionamento da agência
 @app.route('/autenticarConfig1', methods=['POST'])
 @login_required
-def autenticarConfig1(): #config de funcionamento da agencia
+def autenticarConfig1():
+    # converter a string para o formato do banco de dados
     hora_inicio = request.form['hora_inicio']
     if len(hora_inicio) != 8:
         hora_inicio = hora_inicio + ":00"
@@ -57,15 +56,14 @@ def autenticarConfig1(): #config de funcionamento da agencia
         })
         db.session.commit()
     except Exception as e:
-        return render_template('errorPage.html', mensagem_erro=e)
-    
-    
+        return render_template('errorPage.html', mensagem_erro=e) 
     
     return redirect(url_for('configUnidade'))
 
+# Configurações do tempo de atendimento de cada serviço (busca por api no js e retorna alteração pro banco de dados)
 @app.route('/autenticarConfig2', methods=['POST'])
 @login_required
-def autenticarConfig2(): #config de tempo_atendimento
+def autenticarConfig2(): 
     
     servico_id = request.form['servicoSelect']
     novo_horario = request.form['tempo_atendimento']
