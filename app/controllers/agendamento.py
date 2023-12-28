@@ -8,7 +8,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from sqlalchemy import func
 from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import desc
+from sqlalchemy import desc, not_
 
 
 from app.models.User import *
@@ -34,13 +34,13 @@ def filtro():
     filtro = request.args.get('filtro')
     if pesquisarBarra:
         if filtro == 'servicoFiltro':
-            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
         elif filtro == 'dataFiltro':       
             data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
             data_formatada = data_obj.strftime('%Y-%m-%d')
             
-            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado,Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all()    
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado,Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)    
     else:
         agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
@@ -50,11 +50,20 @@ def filtro():
 def meusagendamentos():
     try:
         agendamentos_filtrados = filtro()
+        if agendamentos_filtrados.items:
+           
+            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado != "CARTÃO DO SUS"]
+            
+            return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
+        else:
+            
+            flash('Nenhum resultado encontrado')
+            return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
+       
     except:
         flash('digite um valor de campo valido')
         return redirect(url_for('meusagendamentos'))
    
-    return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
 
 
 # @app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
@@ -85,21 +94,37 @@ def meusagendamentos():
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
    
-    return redirect(url_for('meusagendamentos'))
-
+    return redirect(url_for('indexuser'))
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
+    user_type_usuario_logado = session.get('user_type_usuario_logado')
+
     documento = Documentos.query.filter_by(id_agendamento=id).all()
     if documento:
         for doc in documento:
             db.session.delete(doc)
 
-        agendamento = Agendamento.query.get(id)
-        db.session.delete(agendamento)
-
-        db.session.commit()
+    agendamento = Agendamento.query.get(id)
     
-    return redirect(url_for('meusagendamentos'))
+    if user_type_usuario_logado == 'usuario' :
+        if agendamento.servico_agendado == 'CARTÃO DO SUS':
+            db.session.delete(agendamento)
+            db.session.commit()
+            return redirect(url_for('consultarMedicamento'))
+        else:
+            db.session.delete(agendamento)
+            db.session.commit()
+            return redirect(url_for('meusagendamentos'))
+        
+    elif user_type_usuario_logado == 'servidor' or  user_type_usuario_logado == 'administrador':
+        if agendamento.servico_agendado == 'CARTÃO DO SUS':
+            db.session.delete(agendamento)
+            db.session.commit()
+            return redirect(url_for('consultarMedicamento'))
+        else:  
+            db.session.delete(agendamento)
+            db.session.commit()   
+            return redirect(url_for('areaServidor'))
 
 # rota do card de informações do serviço, recebe um id e busca os dados no objeto
 @app.route('/servico/<int:servico_id>')
@@ -222,11 +247,28 @@ def autenticaragendamento():
             nome_do_servico = request.form['nome_do_servico']
 
             senha = gerarSenha(nome_do_servico, horario_agendado, id_servico)
-            print(senha)
-            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha)
+
+            if nome_do_servico == "CARTÃO DO SUS":
+                status = 'analise'
+                
+                novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
+
+                db.session.add(novo_agendamento)
+                db.session.commit()
+
+            
+                return redirect(url_for('consultarMedicamento')) 
+            
+            status = ''
+                
+            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
 
             db.session.add(novo_agendamento)
             db.session.commit()
+
+
+            return redirect(url_for('meusagendamentos'))
+            
 
             #|----------- Função de enviar para api do GCloud Suspensa, os métodos estão comentados abaixo ------------|#
 
@@ -255,9 +297,7 @@ def autenticaragendamento():
 
             # db.session.add(novo_caminho)
             # db.session.commit()
-
-
-            return redirect(url_for('meusagendamentos'))
+            
 
     except SQLAlchemyError as e:
         # Se ocorrer um erro no banco de dados, você pode lançar uma mensagem de erro
@@ -280,19 +320,19 @@ def filtroAll():
     if pesquisarBarra:
         if filtro == 'servicoFiltro':
            
-            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).all()
+            agendamentos = Agendamento.query.filter(Agendamento.servico_agendado.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
         elif filtro == 'dataFiltro':       
             data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
             data_formatada = data_obj.strftime('%Y-%m-%d')
             
-            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).all() 
+            agendamentos = Agendamento.query.filter(Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
         elif filtro == 'usuarioFiltro':       
           
             
-            agendamentos = Agendamento.query.filter(Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).all()  
+            agendamentos = Agendamento.query.filter(Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False) 
     else:
-        agendamentos = Agendamento.query.order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+        agendamentos = Agendamento.query.order_by(Agendamento.data_agendada).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 
 
     return agendamentos
@@ -300,23 +340,148 @@ def filtroAll():
 @app.route('/areaServidor') 
 def areaServidor():
     try:
-       
         agendamentos_filtrados = filtroAll()
 
+        if agendamentos_filtrados.items:
+            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado != "CARTÃO DO SUS"]
+            
+            return render_template('areaServidor.html', agendamentos=agendamentos_filtrados)
+        else:
+            
+            flash('Nenhum resultado encontrado')
+            return render_template('areaServidor.html', agendamentos=agendamentos_filtrados)
     except:
         flash('digite um valor de campo valido')
         return redirect(url_for('areaServidor'))
    
-    return render_template('areaServidor.html', agendamentos=agendamentos_filtrados)
+
+def filtroConsultarMedicamento():
+    id_usuario_logado = session.get('id_usuario_logado')
+    user_type_usuario_logado = session.get('user_type_usuario_logado')
+    page = int(request.args.get('page', 1))
+    registros_por_pagina = 10
+
+    
+    pesquisarBarra = request.args.get('pesquisarBarra')
+    filtroStatus = request.args.get('filtroStatus')
+    filtroPesquisa = request.args.get('filtroPesquisa')
+    
+    if user_type_usuario_logado == "usuario":  
+        
+        if filtroStatus == 'aprovadosFiltro' and filtroPesquisa == 'todosFiltro':
+           
+            
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "aprovado").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+        elif filtroStatus == 'retificadosFiltro'  and filtroPesquisa == 'todosFiltro':       
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "retificado").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+        elif filtroStatus == 'analiseFiltro'  and filtroPesquisa == 'todosFiltro':       
+            agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+        
+        else:
+           
+            if pesquisarBarra:
+                if filtroStatus == 'aprovadosFiltro' and filtroPesquisa == 'senhaFiltro':
+                
+                    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "aprovado",  Agendamento.senha.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+                elif filtroStatus == 'retificadosFiltro'  and filtroPesquisa == 'senhaFiltro':       
+                    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "retificado",  Agendamento.senha.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                
+                elif filtroStatus == 'analiseFiltro'  and filtroPesquisa == 'senhaFiltro':       
+                    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise",  Agendamento.senha.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                
+                elif filtroStatus == 'aprovadosFiltro' and filtroPesquisa == 'dataFiltro':       
+                    data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+                    data_formatada = data_obj.strftime('%Y-%m-%d')
+                    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "aprovado",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                
+                elif filtroStatus == 'retificadosFiltro' and filtroPesquisa == 'dataFiltro':       
+                    data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+                    data_formatada = data_obj.strftime('%Y-%m-%d')
+                    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "retificado",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                
+                elif filtroStatus == 'analiseFiltro' and filtroPesquisa == 'dataFiltro':       
+                    data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+                    data_formatada = data_obj.strftime('%Y-%m-%d')
+                    agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                else:
+                    flash('por favor preencha os dois campos de filtro')
+                    agendamentos  = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+            
+            else:
+                    
+                    agendamentos  = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+################
+    elif user_type_usuario_logado == "servidor" or user_type_usuario_logado == "administrador":
+         
+        if filtroStatus == 'aprovadosFiltro' and filtroPesquisa == 'todosFiltro':
+           
+            
+            agendamentos = Agendamento.query.filter( Agendamento.status == "aprovado").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+        elif filtroStatus == 'retificadosFiltro'  and filtroPesquisa == 'todosFiltro':       
+            agendamentos = Agendamento.query.filter( Agendamento.status == "retificado").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+        elif filtroStatus == 'analiseFiltro'  and filtroPesquisa == 'todosFiltro':       
+            agendamentos = Agendamento.query.filter( Agendamento.status == "analise").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+        
+        else:
+           
+            if pesquisarBarra:
+                if filtroStatus == 'aprovadosFiltro' and filtroPesquisa == 'senhaFiltro':  
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "aprovado",  Agendamento.senha.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                elif filtroStatus == 'retificadosFiltro'  and filtroPesquisa == 'senhaFiltro':       
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "retificado",  Agendamento.senha.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                elif filtroStatus == 'analiseFiltro'  and filtroPesquisa == 'senhaFiltro':       
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "analise",  Agendamento.senha.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+
+
+                elif filtroStatus == 'aprovadosFiltro'  and filtroPesquisa == 'usuarioFiltro':       
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "analise",  Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                elif filtroStatus == 'retificadosFiltro'  and filtroPesquisa == 'usuarioFiltro':       
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "analise",  Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                elif filtroStatus == 'analiseFiltro'  and filtroPesquisa == 'usuarioFiltro':       
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "analise",  Agendamento.nome_cliente.ilike(f"%{pesquisarBarra}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                
+
+                elif filtroStatus == 'aprovadosFiltro' and filtroPesquisa == 'dataFiltro':       
+                    data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+                    data_formatada = data_obj.strftime('%Y-%m-%d')
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "aprovado",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)   
+                elif filtroStatus == 'retificadosFiltro' and filtroPesquisa == 'dataFiltro':       
+                    data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+                    data_formatada = data_obj.strftime('%Y-%m-%d')
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "retificado",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)              
+                elif filtroStatus == 'analiseFiltro' and filtroPesquisa == 'dataFiltro':       
+                    data_obj = datetime.strptime(pesquisarBarra, '%d/%m/%Y')
+                    data_formatada = data_obj.strftime('%Y-%m-%d')
+                    agendamentos = Agendamento.query.filter( Agendamento.status == "analise",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                
+                else:
+                    flash('por favor preencha os dois campos de filtro')
+                    agendamentos  = Agendamento.query.filter( Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+            
+            else:
+                    
+                    agendamentos  = Agendamento.query.filter( Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+    
+    return agendamentos
 
 @app.route('/consultarMedicamento') 
 def consultarMedicamento():
     try:
+        agendamentos_filtrados = filtroConsultarMedicamento()
+        if agendamentos_filtrados.items:
+            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado == "CARTÃO DO SUS"]
+            
+            return render_template('consultarMedicamento.html', agendamentos=agendamentos_filtrados)
+        else:
+            
+            flash('Nenhum resultado encontrado')
+            return render_template('consultarMedicamento.html', agendamentos=agendamentos_filtrados)
        
-        agendamentos_filtrados = ""#Agendamento.query.filter(Agendamento.consultarMedicamento == "servico").all()
-
     except:
         flash('digite um valor de campo valido')
         return redirect(url_for('consultarMedicamento'))
-   
-    return render_template('consultarMedicamento.html', agendamentos=agendamentos_filtrados)
