@@ -13,7 +13,7 @@
             {% endif %}
         {% endwith %}
             <div class="d-flex align-items-center text-dark text-decoration-none ">
-                <a style="text-decoration: none;" href="{{url_for('areaServidor')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
+                <a style="text-decoration: none;" href="{{url_for('consultarMedicamento')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
                 viewBox="0 0 16 16">
                 <path
                     d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
@@ -28,7 +28,7 @@
             <div class="container-fluid py-4 bg-fundo px-4 mb-2 ">
                 <div class="">
                     <div class="">
-                        <form style="margin-bottom: 0.5rem;" class="d-flex" action="{{url_for('areaServidor')}}" role="search" method="get">
+                        <form style="margin-bottom: 0.5rem;" class="d-flex" action="{{url_for('consultarMedicamento')}}" role="search" method="get">
                             <div class="input-group">
 
                                 <span class="input-group-text">
@@ -40,10 +40,25 @@
                                 </span>
 
                                 <div class="form-group flex-grow-1">
-                                    <select name="filtro" class="form-select me-1" aria-label="Default select example" id="filtro">
-                                        <option selected disabled hidden>Filtrar pesquisa</option>
+                                    <select name="filtroStatus" class="form-select me-1" aria-label="Default select example" id="filtro">
+                                        <option selected disabled hidden>Filtrar status</option>
                                         <option value="aprovadosFiltro">~Aprovados</option>
                                         <option value="retificadosFiltro">~Retificados</option>
+                                        <option value="analiseFiltro">~Em análise</option>
+                                       
+                                       
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group flex-grow-1">
+                                    <select name="filtroPesquisa" class="form-select me-1" aria-label="Default select example" id="filtroPesquisa">
+                                        <option selected disabled hidden>Filtrar pesquisa</option>
+                                        <option value="todosFiltro">~Todos</option>
+                                        {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
+                                            <option value="usuarioFiltro">~Usuario</option>
+                                        {%endif%}
+                                        <option value="senhaFiltro">~Senha</option>
+                                        <option value="dataFiltro">~Data</option>
                                        
                                        
                                         
@@ -90,26 +105,119 @@
                                     <td>{{ agendamento.servico_agendado }}</td>
                                     <td>{{ agendamento.data_agendada }}</td>
                                     <td>{{ agendamento.horario_agendado }}</td>
+                                    <td>{{ agendamento.status }}</td>
                                     <td>
                                        
                                         <div class="d-flex justify-content-center">
+                                        {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id_usuario }}">
-                                                <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop4{{ agendamento.id_usuario }}">
+                                                <img width="24" height="24" src="" alt="">
+
+                                                <span>Aprovar</span>
                                             </button>
-                                        <div class="d-flex justify-content-center">
+
+                                                <div class="modal fade" id="staticBackdrop4{{ agendamento.id_usuario }}" data-bs-backdrop="static"
+                                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Aprovar</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            
+                                                            <div class="modal-body">
+                                                                <p>Tem certeza que deseja aprovar esta solicitaçao?</p>
+
+                                                                <form action="{{url_for('editar', id=agendamento.id)}}"  enctype="multipart/form-data" method="POST">
+                                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                                        <fieldset class="col-md-12">
+                                                                            <div class="mb-4">
+                                                                                <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                                    <b>Status</b>*
+                                                                                </span>
+            
+                                                                                <input type="text" class="form-control" name="status" id='status'
+                                                                                    value="{{agendamento.status}}" aria-describedby="NomedoUsuário" disabled> =
+
+                                                                                <input type="text" class="form-control" name="status" id='status'
+                                                                                    value="aprovar" aria-describedby="NomedoUsuário" disabled>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                </form>        
+                                                   
+                                                            </div>
+                    
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <div class="d-flex align-items-center justify-content-center">
+                                                                        <span>Aprovar</span>
+                                                                    </div>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                       
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id_usuario }}">
-                                                <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop5{{ agendamento.id_usuario }}">
+                                                <img width="24" height="24" src="" alt="">
                                                 
                                                 <span>Retificar</span>
                                             </button>
-                                        <div class="d-flex justify-content-center">
+
+                                            <div class="modal fade" id="staticBackdrop5{{ agendamento.id_usuario }}" data-bs-backdrop="static"
+                                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Retificar</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        
+                                                        <div class="modal-body">
+                                                            <p>Digite o texto de retificação no campo abaixo</p>
+
+                                                            <form action="{{url_for('editar', id=agendamento.id)}}"  enctype="multipart/form-data" method="POST">
+                                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                                    <fieldset class="col-md-12">
+                                                                        <div class="mb-4">
+                                                                            <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                                <b>Status</b>*
+                                                                            </span>
+        
+                                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                                            name="procedimento">teste</textarea>
+
+                                                                        </div>
+                                                                    </fieldset>
+                                                            </form>        
+                                               
+                                                        </div>
+                
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <div class="d-flex align-items-center justify-content-center">
+                                                                    <span>Retificar</span>
+                                                                </div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                       
+                                            
+
+                                        {%endif%}
+
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
                                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id_usuario }}">
                                                 <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
-
-                                                <span>Aprovar</span>
                                             </button>
 
                                             <a href="">
@@ -202,11 +310,29 @@
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Status</b>*
+                                                                        <b>Horario</b>*
                                                                     </span>
 
                                                                     <input type="time" class="form-control" name="cpfPaciente" value="{{agendamento.horario_agendado}}"
                                                                         id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Status</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="cpfPaciente" value="{{agendamento.status}}"
+                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Retificação</b>*
+                                                                    </span>
+
+                                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                                    name="procedimento" disabled>teste</textarea>
                                                                 </div>  
 
                                                             </fieldset>
@@ -271,7 +397,7 @@
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Status</b>*
+                                                                        <b>Horario</b>*
                                                                     </span>
 
                                                                     <input type="time" class="form-control" name="cpfPaciente" value="{{agendamento.horario_agendado}}"
@@ -280,7 +406,33 @@
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Documentos</b>*
+                                                                        <b>Status</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="cpfPaciente" value="{{agendamento.status}}"
+                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Retificação</b>*
+                                                                    </span>
+
+                                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                                    name="procedimento" disabled>teste</textarea>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Documentos enviado</b>*
+                                                                    </span>
+
+                                                                    <img src="../../uploads/{{agendamento.id_usuario}}/ChatGPT.jpg" alt="">{{agendamento.id_usuario}}
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Substituir documentos</b>*
                                                                     </span>
 
                                                                     <input class="form-control" type="file" name="documentos_upados"  id="documentos_upados" multiple>
@@ -288,6 +440,7 @@
                                                                 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+
                                                                     <button type="submit" class="btn btn-primary">
                                                                         <div class="d-flex align-items-center justify-content-center">
                                                                             <span>Confirmar</span>
@@ -318,11 +471,7 @@
                         Agendar novo serviço</button>
                 </a>
 
-                <a href="" >
-                    <button style="margin-right: 20px; background-color: #22487B; border: none;" type="button" class="btn btn-primary btn-gerenc-new">
-                        <i class="bi bi-file-earmark-plus"></i>
-                        Consultar medicamento</button>
-                </a>
+               
                 
                 <div class="pagination">
                     {% if agendamentos.has_prev %}
@@ -387,11 +536,11 @@
     return data;
   }
 
-    document.getElementById('filtro').addEventListener('change', function () {
-    var filtro = this.value;
+    document.getElementById('filtroPesquisa').addEventListener('change', function () {
+    var filtroPesquisa = this.value;
     var campoPesquisa = document.getElementById('pesquisarBarra');
 
-    if (filtro === 'dataFiltro') {
+    if (filtroPesquisa === 'dataFiltro') {
       campoPesquisa.addEventListener('input', function formatarDataListener() {
         this.value = formatarData(this.value);
       });
