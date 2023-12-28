@@ -41,7 +41,6 @@ function obterHorariosDisponiveis() {
             renderizarHorarios(data.horarios_disponiveis);
         },
         error: function(error) {
-        
             console.error('Erro ao obter horários disponíveis:', error);
         }
     });
@@ -51,31 +50,44 @@ function renderizarHorarios(horarios) {
     var divHorarios = document.getElementById('divHorarios');
     divHorarios.innerHTML = '';  // Limpa a div antes de renderizar os novos horários
 
-    var titulo = document.createElement('h2');
-    titulo.textContent = 'Escolha seu horário';
-    titulo.className = 'hora-title subtitle-formAgendamento'
+    var titulo = document.createElement('p');
     divHorarios.appendChild(titulo);
 
-    // Renderiza os horários disponíveis como radio buttons
-    horarios.forEach(function(hora) {
-        var divContainer = document.createElement('div-withHoras');
-        divContainer.className = 'form-check form-check-inline';
+    var divContainer = document.createElement('div');
+    divContainer.className = 'horarios-container';
 
+    // Renderiza os horários disponíveis como radio buttons
+    horarios.forEach(function(hora, index) {
         var inputRadio = document.createElement('input');
         inputRadio.type = 'radio';
         inputRadio.name = 'hora_ipt';
         inputRadio.className = 'input-hora form-check-input';
+        inputRadio.id = 'hora_' + hora.replace(':', ''); // Adiciona um ID único baseado na hora
         inputRadio.value = hora;
 
         var label = document.createElement('label');
-        label.className = 'form-check-label'
-        label.textContent = hora;
+        label.className = 'form-check-label';
+        label.setAttribute('for', 'hora_' + hora.replace(':', '')); // Associa o label ao input
+        label.innerHTML = hora + ' <i class="bi bi-check"></i>';
 
-        divContainer.appendChild(inputRadio);
-        divContainer.appendChild(label);
-        divHorarios.appendChild(divContainer);
+        var divItem = document.createElement('div');
+        divItem.className = 'form-check';
+        divItem.appendChild(inputRadio);
+        divItem.appendChild(label);
+
+        divContainer.appendChild(divItem);
+
+        // Adiciona a divContainer à divHorarios e reinicia a cada 4 elementos
+        if ((index + 1) % 4 === 0 || index === horarios.length - 1) {
+            divHorarios.appendChild(divContainer);
+            divContainer = document.createElement('div');
+            divContainer.className = 'horarios-container';
+        }
     });
 }
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Inicialize o Flatpickr

@@ -104,7 +104,7 @@ body{
 /* ---- Box Contents ---- */ 
 
 .gallery-container {
-    margin: 180px 8% 0px 8% ; /* Adicionei margem para evitar que os itens encostem nas bordas da tela */
+    margin: 50px 8% 0px 8% ; /* Adicionei margem para evitar que os itens encostem nas bordas da tela */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Modificado para auto-fit para ajuste automático */
     gap: 25px;
@@ -154,7 +154,8 @@ body{
 .contentServicesBarOne,
 .contentServicesBarTwo,
 .contentServicesBarThree, 
-.contentServicesBarFour {
+.contentServicesBarFour,
+.contentServicesBarFive {
     padding: 5px 10px 40px 20px;
     text-align: left;
     display: flex;
@@ -180,10 +181,15 @@ body{
     background-color: #e4d61b;
 }
 
+.contentServicesBarFive {
+    background-color: #6ee651;
+}
+
 .contentServicesBarOne p,
 .contentServicesBarTwo p,
 .contentServicesBarThree p,
-.contentServicesBarFour p {
+.contentServicesBarFour p,
+.contentServicesBarFive {
     color: #fff !important;
 }
 
