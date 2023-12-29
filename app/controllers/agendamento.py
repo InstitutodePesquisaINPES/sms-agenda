@@ -74,12 +74,12 @@ def gerar_pdf(id):
     largura_pagina = 150
     altura_pagina = 148
 
-    # Crie um objeto FPDF com as dimensões da página
+
     pdf = FPDF(format=(largura_pagina, altura_pagina))
     pdf.add_page()
 
-    # Defina a cor de fundo para amarelo
-    pdf.set_fill_color(227, 222, 129)  # RGB para amarelo
+   
+    pdf.set_fill_color(227, 222, 129)  
 
     # Preencha o retângulo com a cor de fundo
     pdf.rect(0, 0, largura_pagina, altura_pagina, 'F')
@@ -102,6 +102,8 @@ HORA AGENDADA: {agendamento.horario_agendado}"""
 
     # Configurar alinhamento central para o título
     pdf.set_xy(10, 10)  # Defina as coordenadas iniciais para o título
+
+   
     pdf.multi_cell(largura_pagina - 20, 10, "COMPROVANTE DE AGENDAMENTO", align='C')  # Largura ajustada para evitar margens
 
     # Configurar alinhamento à esquerda para o restante do texto
