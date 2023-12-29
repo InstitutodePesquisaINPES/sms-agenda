@@ -1,9 +1,10 @@
 import logging
 from run import app
+from fpdf import FPDF
 from flask import Flask, render_template, make_response
 
 # from flask_weasyprint import HTML, render_pdf
-from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
+from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify,send_file
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import func
 from datetime import datetime
@@ -66,29 +67,58 @@ def meusagendamentos():
    
 
 
-# @app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
-# def gerar_pdf(id):
-#     agendamento = Agendamento.query.get(id)
+@app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
+def gerar_pdf(id):
+    agendamento = Agendamento.query.get(id)
 
-#     # Verifica se o agendamento foi encontrado
-#     if agendamento is None:
-#         return "Agendamento não encontrado", 404
+    largura_pagina = 150
+    altura_pagina = 148
 
-#     # Renderiza o template HTML
-#     html = render_template('comprovante_agendamento.html', agendamento=agendamento)
 
-#     # Converte o HTML para PDF usando o Flask-WeasyPrint
-#     pdf = render_pdf(HTML(string=html))
+    pdf = FPDF(format=(largura_pagina, altura_pagina))
+    pdf.add_page()
 
-#     # Cria uma resposta Flask
-#     response = make_response(pdf)
+   
+    pdf.set_fill_color(227, 222, 129)  
 
-#     # Define os cabeçalhos apropriados para PDF
-#     response.headers['Content-Type'] = 'application/pdf'
-#     response.headers['Content-Disposition'] = 'inline; filename=Facilita_comprovante_de_agendamento.pdf'
+    # Preencha o retângulo com a cor de fundo
+    pdf.rect(0, 0, largura_pagina, altura_pagina, 'F')
+    pdf.image(r'app\static\assets\images\prefeitura.jpeg', x=10, y=10, w=20)
 
-#     return response
-    
+    textoMedicamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
+SENHA: {agendamento.senha}
+SERVIÇO AGENDADO: {agendamento.servico_agendado}.
+STATUS: {agendamento.status}
+DATA AGENDADA: {agendamento.data_agendada}
+HORA AGENDADA: {agendamento.horario_agendado}"""
+
+    textoAgendamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
+SENHA: {agendamento.senha}
+SERVIÇO AGENDADO: {agendamento.servico_agendado}.
+DATA AGENDADA: {agendamento.data_agendada}
+HORA AGENDADA: {agendamento.horario_agendado}"""
+
+    pdf.set_font("Courier", size=12)
+
+    # Configurar alinhamento central para o título
+    pdf.set_xy(10, 10)  # Defina as coordenadas iniciais para o título
+
+   
+    pdf.multi_cell(largura_pagina - 20, 10, "COMPROVANTE DE AGENDAMENTO", align='C')  # Largura ajustada para evitar margens
+
+    # Configurar alinhamento à esquerda para o restante do texto
+    pdf.set_xy(10, 30)  # Defina as coordenadas iniciais para o texto restante
+
+    if agendamento.servico_agendado != "CARTÃO DO SUS":
+        pdf.multi_cell(largura_pagina - 20, 10, textoAgendamento)  # Largura ajustada para evitar margens
+    else:
+        pdf.multi_cell(largura_pagina - 20, 10, textoMedicamento)  # Largura ajustada para evitar margens
+
+    temp_file_path = "Comprovante de agendamento.pdf"
+    pdf.output(temp_file_path)
+
+    return send_file(temp_file_path, as_attachment=True)
+   
 
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])

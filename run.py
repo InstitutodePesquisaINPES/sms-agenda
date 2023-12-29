@@ -16,8 +16,6 @@ from complementary.functions.login import tipo_user
 
 import os
 
-GTK_FOLDER = r'C:\Program Files\GTK3-Runtime Win64\bin'
-os.environ['PATH'] = GTK_FOLDER + os.pathsep + os.environ.get('PATH', '')
 
 
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
