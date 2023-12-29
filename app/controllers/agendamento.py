@@ -95,9 +95,18 @@ def meusagendamentos():
 def editar(id):
    
     return redirect(url_for('indexuser'))
+
+
+def registrar_log(descricao):
+    with open('log.txt', 'a') as f:
+        dataAlteraçao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        log = f'{dataAlteraçao} - {descricao}\n'
+        f.write(log)
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
     user_type_usuario_logado = session.get('user_type_usuario_logado')
+    usuario_logado = session.get('usuario_logado')
+    cpf_usuario_logado = session.get('cpf_usuario_logado')
 
     documento = Documentos.query.filter_by(id_agendamento=id).all()
     if documento:
@@ -105,25 +114,46 @@ def deletar(id):
             db.session.delete(doc)
 
     agendamento = Agendamento.query.get(id)
+    descricao_log = descricao_log = f'''Registro excluído: 
+    - id: {agendamento.id}
+    - id_usuario: {agendamento.id_usuario}
+    - nome_cliente: {agendamento.nome_cliente}
+    - data_agendada: {agendamento.data_agendada}
+    - horario_agendado: {agendamento.horario_agendado}
+    - senha: {agendamento.senha}
+    - status: {agendamento.status}
+    - servico_agendado: {agendamento.servico_agendado}
+    - documentos: {agendamento.documentos}
+    - Usuario editor: 
+        - usuario_logado: {usuario_logado}
+        - cpf_usuario_logado: {cpf_usuario_logado}
+        - user_type_usuario_logado: {user_type_usuario_logado}
+------------------------------------------------------------------
+'''
+
     
     if user_type_usuario_logado == 'usuario' :
         if agendamento.servico_agendado == 'CARTÃO DO SUS':
             db.session.delete(agendamento)
             db.session.commit()
+            registrar_log(descricao_log)
             return redirect(url_for('consultarMedicamento'))
         else:
             db.session.delete(agendamento)
             db.session.commit()
+            registrar_log(descricao_log)
             return redirect(url_for('meusagendamentos'))
         
     elif user_type_usuario_logado == 'servidor' or  user_type_usuario_logado == 'administrador':
         if agendamento.servico_agendado == 'CARTÃO DO SUS':
             db.session.delete(agendamento)
             db.session.commit()
+            registrar_log(descricao_log)
             return redirect(url_for('consultarMedicamento'))
         else:  
             db.session.delete(agendamento)
-            db.session.commit()   
+            db.session.commit()
+            registrar_log(descricao_log)   
             return redirect(url_for('areaServidor'))
 
 # rota do card de informações do serviço, recebe um id e busca os dados no objeto

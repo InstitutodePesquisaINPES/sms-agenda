@@ -1,0 +1,50 @@
+
+
+2023-12-29 10:45:02 - Registro excluído: 
+    - id: 10
+    - id_usuario: 2
+    - nome_cliente: yasmin
+    - data_agendada: 2024-01-01
+    - horario_agendado: 08:20:00
+    - senha: CDS_5
+    - status: analise
+    - servico_agendado: CARTÃO DO SUS
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2023-12-29 10:45:03 - Registro excluído: 
+    - id: 17
+    - id_usuario: 3
+    - nome_cliente: Gustavo
+    - data_agendada: 2024-01-01
+    - horario_agendado: 09:00:00
+    - senha: CDS_7
+    - status: analise
+    - servico_agendado: CARTÃO DO SUS
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2023-12-29 10:45:05 - Registro excluído: 
+    - id: 2
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-02
+    - horario_agendado: 16:40:00
+    - senha: CDS_24
+    - status: analise
+    - servico_agendado: CARTÃO DO SUS
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
