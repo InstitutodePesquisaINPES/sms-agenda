@@ -1,4 +1,6 @@
 *.pyc
+*.pdf
+*.txt
 config.py
 venv/
 uploads/

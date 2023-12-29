@@ -48,3 +48,19 @@
         - user_type_usuario_logado: administrador
 ------------------------------------------------------------------
 
+2023-12-29 12:30:54 - Registro excluído: 
+    - id: 18
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-02
+    - horario_agendado: 07:00:00
+    - senha: CDS_1
+    - status: analise
+    - servico_agendado: CARTÃO DO SUS
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+

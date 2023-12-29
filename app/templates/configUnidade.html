@@ -116,14 +116,14 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" role="alert">
-                    A alteração deste dado irá interferir na distribuição de agendamentos para os usuários, podendo permitir
-                    mais ou menos agendamentos, conforme o tempo de atendimento definido para o serviço.
+                    Este relatório contém informações sensíveis e confidenciais. O acesso não autorizado a este documento é estritamente proibido. Certifique-se de compartilhar este relatório apenas com 
+                    indivíduos autorizados e tomar as medidas adequadas para proteger a privacidade e a integridade das informações contidas.
                 </div>
                 <!-- Conteúdo do modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
-                <form action="{{url_for('')}}" method="POST">
+                <form action="{{url_for('gerar_pdf_logs')}}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                    
-                        <button type="submit" class="button-configs"> GERAR RELATORIO</button>
+                        <input type="submit" class="button-configs" value="GERAR RELATORIO"> 
                     
                     <br>
                 </form>

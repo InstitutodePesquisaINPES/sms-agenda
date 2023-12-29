@@ -40,8 +40,13 @@
                     <ul class="documents-list">
                         {% for documentos in info_servico.documentos %}
                             <li> 
-                                <i class="bi bi-file-person"></i>
-                                {{ documentos }} 
+                                {%if documentos_Acompanhante%}
+                                <i class="bi bi-file-person"></i> 
+                                    {{ documentos_Acompanhante }} 
+                                {%else%}
+                                <i class="bi bi-file-person"></i> 
+                                    {{ documentos }} 
+                                {%endif%}
                             </li>
                         {% endfor %}
                     </ul>

@@ -118,6 +118,36 @@ HORA AGENDADA: {agendamento.horario_agendado}"""
     pdf.output(temp_file_path)
 
     return send_file(temp_file_path, as_attachment=True)
+
+@app.route('/gerar_pdf_logs', methods=['POST'])
+def gerar_pdf_logs():
+
+    
+
+# Abre o arquivo em modo de leitura ('r')
+    with open('C:\\Users\\gulos\\OneDrive\\Área de Trabalho\\sms-agenda\log.txt', 'r') as logs:
+    # Lê o conteúdo do arquivo e armazena na variável
+        log = logs.read()
+    # Crie um objeto FPDF
+        pdf = FPDF()
+        pdf.add_page()
+
+        # Adicione o título
+        pdf.set_font("Courier", size=14)
+        pdf.cell(200, 10, txt="Logs do Sistema", ln=True, align='C')
+
+        # Adicione os logs
+        pdf.set_font("Courier", size=12)
+    
+        pdf.multi_cell(0, 10, txt=log)
+
+        # Salve o arquivo PDF temporário
+        temp_file_path = "logs.pdf"
+        pdf.output(temp_file_path)
+
+    # Envie o arquivo PDF como resposta
+    return send_file(temp_file_path, as_attachment=True)
+
    
 
 
