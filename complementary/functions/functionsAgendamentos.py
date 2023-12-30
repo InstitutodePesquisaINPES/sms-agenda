@@ -17,27 +17,28 @@ def calculaHoras(id_servico): # puxa do banco a quantidade de horas de cada hora
     servicos = servicos_data_function()
 
     # e `hora_inicio` e `hora_pausa` são campos no seu modelo
-    horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
+    # horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
+    horario1 = Horario_Servico.query.filter_by(id = id_servico).first()
     
     servico = servicos.get(int(id_servico))
     
     # Certifique-se de que `hora_inicio` e `hora_pausa` sejam objetos time
     hora_inicio = horario1.hora_inicio
     hora_pausa = horario1.hora_pausa
-    tempo_pausa = horario1.tempo_pausa
+    # tempo_pausa = horario1.tempo_pausa
     hora_retomada = horario1.hora_retomada
     hora_final = horario1.hora_final
 
     # tempo_atendimento = servico['tempo_atendimento']
     # tempo_atendimento = datetime.strptime(tempo_atendimento, "%H:%M:%S")
     
-    servico_temp = Servico.query.filter_by(id_servico = id_servico).first()
+    servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico).first()
     tempo_atendimento = servico_temp.tempo_atendimento
 
     # Converta os objetos time para representações numéricas (por exemplo, minutos)
     minutos_inicio = paraMinutos(hora_inicio)
     minutos_pausa = paraMinutos(hora_pausa)
-    minutos_pausados = paraMinutos(tempo_pausa)
+    # minutos_pausados = paraMinutos(tempo_pausa)
     minutos_retomada = paraMinutos(hora_retomada)
     minutos_final = paraMinutos(hora_final)
     minutos_atendimento = paraMinutos(tempo_atendimento)
@@ -60,7 +61,8 @@ def calculaHorarios(id_servico):
     servico = servicos.get(int(id_servico))
 
     # e `hora_inicio` e `hora_pausa` são campos no seu modelo
-    horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
+    # horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
+    horario1 = Horario_Servico.query.filter_by(id = id_servico).first()
 
     # manha
     hora_inicio = horario1.hora_inicio
@@ -79,7 +81,7 @@ def calculaHorarios(id_servico):
     minutos_final = paraMinutos(hora_final)
 
     # tempo de duração de cada atendimento 
-    servico_temp = Servico.query.filter_by(id_servico = id_servico).first()
+    servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico).first()
     tempo_atendimento = servico_temp.tempo_atendimento
     minutos_atendimento = paraMinutos(tempo_atendimento)
 
@@ -97,10 +99,19 @@ def calculaHorarios(id_servico):
 def listaHorarios(id_servico):
     tempo = 0
     horarios = calculaHorarios(int(id_servico))
+    print(horarios)
     lista_horarios = []
+    
     tempo = horarios[3] # tempo que inicia a manha
+    horas, minutos_restantes = divmod(tempo, 60)
+    tempo_format = "{:02d}:{:02d}".format(horas, minutos_restantes)
+    
     tempo2 = horarios[4] # tempo que inicia a tarde
-    lista_horarios.append("0{}:00".format(int(tempo / 60)))
+    horas, minutos_restantes = divmod(tempo2, 60)
+    tempo2_format = "{:02d}:{:02d}".format(horas, minutos_restantes)
+    
+    lista_horarios.append(tempo_format)
+    
     for i in range(horarios[0]):
         if i != 0:
             tempo = tempo + horarios[2]
@@ -109,7 +120,7 @@ def listaHorarios(id_servico):
             tempo_formatado = "{:02}:{:02}".format(tempoh, tempom)
             lista_horarios.append(tempo_formatado)
     
-    lista_horarios.append("{}:00".format(int(tempo2 / 60)))
+    lista_horarios.append(tempo2_format)
 
     for i in range(horarios[1]):
         if i != 0:
@@ -220,14 +231,7 @@ def upa_pro_GCloud(documentos, cpf_usuario):
             print(f"Ocorreu um erro durante o upload do documento: {e}")
 
     return lista_documentos_uuid 
-
-def obter_horario_atual():
-    # Obtém o horário atual
-    horario_atual = datetime.now().strftime("%H:%M")
-    return horario_atual
-
-
-
+    
     
 
 

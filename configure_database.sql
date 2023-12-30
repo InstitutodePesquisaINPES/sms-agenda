@@ -38,6 +38,23 @@ CREATE TABLE `horarios_disponiveis` (
     PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `horario_servico` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `id_servico` int NOT NULL, 
+    `hora_inicio` time NOT NULL,
+    `hora_pausa` time NOT NULL, 
+    `hora_retomada` time NOT NULL,
+    `hora_final` time NOT NULL,
+    `tempo_atendimento` time NOT NULL,
+    PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
+
 CREATE TABLE `servico` (     
   `id` int NOT NULL AUTO_INCREMENT,     
   `id_servico` int NOT NULL,     
@@ -45,11 +62,7 @@ CREATE TABLE `servico` (
   PRIMARY KEY(`id`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-insert into servico (id_servico, tempo_atendimento) values (1, "00:20:00");
-insert into servico (id_servico, tempo_atendimento) values (2, "00:20:00");
-insert into servico (id_servico, tempo_atendimento) values (3, "00:20:00");
-insert into servico (id_servico, tempo_atendimento) values (4, "00:20:00");
-insert into servico (id_servico, tempo_atendimento) values (5, "00:20:00");
+
 
 
 CREATE TABLE `documentos` (
@@ -63,7 +76,7 @@ CREATE TABLE `documentos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-insert into horarios_disponiveis (hora_inicio, hora_pausa, tempo_pausa, hora_retomada, hora_final) values ("07:00:00", "11:00:00", "02:00:00", "13:00:00", "17:00:00");
+insert into horarios_disponiveis (hora_inicio, hora_pausa, tempo_pausa, hora_retomada, hora_final) values ("07:00:00", "11:00:00", "13:00:00", "17:00:00",);
 
 insert into usuario (id, email, nome, cpf, sus, senha, user_type) values (1, "admin@gmail.com", "admin", "211.111.111-11", "211.111.111.1111-11", "12345678", "administrador");
 

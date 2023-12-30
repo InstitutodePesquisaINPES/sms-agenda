@@ -42,6 +42,16 @@ class Horarios_disponiveis(db.Model):
     hora_retomada = db.Column(db.Time, nullable=False)
     hora_final = db.Column(db.Time, nullable=False)
     # tempo_atendimento = db.Column(db.Time, nullable=False)
+    
+class Horario_Servico(db.Model):
+    __tablename__ = 'horario_servico'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_servico = db.Column(db.Integer, nullable=False)
+    hora_inicio = db.Column(db.Time, nullable=False)
+    hora_pausa = db.Column(db.Time, nullable=False) 
+    hora_retomada = db.Column(db.Time, nullable=False)
+    hora_final = db.Column(db.Time, nullable=False)
+    tempo_atendimento = db.Column(db.Time, nullable=False)
 
 class Servico(db.Model):
     __tablename__ = "servico"
