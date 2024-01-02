@@ -16,10 +16,12 @@ servicos = {
             'documentos': [ 'Laudo médico padrão TFD','Exames', 'Relatorios Médicos', 'Cartão SUS', 'RG', 'CPF', 'Comprovante de Residencia'], 'tempo_atendimento': '00:05:00', 'upload': "True",
             'documentos_Acompanhante': [ 'RG', 'CPF', 'Comprovante de Residencia',' Extrato Conta Bancária', 'Cartão SUS'], 'tempo_atendimento': '00:05:00', 'upload': "True", 'dias_minimos': 2},
 
-
          5:{'id': 5,'categoria': 'SUS', 'nome': 'CARTÃO DO SUS', 
             'descricao': 'Emissão ou atualização do Cartão Nacional de Saúde - SUS.', 
-            'documentos': ['RG', 'CPF', 'Comprovante de residencia com CEP'], 'tempo_atendimento': '00:40:00', 'upload': "False", 'dias_minimos': 2}
+            'documentos': ['RG', 'CPF', 'Comprovante de residencia com CEP'], 'tempo_atendimento': '00:40:00', 'upload': "False", 'dias_minimos': 2},
+
+         6:{'id': 6, 'categoria': 'FARMÁCIA', 'nome': 'BUSCAR MEDICAMENTOS', 'descricao': 'Consultar disponibilidade de medicamentos para retirada na farmácia popular', 'documentos': ['RG', 'CPF', 'Cartão do SUS', 'Receita'], 'upload': "True", 'dias_minimos': 3}
+
       }
    
 def servicos_data_function():

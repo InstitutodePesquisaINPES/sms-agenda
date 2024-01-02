@@ -55,6 +55,7 @@ insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada,
 insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
 insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
 
+
 CREATE TABLE `servico` (     
   `id` int NOT NULL AUTO_INCREMENT,     
   `id_servico` int NOT NULL,     
