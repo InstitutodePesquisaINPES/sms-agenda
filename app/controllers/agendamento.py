@@ -125,7 +125,7 @@ def gerar_pdf_logs():
     
 
 # Abre o arquivo em modo de leitura ('r')
-    with open('C:\\Users\\gulos\\OneDrive\\Área de Trabalho\\sms-agenda\log.txt', 'r') as logs:
+    with open('log.txt', 'r') as logs:
     # Lê o conteúdo do arquivo e armazena na variável
         log = logs.read()
     # Crie um objeto FPDF
@@ -137,9 +137,9 @@ def gerar_pdf_logs():
         pdf.cell(200, 10, txt="Logs do Sistema", ln=True, align='C')
 
         # Adicione os logs
-        pdf.set_font("Courier", size=12)
+        pdf.set_font("Courier", size=6)
     
-        pdf.multi_cell(0, 10, txt=log)
+        pdf.multi_cell(0, 3, txt=log)
 
         # Salve o arquivo PDF temporário
         temp_file_path = "logs.pdf"

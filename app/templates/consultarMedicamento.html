@@ -99,7 +99,7 @@
 
                                 <tbody>
                                 {% for agendamento in agendamentos %}
-                                <tr data-bs-toggle="modal" data-bs-target="#staticBackdrop2{{ agendamento.id_usuario }}">
+                                <tr data-bs-toggle="modal" data-bs-target="#staticBackdrop2{{ agendamento.id }}">
                                     <td>{{ agendamento.senha }}</td>
                                     <td>{{ agendamento.nome_cliente }}</td>
                                     <td>{{ agendamento.servico_agendado }}</td>
@@ -111,13 +111,13 @@
                                         <div class="d-flex justify-content-center">
                                         {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop4{{ agendamento.id_usuario }}">
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop4{{ agendamento.id }}">
                                                 <img width="24" height="24" src="" alt="">
 
                                                 <span>Aprovar</span>
                                             </button>
 
-                                                <div class="modal fade" id="staticBackdrop4{{ agendamento.id_usuario }}" data-bs-backdrop="static"
+                                                <div class="modal fade" id="staticBackdrop4{{ agendamento.id }}" data-bs-backdrop="static"
                                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
@@ -162,13 +162,13 @@
                                                 </div>
                                        
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop5{{ agendamento.id_usuario }}">
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop5{{ agendamento.id }}">
                                                 <img width="24" height="24" src="" alt="">
                                                 
                                                 <span>Retificar</span>
                                             </button>
 
-                                            <div class="modal fade" id="staticBackdrop5{{ agendamento.id_usuario }}" data-bs-backdrop="static"
+                                            <div class="modal fade" id="staticBackdrop5{{ agendamento.id }}" data-bs-backdrop="static"
                                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
@@ -216,7 +216,7 @@
                                         {%endif%}
 
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id_usuario }}">
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id }}">
                                                 <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
                                             </button>
 
@@ -260,7 +260,7 @@
                                 </tr>
 
                                     <!--visualizar-->
-                                    <div class="modal fade" id="staticBackdrop2{{ agendamento.id_usuario }}" data-bs-backdrop="static"
+                                    <div class="modal fade" id="staticBackdrop2{{ agendamento.id }}" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -347,7 +347,7 @@
                                     </div>
 
                                     <!--editar-->
-                                    <div class="modal fade" id="staticBackdrop3{{ agendamento.id_usuario }}" data-bs-backdrop="static"
+                                    <div class="modal fade" id="staticBackdrop3{{ agendamento.id }}" data-bs-backdrop="static"
                                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
