@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
 <body>
     <nav> 
         <div class="navbar">
             <ul>
                 <li>
-                    <img src="../static/assets/images/Brasão_Vitoria_da_Conquista.png" alt="Logo prefeitura">
+                    <a href="/">
+                        <img src="../static/assets/images/Brasão_Vitoria_da_Conquista.png" alt="Logo prefeitura">
+                        <i class="bi bi-chevron-left"></i>
+                        <p> Voltar ao Início</p>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -61,7 +66,7 @@
                     </div>
 
                     <div class="input-box">
-                       <p>Não Tem Uma Conta? <a href="#">Inscrever-se</a></p>
+                       <p>Não Tem Uma Conta? <a href="/cadastrouser">Inscrever-se</a></p>
                     </div>
                 </form>
                 <div class="cookie-policy">
