@@ -1,7 +1,7 @@
 import logging
 from run import app
 from fpdf import FPDF
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response,send_from_directory
 
 # from flask_weasyprint import HTML, render_pdf
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify,send_file
@@ -118,6 +118,36 @@ HORA AGENDADA: {agendamento.horario_agendado}"""
     pdf.output(temp_file_path)
 
     return send_file(temp_file_path, as_attachment=True)
+
+@app.route('/gerar_pdf_logs', methods=['POST'])
+def gerar_pdf_logs():
+
+    
+
+# Abre o arquivo em modo de leitura ('r')
+    with open('log.txt', 'r') as logs:
+    # Lê o conteúdo do arquivo e armazena na variável
+        log = logs.read()
+    # Crie um objeto FPDF
+        pdf = FPDF()
+        pdf.add_page()
+
+        # Adicione o título
+        pdf.set_font("Courier", size=14)
+        pdf.cell(200, 10, txt="Logs do Sistema", ln=True, align='C')
+
+        # Adicione os logs
+        pdf.set_font("Courier", size=6)
+    
+        pdf.multi_cell(0, 3, txt=log)
+
+        # Salve o arquivo PDF temporário
+        temp_file_path = "logs.pdf"
+        pdf.output(temp_file_path)
+
+    # Envie o arquivo PDF como resposta
+    return send_file(temp_file_path, as_attachment=True)
+
    
 
 
@@ -125,9 +155,18 @@ HORA AGENDADA: {agendamento.horario_agendado}"""
 def editar(id):
    
     return redirect(url_for('indexuser'))
+
+
+def registrar_log(descricao):
+    with open('log.txt', 'a') as f:
+        dataAlteraçao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        log = f'{dataAlteraçao} - {descricao}\n'
+        f.write(log)
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
     user_type_usuario_logado = session.get('user_type_usuario_logado')
+    usuario_logado = session.get('usuario_logado')
+    cpf_usuario_logado = session.get('cpf_usuario_logado')
 
     documento = Documentos.query.filter_by(id_agendamento=id).all()
     if documento:
@@ -135,25 +174,46 @@ def deletar(id):
             db.session.delete(doc)
 
     agendamento = Agendamento.query.get(id)
+    descricao_log = descricao_log = f'''Registro excluído: 
+    - id: {agendamento.id}
+    - id_usuario: {agendamento.id_usuario}
+    - nome_cliente: {agendamento.nome_cliente}
+    - data_agendada: {agendamento.data_agendada}
+    - horario_agendado: {agendamento.horario_agendado}
+    - senha: {agendamento.senha}
+    - status: {agendamento.status}
+    - servico_agendado: {agendamento.servico_agendado}
+    - documentos: {agendamento.documentos}
+    - Usuario editor: 
+        - usuario_logado: {usuario_logado}
+        - cpf_usuario_logado: {cpf_usuario_logado}
+        - user_type_usuario_logado: {user_type_usuario_logado}
+------------------------------------------------------------------
+'''
+
     
     if user_type_usuario_logado == 'usuario' :
         if agendamento.servico_agendado == 'CARTÃO DO SUS':
             db.session.delete(agendamento)
             db.session.commit()
+            registrar_log(descricao_log)
             return redirect(url_for('consultarMedicamento'))
         else:
             db.session.delete(agendamento)
             db.session.commit()
+            registrar_log(descricao_log)
             return redirect(url_for('meusagendamentos'))
         
     elif user_type_usuario_logado == 'servidor' or  user_type_usuario_logado == 'administrador':
         if agendamento.servico_agendado == 'CARTÃO DO SUS':
             db.session.delete(agendamento)
             db.session.commit()
+            registrar_log(descricao_log)
             return redirect(url_for('consultarMedicamento'))
         else:  
             db.session.delete(agendamento)
-            db.session.commit()   
+            db.session.commit()
+            registrar_log(descricao_log)   
             return redirect(url_for('areaServidor'))
 
 # rota do card de informações do serviço, recebe um id e busca os dados no objeto
@@ -253,7 +313,11 @@ def horas_disponiveis():
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-    
+
+
+@app.route('/uploads/<path:filename>')
+def servir_arquivo(filename):
+    return send_from_directory(os.path.join(app.root_path, 'uploads'), filename)
 # rota para autenticar o agendamento     
 @app.route('/autenticaragendamento', methods=['POST'])
 @login_required
