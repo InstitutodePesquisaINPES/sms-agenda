@@ -1,7 +1,7 @@
 import logging
 from run import app
 from fpdf import FPDF
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response,send_from_directory
 
 # from flask_weasyprint import HTML, render_pdf
 from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify,send_file
@@ -313,7 +313,11 @@ def horas_disponiveis():
         return jsonify({'horarios_disponiveis': horarios_disponiveis})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-    
+
+
+@app.route('/uploads/<path:filename>')
+def servir_arquivo(filename):
+    return send_from_directory(os.path.join(app.root_path, 'uploads'), filename)
 # rota para autenticar o agendamento     
 @app.route('/autenticaragendamento', methods=['POST'])
 @login_required
