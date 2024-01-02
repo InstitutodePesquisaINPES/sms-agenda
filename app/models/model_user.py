@@ -52,6 +52,7 @@ class Horario_Servico(db.Model):
     hora_retomada = db.Column(db.Time, nullable=False)
     hora_final = db.Column(db.Time, nullable=False)
     tempo_atendimento = db.Column(db.Time, nullable=False)
+    dia_semana = db.Column(db.Integer, nullable=False)
 
 class Servico(db.Model):
     __tablename__ = "servico"

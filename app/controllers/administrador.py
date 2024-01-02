@@ -10,60 +10,42 @@ from complementary.servicos.servicos_data import *
 def configUnidade():
     horarios = Horario_Servico.query.filter_by(id=1).first()
     servicos = servicos_data_function() # objeto dos serviços
+    dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
 
-    return render_template('configUnidade.html', horarios=horarios, servicos=servicos)
+    return render_template('configUnidade.html', horarios=horarios, servicos=servicos, dias=dias)
 
-# API para buscar os dados de tempo de atendimento em cada serviço em tempo real
-@app.route('/api/obter_horario', methods=['GET', 'POST'])
-def obter_horario():
+@app.route('/api/obter_horario_e_tempo_atendimento', methods=['GET', 'POST'])
+def obter_horario_e_tempo_atendimento():
     try:
         dados_json = request.get_json()
-        
+
         id_servico = dados_json.get('servico_id')
-        
-        servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico).first()
-        
-        
+        dia_semana = dados_json.get('dia_semana')
+        print('id: ', id_servico)
+        print('dia: ', dia_semana )
+
+        servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico, dia_semana = dia_semana).first()
+
         hora_inicio = servico_temp.hora_inicio.isoformat()
         hora_pausa = servico_temp.hora_pausa.isoformat()
         hora_retomada = servico_temp.hora_retomada.isoformat()
         hora_final = servico_temp.hora_final.isoformat()
-        
-        
+        tempo_atendimento = servico_temp.tempo_atendimento.isoformat()
+
         return jsonify({
                         'hora_inicio': hora_inicio,
                         'hora_pausa': hora_pausa,
                         'hora_retomada': hora_retomada,
-                        'hora_final': hora_final
+                        'hora_final': hora_final,
+                        'tempo_atendimento': tempo_atendimento
                         })
+
     except Exception as e:
         return jsonify({'error': str(e)}), 400 
-    
-    
-# API para buscar os dados de tempo de atendimento em cada serviço em tempo real
-@app.route('/api/obter_tempo_atendimento', methods=['GET', 'POST'])
-def obter_tempo_atendimento():
-    try:
-        dados_json = request.get_json()
-        
-        id_servico = dados_json.get('servico_id')
-        
-        servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico).first()
-        
-        tempo_atendimento = servico_temp.tempo_atendimento.isoformat()
-        
-        
-        return jsonify({'tempo_atendimento': tempo_atendimento})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
-    
 
-
-# Configurações de funcionamento da agência
-@app.route('/autenticarConfig1', methods=['POST'])
+@app.route('/autenticar_novas_configuracoes', methods=['POST'])
 @login_required
-def autenticarConfig1():
-    # converter a string para o formato do banco de dados
+def autenticar_novas_configuracoes():
     hora_inicio = request.form['hora_inicio']
     if len(hora_inicio) != 8:
         hora_inicio = hora_inicio + ":00"
@@ -76,9 +58,12 @@ def autenticarConfig1():
     hora_final = request.form['hora_final']
     if len(hora_final) != 8:
         hora_final = hora_final + ":00"
-        
+    tempo_atendimento = request.form['tempo_atendimento']
+    if len(tempo_atendimento) != 8:
+        tempo_atendimento = tempo_atendimento + ":00"
+
     servico_id = request.form['servicoSelect1'] 
-    
+
     try:
         horario = db.session.query(Horario_Servico).get(servico_id)
         
@@ -86,40 +71,12 @@ def autenticarConfig1():
         horario.hora_pausa = hora_pausa
         horario.hora_retomada = hora_retomada
         horario.hora_final = hora_final
+        horario.tempo_atendimento = tempo_atendimento
         
         db.session.commit()
         
-        # update = db.session.query(Horarios_disponiveis).filter_by(id=1).update({
-        #     'hora_inicio': hora_inicio,
-        #     'hora_pausa': hora_pausa,
-        #     'hora_retomada': hora_retomada,
-        #     'hora_final': hora_final
-        # })
-        # db.session.commit()
     except Exception as e:
         return render_template('errorPage.html', mensagem_erro=e) 
     
-    return redirect(url_for('configUnidade'))
-
-# Configurações do tempo de atendimento de cada serviço (busca por api no js e retorna alteração pro banco de dados)
-@app.route('/autenticarConfig2', methods=['POST'])
-@login_required
-def autenticarConfig2(): 
+    return redirect(url_for('configUnidade'))    
     
-    servico_id = request.form['servicoSelect2'] 
-    novo_horario = request.form['tempo_atendimento']
-    novo_horario = novo_horario + ":00"
-
-    try:
-        horario = db.session.query(Horario_Servico).get(servico_id)
-        
-        horario.tempo_atendimento = novo_horario
-        
-        db.session.commit()
-        
-        # update = db.session.query(Servico).filter_by(id_servico=servico_id).update({'tempo_atendimento': novo_horario})
-        # db.session.commit()
-    except Exception as e:
-        return render_template('errorPage.html', mensagem_erro=e)
-    return redirect(url_for('configUnidade'))
-

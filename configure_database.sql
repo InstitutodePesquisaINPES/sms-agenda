@@ -28,15 +28,15 @@ CREATE TABLE `agendamentos` (
   CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `horarios_disponiveis` (
-    `id` int NOT NULL AUTO_INCREMENT,
-    `hora_inicio` time NOT NULL,
-    `hora_pausa` time NOT NULL, 
-    `tempo_pausa` time NOT NULL,
-    `hora_retomada` time NOT NULL,
-    `hora_final` time NOT NULL, 
-    PRIMARY KEY(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- CREATE TABLE `horarios_disponiveis` (
+--     `id` int NOT NULL AUTO_INCREMENT,
+--     `hora_inicio` time NOT NULL,
+--     `hora_pausa` time NOT NULL, 
+--     `tempo_pausa` time NOT NULL,
+--     `hora_retomada` time NOT NULL,
+--     `hora_final` time NOT NULL, 
+--     PRIMARY KEY(`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `horario_servico` (
     `id` int NOT NULL AUTO_INCREMENT,
@@ -46,25 +46,61 @@ CREATE TABLE `horario_servico` (
     `hora_retomada` time NOT NULL,
     `hora_final` time NOT NULL,
     `tempo_atendimento` time NOT NULL,
+    `dia_semana` int NOT NULL, 
     PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
-insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
-insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
-insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
-insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00");
+-- SERVIÇOS PELO DIA_SEMANA DE 1 A 5, 0 DOMINGO, 1 SEGUNDA, 2 TERÇA, 3 QUARTA, 4 QUINTA, 5 SEXTA, 6 SÁBADO
+
+-- SERVIÇO 1 
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 1);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 2);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 3);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 4);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (1, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 5);
+
+-- SERVICO 2
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 1);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 2);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 3);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 4);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (2, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 5);
+
+-- SERVICO 3
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 1);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 2);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 3);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 4);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (3, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 5);
+
+-- SERVICO 4
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 1);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 2);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 3);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 4);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (4, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 5);
+
+-- SERVICO 5
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 1);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 2);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 3);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 4);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (5, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 5);
+
+-- SERVICO 6
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (6, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 1);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (6, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 2);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (6, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 3);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (6, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 4);
+insert into horario_servico (id_servico, hora_inicio, hora_pausa, hora_retomada, hora_final, tempo_atendimento, dia_semana) values (6, "07:00:00", "11:00:00", "13:00:00", "17:00:00", "00:20:00", 5);
 
 
-CREATE TABLE `servico` (     
-  `id` int NOT NULL AUTO_INCREMENT,     
-  `id_servico` int NOT NULL,     
-  `tempo_atendimento` time NOT NULL,      
-  PRIMARY KEY(`id`) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-
+-- CREATE TABLE `servico` (     
+--   `id` int NOT NULL AUTO_INCREMENT,     
+--   `id_servico` int NOT NULL,     
+--   `tempo_atendimento` time NOT NULL,      
+--   PRIMARY KEY(`id`) 
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `documentos` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -76,9 +112,4 @@ CREATE TABLE `documentos` (
   FOREIGN KEY (`id_agendamento`) REFERENCES `agendamentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-insert into horarios_disponiveis (hora_inicio, hora_pausa, tempo_pausa, hora_retomada, hora_final) values ("07:00:00", "11:00:00", "13:00:00", "17:00:00",);
-
 insert into usuario (id, email, nome, cpf, sus, senha, user_type) values (1, "admin@gmail.com", "admin", "211.111.111-11", "211.111.111.1111-11", "12345678", "administrador");
-
-

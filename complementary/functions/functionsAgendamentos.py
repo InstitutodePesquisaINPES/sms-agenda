@@ -16,9 +16,14 @@ def paraMinutos(hora):
 def calculaHoras(id_servico): # puxa do banco a quantidade de horas de cada horario de atendimento (intevalo de tempo), util na api do calendario
     servicos = servicos_data_function()
 
+    dia_atual = datetime.date.today()
+    numero_dia_atual = dia_atual.day
+
+    print(numero_dia_atual)
+
     # e `hora_inicio` e `hora_pausa` são campos no seu modelo
     # horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
-    horario1 = Horario_Servico.query.filter_by(id = id_servico).first()
+    horario1 = Horario_Servico.query.filter_by(id = id_servico, dia_semana = numero_dia_atual).first()
     
     servico = servicos.get(int(id_servico))
     
@@ -32,8 +37,8 @@ def calculaHoras(id_servico): # puxa do banco a quantidade de horas de cada hora
     # tempo_atendimento = servico['tempo_atendimento']
     # tempo_atendimento = datetime.strptime(tempo_atendimento, "%H:%M:%S")
     
-    servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico).first()
-    tempo_atendimento = servico_temp.tempo_atendimento
+
+    tempo_atendimento = horario1.tempo_atendimento
 
     # Converta os objetos time para representações numéricas (por exemplo, minutos)
     minutos_inicio = paraMinutos(hora_inicio)
@@ -60,9 +65,12 @@ def calculaHorarios(id_servico):
     servicos = servicos_data_function()
     servico = servicos.get(int(id_servico))
 
+    dia_atual = datetime.date.today()
+    numero_dia_atual = dia_atual.day
+
     # e `hora_inicio` e `hora_pausa` são campos no seu modelo
     # horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
-    horario1 = Horario_Servico.query.filter_by(id = id_servico).first()
+    horario1 = Horario_Servico.query.filter_by(id = id_servico, dia_semana = numero_dia_atual).first()
 
     # manha
     hora_inicio = horario1.hora_inicio
@@ -81,8 +89,7 @@ def calculaHorarios(id_servico):
     minutos_final = paraMinutos(hora_final)
 
     # tempo de duração de cada atendimento 
-    servico_temp = Horario_Servico.query.filter_by(id_servico = id_servico).first()
-    tempo_atendimento = servico_temp.tempo_atendimento
+    tempo_atendimento = horario1.tempo_atendimento
     minutos_atendimento = paraMinutos(tempo_atendimento)
 
 

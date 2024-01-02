@@ -5,6 +5,7 @@ var horas_disponiveis = []
 // API PARA AS BUSCAS DAS DATAS DISPONIVEIS (CUIDADO AO MEXER)
 document.addEventListener('DOMContentLoaded', function () {
     var id_servico = document.getElementById('id_servico').value;
+    console.log(id_servico)
     var csrfToken = $('input[name=csrf_token]').val();
     
     // Fazer uma requisição AJAX para obter os dados dos agendamentos por dia
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             for (var i = 0; i < lista_datas.length; i++) {
                 diasDesativados.push(String(lista_datas[i]));
             }
-            console.log(lista_datas)
+            // console.log(lista_datas)
             FunctDatePicker()
             
         },
@@ -226,7 +227,7 @@ $(document).ready(function () {
 });
 
 // Código para puxar a data do calendar 
-function FunctDatePicker() {
+document.addEventListener('DOMContentLoaded', function FunctDatePicker() {
     // Obter a data atual
     var dataAtual = new Date();
     var diaAtual = dataAtual.getDate();
@@ -317,7 +318,7 @@ function FunctDatePicker() {
 
 
     // ... seu código existente
-};
+});
 
 function verificaCondicional(data) {
     // Extrai ano, mês e dia da data fornecida
