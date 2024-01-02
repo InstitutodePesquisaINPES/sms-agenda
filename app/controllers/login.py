@@ -3,7 +3,6 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from app.models.User import User
 from app.models.model_user import *
-from app.models.model_agendamento import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import *
 import pandas as pd

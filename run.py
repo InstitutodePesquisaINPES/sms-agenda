@@ -11,7 +11,11 @@ from flask_wtf.csrf import CSRFProtect
 import pandas as pd
 
 
+
 from complementary.functions.login import tipo_user
+
+import os
+
 
 
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
@@ -30,7 +34,6 @@ from app.controllers.servidor import *
 from app.controllers.indexusuario import *
 from app.controllers.agendamento import *
 from app.models.model_user import *
-from app.models.model_agendamento import *
 
 
 if __name__ == '__main__':
