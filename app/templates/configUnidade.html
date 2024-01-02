@@ -9,6 +9,10 @@
     <button type="button" class="button-configs" data-toggle="modal" data-target="#configAtendimentoModal">
         CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO
     </button>
+
+    <button type="button" class="button-configs" data-toggle="modal" data-target="#configRelatorioModal">
+        GERAR RELATORIO DE LOGS DO SISTEMA
+    </button>
 </div>
 
 <!-- Modal para CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE -->
@@ -90,6 +94,37 @@
                         onblur="if (!this.value) this.type='text'"> <br>
                         <button type="submit" class="button-configs"> SALVAR ALTERAÇÕES </button>
                     </div>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
+<div class="modal fade" id="configRelatorioModal" tabindex="-1" role="dialog" aria-labelledby="configRelatorioModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configAtendimentoModalLabel">Relatorio de logs do sistema</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    Este relatório contém informações sensíveis e confidenciais. O acesso não autorizado a este documento é estritamente proibido. Certifique-se de compartilhar este relatório apenas com 
+                    indivíduos autorizados e tomar as medidas adequadas para proteger a privacidade e a integridade das informações contidas.
+                </div>
+                <!-- Conteúdo do modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
+                <form action="{{url_for('gerar_pdf_logs')}}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                   
+                        <input type="submit" class="button-configs" value="GERAR RELATORIO"> 
+                    
                     <br>
                 </form>
             </div>

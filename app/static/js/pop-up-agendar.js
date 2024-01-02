@@ -56,7 +56,6 @@ function obterHorariosDisponiveis() {
             
         },
         error: function(error) {
-        
             console.error('Erro ao obter horários disponíveis:', error);
         }
     });
@@ -66,32 +65,59 @@ function renderizarHorarios(horarios) {
     var divHorarios = document.getElementById('divHorarios');
     divHorarios.innerHTML = '';  // Limpa a div antes de renderizar os novos horários
 
-    var titulo = document.createElement('h2');
-    titulo.textContent = 'Escolha seu horário';
-    titulo.className = 'hora-title subtitle-formAgendamento'
+    var titulo = document.createElement('p');
     divHorarios.appendChild(titulo);
 
-    // Renderiza os horários disponíveis como radio buttons
-    horarios.forEach(function(hora) {
-        var divContainer = document.createElement('div-withHoras');
-        divContainer.className = 'form-check form-check-inline';
+    var divContainer = document.createElement('div');
+    divContainer.className = 'horarios-container';
 
+    // Renderiza os horários disponíveis como radio buttons
+    horarios.forEach(function(hora, index) {
         var inputRadio = document.createElement('input');
         inputRadio.type = 'radio';
         inputRadio.name = 'hora_ipt';
         inputRadio.className = 'input-hora form-check-input';
+        inputRadio.id = 'hora_' + hora.replace(':', ''); // Adiciona um ID único baseado na hora
         inputRadio.value = hora;
 
         var label = document.createElement('label');
-        label.className = 'form-check-label'
-        label.textContent = hora;
+        label.className = 'form-check-label';
+        label.setAttribute('for', 'hora_' + hora.replace(':', '')); // Associa o label ao input
+        label.innerHTML = hora + ' <i class="bi bi-check"></i>';
 
-        divContainer.appendChild(inputRadio);
-        divContainer.appendChild(label);
-        divHorarios.appendChild(divContainer);
+        var divItem = document.createElement('div');
+        divItem.className = 'form-check';
+        divItem.appendChild(inputRadio);
+        divItem.appendChild(label);
+
+        divContainer.appendChild(divItem);
+
+        // Adiciona a divContainer à divHorarios e reinicia a cada 4 elementos
+        if ((index + 1) % 4 === 0 || index === horarios.length - 1) {
+            divHorarios.appendChild(divContainer);
+            divContainer = document.createElement('div');
+            divContainer.className = 'horarios-container';
+        }
     });
 }
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicialize o Flatpickr
+    flatpickr("#datePicker", {
+        dateFormat: "Y-m-d", // Formato da data
+        minDate: "today",    // Define a data mínima como hoje
+        maxDate: new Date().fp_incr(29),  // Define a data máxima como 30 dias a partir de hoje
+        disableMobile: "true", // Desativa o seletor nativo em dispositivos móveis
+        inline: true, // exibe o calendario inline
+        disable: [
+            function(date) {
+                // Desativa sábados e domingos
+                if (date.getDay() === 0 || date.getDay() === 6) {
+                    return true;
+                }
 // document.addEventListener('DOMContentLoaded', function() {
 
 //     console.log(diasDesativados),
@@ -319,17 +345,17 @@ function FunctDatePicker() {
     // ... seu código existente
 };
 
-function verificaCondicional(data) {
-    // Extrai ano, mês e dia da data fornecida
-    var partesData = data.split("-");
-    var anoAtualdt = parseInt(partesData[0]);
-    var mesAtualdt = parseInt(partesData[1]);
-    var diaAtualdt = parseInt(partesData[2]);
+// function verificaCondicional(data) {
+//     // Extrai ano, mês e dia da data fornecida
+//     var partesData = data.split("-");
+//     var anoAtualdt = parseInt(partesData[0]);
+//     var mesAtualdt = parseInt(partesData[1]);
+//     var diaAtualdt = parseInt(partesData[2]);
 
-    // Condição a ser verificada
-    if (mesAtualdt === 12 && anoAtualdt === 2023 && diaAtualdt === 27) {
-        return true;
-    }
+//     // Condição a ser verificada
+//     if (mesAtualdt === 12 && anoAtualdt === 2023 && diaAtualdt === 27) {
+//         return true;
+//     }
 
-    return false;
-}
+//     return false;
+// }

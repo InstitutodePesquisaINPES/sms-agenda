@@ -1,8 +1,138 @@
 
+.mainFormAgendamento {
+    background: linear-gradient(90deg, #007af5, #14cdfc); 
+}
 
+/* ---- Background style ---- */ 
+.backgraundicons {
+    display: flex;
+}
+
+.iconsfieldbackground {
+    font-size: 4rem;
+    color: #ffffff30;
+}
+
+.iconsfieldbackground i:nth-child(1) {
+    position: absolute;
+    transform: rotate(-20deg);
+    top: 20%;
+}
+
+.iconsfieldbackground i:nth-child(2) {
+    position: absolute;
+    transform: rotate(20deg);
+    top: 80%;
+    right: 0;
+    color: #ffffff40;
+}
+
+.iconsfieldbackground i:nth-child(3) {
+    position: absolute;
+    transform: rotate(-20deg);
+    top: 130%;
+    color: #ffffff30;
+}
+
+.iconsfieldbackground i:nth-child(4) {
+    position: absolute;
+    transform: rotate(20deg);
+    top: 180%;
+    right: 0;
+    color: #ffffff40;
+}
+
+/* CIRCLE ---- */ 
+/* LEFT ---- */ 
+.iconsfieldbackground i:nth-child(5) {
+    position: absolute;
+    font-size: 1rem;
+    top: 15%;
+    left: 2%;
+    color: #ffffff30;
+    animation: 3s animationbackground infinite ease-in-out;
+}
+
+.iconsfieldbackground i:nth-child(6) {
+    position: absolute;
+    font-size: 1.4rem;
+    top: 15%;
+    left: 3.5%;
+    color: #ffffff30;
+    animation: 4s animationbackground infinite ease-in-out;
+}
+
+.iconsfieldbackground i:nth-child(7) {
+    position: absolute;
+    font-size: 1.8rem;
+    top: 80%;
+    left: 3.5%;
+    color: #ffffff30;
+    animation: 4s animationbackground infinite ease-in-out;
+}
+
+.iconsfieldbackground i:nth-child(8) {
+    position: absolute;
+    font-size: 2.1rem;
+    top: 140%;
+    left: 3%;
+    color: #ffffff30;
+    animation: 4s animationbackground infinite ease-in-out;
+}
+
+/* --- LEFT --- */ 
+.iconsfieldbackground i:nth-child(9) {
+    position: absolute;
+    font-size: 2.1rem;
+    top: 30%;
+    right: 2%;
+    color: #ffffff60;
+    animation: 4s animationbackground infinite ease-in-out;
+}
+
+.iconsfieldbackground i:nth-child(10) {
+    position: absolute;
+    font-size: 1.6rem;
+    top: 37%;
+    right: 2.5%;
+    color: #ffffff60;
+    animation: 3s animationbackground infinite ease-in-out;
+}
+
+.iconsfieldbackground i:nth-child(11) {
+    position: absolute;
+    font-size: 2rem;
+    top: 95%;
+    right: 3%;
+    color: #ffffff60;
+    animation: 3s animationbackground infinite ease-in-out;
+}
+
+.iconsfieldbackground i:nth-child(12) {
+    position: absolute;
+    font-size: 2rem;
+    top: 170%;
+    right: 3%;
+    color: #ffffff60;
+    animation: 3s animationbackground infinite ease-in-out;
+}
+
+@keyframes animationbackground {
+    0% {
+        transform: translateY(0px);
+    } 50% {
+        transform: translateY(-10px);
+    } 100% {
+        transform: translateY(0px);
+    }
+}
+
+/* ---- Background style END ---- */ 
 .div-form{
-    margin-top: 80px;
+    margin: 120px 0px 50px;
     padding: 20px;
+    border-radius: 20px !important;
+    background-color: #f8f8f8 !important;
 }
 
 
@@ -14,20 +144,47 @@
     display: none;
 }
 
-
-
 #datePicker{
     width: 100%;
     box-sizing: border-box;
 }
 
 .documents{
-    align-items: center;
-    text-align: center;
+    padding: 20px 30px;
+    margin: 25px 0px;
+    border-radius: 20px;
 }
 
-.checkbox-div{
-    margin-top: 30px;
+.documents-field {
+    align-items: center;
+    text-align: center;
+    margin: 20px 0px;
+    padding: 10px 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.fieldimgdocuments {
+    position: relative;
+}
+
+
+.fieldimgdocuments img {
+    max-width: 450px;
+}
+
+.subtitle-formAgendamento {
+    font-size: 2rem !important;
+    padding: 30px 0px !important;
+}
+
+.checkbox-div {
+    margin: 0 auto;
+    transform: translateX(25%);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .form-check-label {
@@ -42,17 +199,27 @@
     text-align: center;
 }
 
+/* --- Field Calendar + Day --- */
+
+.fieldcalendarDayHour {
+    display: flex;
+    flex-direction: inherit;
+    justify-content: space-between;
+    border-bottom: 1px solid #29251c50;
+}
+
 /* --- Style index --- */ 
 
 .agendarAgendamentoIndex {
     border-radius: 10px;
-    background-color: #2b2b389c;   
-    margin: 100px 0px 50px 0px;
+    background-color: #fff;   
+    overflow: hidden;
 }
 
 
 .title-forms {
-    color: #fff;
+    color: #121212;
+    padding: 25px 0px 20px 0px;
 }
 
 .title-forms h2 {
@@ -60,19 +227,97 @@
     text-align: center;
 }
 
-.subtitle-formAgendamento {
-    color: #fff;
-    font-size: 1.6rem;
-    margin: 50px 0px 5px 120px;
+.title-forms p {
+    text-align: center;
+    color: #4d4d4d;
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-top: -5px;
 }
 
+
 .div-hora {
-    border-radius: 20px;
-    padding: 10px;
-    background-color: #2b2b38;
-    margin: 0 200px 0px 110px;
-    color: #fff;
+    color: #121212;
     font-weight: 600;
+    width: 400px;
+    margin: -20px 40px 0px 0px;
+}
+
+/* --- inputs hora --- */ 
+.hourtextfield {
+    padding: 20px 0px 0px 35px;
+    font-size: 1.2rem;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+}
+
+#divHorarios {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.horarios-container {
+    display: flex;
+}
+
+.form-check {
+    flex-basis: 25%; 
+    margin: 5px;
+    box-sizing: border-box; 
+}
+
+.input-hora {
+    display: none;
+}
+
+.form-check-label {
+    padding: 4px 6px;
+    border-radius: 10px;
+    filter: drop-shadow(2px 2px 1px #00000040);
+    border: 1px solid #c2c2c2c7;
+    background-color: #ffffff;
+    color: #525252;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    width: 58px;
+    margin-left: -10px;
+    z-index: 10000;
+}
+
+.form-check-label i {
+    position: relative;
+    display: none;
+    align-items: center;
+    text-align: center;
+    background-color: #028df6;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    transition: all 0.5s ease-in;
+    margin: 0px 0px 0px 3px;
+}
+
+.input-hora:checked + .form-check-label {
+    color:  #000;
+    background-color: #fff;
+    width: 80px;
+    filter: drop-shadow(none);
+    transform: scale(1.05);
+}
+
+.input-hora:checked + .form-check-label i {
+    padding: 0px 4px;
+    color: #fff;
+    display: block;
+}
+
+.icondivHorarios i {
+    position: absolute;
+    color: #cccccc40;
+    font-size: 11rem;
+    right: 140px;
+    animation: 4s animationbackground infinite ease-in-out;
 }
 
 /* --- Calendar Style ----- */ 
@@ -81,19 +326,18 @@
     display: flex;
     border-radius: 10px;
     overflow: hidden;
-    margin: 0px 10%;
-    width: 71%;
+    margin: 0px 0px 0px 80px;
+    width: 650px;
     height: 53vh;
     justify-content: center;
-    border: 15px solid #2b2b38;
+    margin: 15px 0px 0px 0px;
 }
 
 /* --- Calendar Description -- */ 
 .boxDateCalendar {
     width: 61%;
     height: 350px;
-    background-color: #2b2b38;
-    color: #fff;
+    color: #29251c;
     text-align: center;
     overflow: hidden;
 }
@@ -132,29 +376,27 @@
 }
 
 .getCalendarDayBackground {
-    color: #ffffff08;
+    color: #5f5f5f10;
     font-size: 14rem;
     font-weight: 700;
     letter-spacing: -10px;
-    transform: translate(-50px,-130px);
+    transform: translate(100px,-130px);
     position: absolute;
-    z-index: 1000;
 }
 
 .getCalendarYearBackground {
-    color: #ffffff08;
+    color: #3f3f3f10;
     font-size: 3rem;
     font-weight: 700;
-    transform: translate(-20px,130px);
+    transform: translate(20px,140px);
     position: absolute;
-    z-index: 1000;
+    z-index: 0;
 }
 /* --- Calendar Base -- */ 
 
 .div-calendar{
-    width: 310px; /* Ajuste o valor conforme necessário */
+    width: 450px; /* Ajuste o valor conforme necessário */
     height: 100%;
-    background-color: #2b2b38;
 }
 
 .flatpickr-calendar {
@@ -177,21 +419,54 @@
 
 
 .flatpickr-day.selected {
-    background-color: #2b2b38 !important;
+    background-color: #343838 !important;
     border: none !important;
-    color: #008cff !important;
+    color: #028df6 !important;
+    font-weight: 600 !important;
     filter: drop-shadow(0px 0px 5px #00000070);
 }
 
 .flatpickr-monthDropdown-months {
-    background-color: #008cff !important;
+    background: #0984ff!important;
     border-radius: 5px !important;
     color: #fff !important;
     font-weight: 600;
 }
 
+@media (max-width: 990px) {
+    #divHorariosContainer {
+        position: static; /* Removendo a posição fixa em telas menores */
+        transform: translateY(0); /* Removendo a transformação em telas menores */
+        align-items: stretch; /* Fazendo com que os itens ocupem a largura total */
+        padding: 0; /* Removendo o padding */
+    }
+
+    #divHorarios {
+        margin-left: 13%;
+        max-width: 70%;
+        width: 100%; /* Garantindo que a largura seja 100% em telas menores */
+        margin-bottom: 40px;
+    }
+
+    .hourtextfield {
+        text-align: center;
+    }
+
+    .form-check {
+        flex-basis: 48%; /* Ajustando para que dois itens ocupem quase a largura total */
+    }
+    .icondivHorarios i {
+        display: none;
+    }
+}
+
 
 @media (max-width:990px) {
+    .fieldcalendarDayHour {
+        display: flex;
+        flex-direction: column;
+    }
+    
     .fieldCalendarAgendamento {
         display: flex;
         flex-direction: column;

@@ -210,6 +210,28 @@ body{
     align-items: center;
 }
 
+.buttonUserServicos {
+    padding: 8px 20px;
+    background-color: #1d6fba;
+    font-size: 1.1rem;
+    transition: 0.3s ease-in-out;
+}
+
+.buttonUserServicos:hover {
+    transform: scale(1.07);
+    transition: 0.3s ease-in-out;
+}
+
+.buttonUserServicos i {
+    font-size: 1rem;
+    margin: 0px 0px 0px 5px;
+}
+
+.buttonUserServicos:hover > i {
+    margin: 0px 0px 0px 9px;
+    transition: 0.7s ease-in-out;
+}
+
 .needLoginButton {
     background-color:#24a3b1 ;
 }
@@ -243,16 +265,17 @@ body{
 }
 
 .rodape{
-    background: #f1f1f1;
-    color: #121212;
-    border-top: 2px solid #c9c9c9;
+    background: #2a3f4a;
+    border-top: 2px solid #405864;
     height: 50px;
     padding: 40px 0px;
     border-radius: 10px 10px 0px 0px;
+    min-height: 38vh;
+    margin-top: auto;
 }
 
 .rodape-text{
-    color: #7e7e7e;
+    color: #f1f1f1;
     font-weight: 500;
     position: absolute;
     left: 50%;
@@ -263,7 +286,7 @@ body{
 }
 .rodape-text:hover {
     text-decoration: none;
-    color: #7e7e7e;
+    color: #ffffff;
 
 }
 
@@ -284,11 +307,6 @@ body{
     color: #835f11;
     font-size: 1.8rem;
 }
-.rodape {
-    background: #f1f1f1;
-    min-height: 38vh;
-    margin-top: auto;
-}
 
 .footerContentOne {
     display: flex;
@@ -299,6 +317,8 @@ body{
 
 .footerContentOne li:nth-child(1) img{
     max-width: 170px;
+    margin-top: -20px;
+    cursor: pointer;
 }
 
 .footerContentOne li{
@@ -309,7 +329,7 @@ body{
 
 .footerContentOne li a{
     text-decoration: none;
-    color: #121212;
+    color: #f3f3f3;
     font-weight: 400;
 }
 
@@ -330,7 +350,7 @@ body{
 
 .footerContentTwo li a {
     text-decoration: none;
-    color: #3b3b3b;
+    color: #f3f3f3;
     align-items: center;
     margin: 0 5px;
     font-weight: 600;
@@ -342,7 +362,7 @@ body{
 }
 
 .socialMedia a{
-    color: #3b3b3b;
+    color: #f1f1f1;
     font-size: 1.8rem;
     margin: 0 5px;
     align-items: center;
