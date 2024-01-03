@@ -5,9 +5,8 @@
     <button type="button" class="button-configs" data-toggle="modal" data-target="#configUnidadeModal">
         CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE
     </button>
-
-    <button type="button" class="button-configs" data-toggle="modal" data-target="#configAtendimentoModal">
-        CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO
+    <button type="button" class="button-configs" data-toggle="modal" data-target="#configRelatorioModal">
+        GERAR RELATORIO DE LOGS DO SISTEMA
     </button>
 </div>
 
@@ -27,24 +26,63 @@
                     Estes dados são sensíveis, confirme que tenha certeza das alterações antes de salvar. <br>
                     A alteração destes dados irá interferir na distribuição de horários do agendamento. <br>
                 </div>
-                <form action="/autenticarConfig1" method='POST'>
+                <div class="alert alert-info" role="alert">
+                    Selecione o serviço e depois selecione o dia da semana
+                </div>
+                
+                <form action="/autenticar_novas_configuracoes" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <div>
+                        <label for="servicoSelect1">Selecione o Serviço:</label> <br>
+                        <select id="servicoSelect1" name="servicoSelect1">
+                            <!-- Popule as opções do select com os nomes dos serviços -->
+                            <option value="">Selecione um Serviço</option>
+                            <!-- Adicione mais opções conforme necessário -->
+                            {% for id, servico in servicos.items() %}
+                                <option value="{{ id }}">{{ servico['nome'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                    <label for="hora_inicio"> HORÁRIO DE INICIO DOS ATENDIMENTOS </label>
-                    <input type="text" name="hora_inicio" value="{{horarios.hora_inicio}}" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
-                        onblur="if (!this.value) this.type='text'">
-                    <label for="hora_pausa"> HORÁRIO DE PAUSA DOS ATENDIMENTOS </label>
-                    <input type="text" name="hora_pausa" value="{{horarios.hora_pausa}}" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
-                        onblur="if (!this.value) this.type='text'">
-                    <label for="hora_retomada"> HORÁRIO DE RETOMADA DOS ATENDIMENTOS </label>
-                    <input type="text" name="hora_retomada" value="{{horarios.hora_retomada}}" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
-                        onblur="if (!this.value) this.type='text'">
-                    <label for="hora_final"> HORÁRIO DE FINALIZAR OS ATENDIMENTOS </label>
-                    <input type="text" name="hora_final" value="{{horarios.hora_final}}" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
-                        onblur="if (!this.value) this.type='text'">
-                        <br>
+                    <div>
+                        <label for="diaSelect1">Selecione o dia:</label> <br>
+                        <select id="diaSelect1" name="diaSelect1">
+                            <!-- Popule as opções do select com os nomes dos serviços -->
+                            <option value="">Selecione um dia</option>
+                            <!-- Adicione mais opções conforme necessário -->
+                            {% for x in range(5) %}
+                                <option value="{{ x + 1 }}">{{ dias[x] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
 
-                    <button class="button-configs" type="submit"> SALVAR ALTERAÇÃO DE HORÁRIOS </button>
+                    <div id="ConfigContainer" style="display: none;">
+                        <div>
+                            <label for="hora_inicio">Horário de abertura: </label> <br>
+                            <input type="text" id="hora_inicio" name="hora_inicio" onfocus="this.type='time'"
+                            onblur="if (!this.value) this.type='text'"> <br>
+                            <label for="hora_pausa">Horário de pausa: </label> <br>
+                            <input type="text" id="hora_pausa" name="hora_pausa" onfocus="this.type='time'"
+                            onblur="if (!this.value) this.type='text'"> <br>
+                            <label for="hora_retomada">Horário de retomada: </label> <br>
+                            <input type="text" id="hora_retomada" name="hora_retomada" onfocus="this.type='time'"
+                            onblur="if (!this.value) this.type='text'"> <br>
+                            <label for="hora_final">Horário de fechamento: </label> <br>
+                            <input type="text" id="hora_final" name="hora_final" onfocus="this.type='time'"
+                            onblur="if (!this.value) this.type='text'"> <br>
+                        </div>
+                        <div>
+                            <label for="tempo_atendimento">Tempo de Atendimento:</label> <br>
+                            <input type="text" id="tempo_atendimento" name="tempo_atendimento" onfocus="this.type='time'" 
+                            onblur="if (!this.value) this.type='text'"> <br>
+                        </div>
+                        <div>
+                            <button type="submit" class="button-configs"> SALVAR ALTERAÇÕES </button>
+                        </div>
+                    </div>
+                    <br>
                 </form>
             </div>
             <div class="modal-footer">
@@ -55,41 +93,26 @@
 </div>
 
 <!-- Modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
-<div class="modal fade" id="configAtendimentoModal" tabindex="-1" role="dialog" aria-labelledby="configAtendimentoModalLabel" aria-hidden="true">
+<div class="modal fade" id="configRelatorioModal" tabindex="-1" role="dialog" aria-labelledby="configRelatorioModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="configAtendimentoModalLabel">Configurações de Tempo de Atendimento</h5>
+                <h5 class="modal-title" id="configAtendimentoModalLabel">Relatorio de logs do sistema</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" role="alert">
-                    A alteração deste dado irá interferir na distribuição de agendamentos para os usuários, podendo permitir
-                    mais ou menos agendamentos, conforme o tempo de atendimento definido para o serviço.
+                    Este relatório contém informações sensíveis e confidenciais. O acesso não autorizado a este documento é estritamente proibido. Certifique-se de compartilhar este relatório apenas com 
+                    indivíduos autorizados e tomar as medidas adequadas para proteger a privacidade e a integridade das informações contidas.
                 </div>
                 <!-- Conteúdo do modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
-                <form action="/autenticarConfig2" method="POST">
+                <form action="{{url_for('gerar_pdf_logs')}}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                   
+                        <input type="submit" class="button-configs" value="GERAR RELATORIO"> 
                     
-                    <label for="servicoSelect">Selecione o Serviço:</label> <br>
-                    <select id="servicoSelect" name="servicoSelect">
-                        <!-- Popule as opções do select com os nomes dos serviços -->
-                        <option value="">Selecione um Serviço</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                        {% for id, servico in servicos.items() %}
-                            <option value="{{ id }}">{{ servico['nome'] }}</option>
-                        {% endfor %}
-                    </select>
-                    <br>
-
-                    <div id="tempoAtendimentoContainer" style="display: none;">
-                        <label for="tempoAtendimento">Tempo de Atendimento:</label> <br>
-                        <input type="text" id="tempoAtendimento" name="tempo_atendimento" onfocus="this.type='time'" 
-                        onblur="if (!this.value) this.type='text'"> <br>
-                        <button type="submit" class="button-configs"> SALVAR ALTERAÇÕES </button>
-                    </div>
                     <br>
                 </form>
             </div>

@@ -27,6 +27,7 @@ class Agendamento(db.Model):
     nome_cliente = db.Column(db.String(255), nullable=False)
     data_agendamento = db.Column(db.Date, nullable=False)
     senha = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.String(25), nullable=False)
     
     servico_agendado = db.Column(db.String(255), nullable=False)
     usuario = db.relationship('Usuario', backref='agendamentos')
@@ -40,7 +41,18 @@ class Horarios_disponiveis(db.Model):
     tempo_pausa = db.Column(db.Time, nullable=False)
     hora_retomada = db.Column(db.Time, nullable=False)
     hora_final = db.Column(db.Time, nullable=False)
+    #tempo_atendimento = db.Column(db.Time, nullable=False)
+    
+class Horario_Servico(db.Model):
+    __tablename__ = 'horario_servico'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_servico = db.Column(db.Integer, nullable=False)
+    hora_inicio = db.Column(db.Time, nullable=False)
+    hora_pausa = db.Column(db.Time, nullable=False) 
+    hora_retomada = db.Column(db.Time, nullable=False)
+    hora_final = db.Column(db.Time, nullable=False)
     tempo_atendimento = db.Column(db.Time, nullable=False)
+    dia_semana = db.Column(db.Integer, nullable=False)
 
 class Servico(db.Model):
     __tablename__ = "servico"

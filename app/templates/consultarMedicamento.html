@@ -13,12 +13,12 @@
             {% endif %}
         {% endwith %}
             <div class="d-flex align-items-center text-dark text-decoration-none ">
-                <a style="text-decoration: none;" href="{{url_for('meusagendamentos')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
+                <a style="text-decoration: none;" href="{{url_for('consultarMedicamento')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
                 viewBox="0 0 16 16">
                 <path
                     d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
                 </svg>
-                <span class="fs-4 cor1">Gerenciar meus agendamentos</span></a>
+                <span class="fs-4 cor1">Gerenciar consulta de medicamentos</span></a>
             </div>
         </div>
         
@@ -28,7 +28,7 @@
             <div class="container-fluid py-4 bg-fundo px-4 mb-2 ">
                 <div class="">
                     <div class="">
-                        <form style="margin-bottom: 0.5rem;" class="d-flex" action="{{url_for('meusagendamentos')}}" role="search" method="get">
+                        <form style="margin-bottom: 0.5rem;" class="d-flex" action="{{url_for('consultarMedicamento')}}" role="search" method="get">
                             <div class="input-group">
 
                                 <span class="input-group-text">
@@ -40,11 +40,27 @@
                                 </span>
 
                                 <div class="form-group flex-grow-1">
-                                    <select name="filtro" class="form-select me-1" aria-label="Default select example" id="filtro">
-                                        <option selected disabled hidden>Filtrar pesquisa</option>
+                                    <select name="filtroStatus" class="form-select me-1" aria-label="Default select example" id="filtro">
+                                        <option selected disabled hidden>Filtrar status</option>
+                                        <option value="aprovadosFiltro">~Aprovados</option>
+                                        <option value="retificadosFiltro">~Retificados</option>
+                                        <option value="analiseFiltro">~Em análise</option>
                                        
-                                        <option value="servicoFiltro">~Serviço</option>
+                                       
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group flex-grow-1">
+                                    <select name="filtroPesquisa" class="form-select me-1" aria-label="Default select example" id="filtroPesquisa">
+                                        <option selected disabled hidden>Filtrar pesquisa</option>
+                                        <option value="todosFiltro">~Todos</option>
+                                        {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
+                                            <option value="usuarioFiltro">~Usuario</option>
+                                        {%endif%}
+                                        <option value="senhaFiltro">~Senha</option>
                                         <option value="dataFiltro">~Data</option>
+                                       
+                                       
                                         
                                     </select>
                                 </div>
@@ -76,6 +92,7 @@
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Nome do Serviço </a></th>
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none;">Data de agendamentos </a></th>
                                         <th class="configfont" scope="col">Horario agendado</th>
+                                        <th class="configfont" scope="col">Status</th>
                                         <th class="configfont" scope="col">Ações</th>
                                     </tr>
                                 </thead>
@@ -88,8 +105,16 @@
                                     <td>{{ agendamento.servico_agendado }}</td>
                                     <td>{{ agendamento.data_agendada }}</td>
                                     <td>{{ agendamento.horario_agendado }}</td>
+                                    <td>{{ agendamento.status }}</td>
                                     <td>
+                                       
                                         <div class="d-flex justify-content-center">
+                                        
+                                           
+
+                                           
+                
+
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
                                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id }}">
                                                 <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
@@ -176,7 +201,7 @@
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Data de agendamento</b>*
+                                                                        <b>Data de solicitaçao</b>*
                                                                     </span>
 
                                                                     <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
@@ -185,11 +210,29 @@
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>horario agendado</b>*
+                                                                        <b>Horario</b>*
                                                                     </span>
 
                                                                     <input type="time" class="form-control" name="cpfPaciente" value="{{agendamento.horario_agendado}}"
                                                                         id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Status</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="cpfPaciente" value="{{agendamento.status}}"
+                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Retificação</b>*
+                                                                    </span>
+
+                                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                                    name="procedimento" disabled>teste</textarea>
                                                                 </div>  
 
                                                             </fieldset>
@@ -233,38 +276,98 @@
                                                                     <input type="text" class="form-control" name="nome_cliente" id='nome_cliente'
                                                                         value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" disabled>
                                                                 </div>
-
+                                                                
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Nome do Serviço</b>*
                                                                     </span>
-
-                                                                    <input type="text" class="form-control" name="serviço" id="serviço"
-                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"disabled>
+                                                                    {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
+                                                                    <select name="serviço" class="form-select me-1" aria-label="Default select example" id="serviço">
+                                                                        <option value="{{agendamento.servico_agendado}}" disabled hidden>{{agendamento.servico_agendado}}</option>
+                                                                        <option value="ATENDIMENTO FARMACÊUTICO">ATENDIMENTO FARMACÊUTICO</option>
+                                                                        <option value="MARCAÇÃO DE EXAMES">MARCAÇÃO DE EXAMES</option>
+                                                                        <option value="AUTORIZAÇÃO DE PROCEDIMENTOS">AUTORIZAÇÃO DE PROCEDIMENTOS</option>
+                                                                        <option value="TRATAMENTO FORA DO DOMICÍLIO - TFD">TRATAMENTO FORA DO DOMICÍLIO - TFD</option>
+                                                                        <option value="CARTÃO DO SUS">CARTÃO DO SUS</option>
+                                                                    </select>
+                                                                    {%else%}
+                                                                        <input type="text" class="form-control" name="serviço" id="serviço"
+                                                                        value="{{agendamento.servico_agendado}}" aria-describedby="NomedoPaciente" disabled>
+                                                                    {%endif%}
+                                                                    
                                                                 </div>
-
+                                                                
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Data de agendamento</b>*
+                                                                        <b>Data de solicitaçao</b>*
                                                                     </span>
 
                                                                     <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
-                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" disabled>
+                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" >
                                                                 </div>
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>horario agendado</b>*
+                                                                        <b>Horario</b>*
                                                                     </span>
 
-                                                                    <input type="time" class="form-control" name="horario_agendado" value="{{agendamento.horario_agendado}}"
-                                                                        id="horario_agendado" aria-describedby="cpfPaciente" disabled>
-                                                                </div> 
+                                                                    <input type="time" class="form-control" name="horario" value="{{agendamento.horario_agendado}}"
+                                                                        id="horario" aria-describedby="cpfPaciente" >
+                                                                </div>  
 
-                                                               
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Status</b>*
+                                                                    </span>
+                                                                    {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
+                                                                    <select name="status" class="form-select me-1" aria-label="Default select example" id="status">
+                                                                        <option value="{{agendamento.status or ''}}" selected disabled hidden>{{agendamento.status or 'Selecione um status'}}</option>
+
+                                                                        <option value="analise">Analise</option>
+                                                                        <option value="retificado">Retificado</option>
+                                                                        <option value="aprovado">Aprovado</option>
+                                                                        
+                                                                    </select>
+                                                                    {%else%}
+                                                                        <input type="text" class="form-control" name="status" id="status"
+                                                                            value="{{agendamento.status}}" aria-describedby="NomedoPaciente" disabled>
+                                                                    {%endif%}
+
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Retificação</b>*
+                                                                    </span>
+
+                                                                    <textarea class="form-control" id="retificacao" rows="3"
+                                                                    name="retificacao" disabled>teste</textarea>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Visualizar Documento</b>*
+                                                                    </span>
+                                                                    
+                                                                    <!-- Use a tag <embed> ou <iframe> aqui -->
+                                                                        <embed src="{{ url_for('servir_arquivo', filename=session.cpf_usuario_logado|replace(".", "")|replace("-", ""), data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}"
+                                                                        type="application/pdf" style="max-width: 100%; max-height: 600px; border-radius: 5px;" />
+                                                                 
+                                                                 
+                                                                </div>
+                                                                
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Substituir documentos</b>*
+                                                                    </span>
+
+                                                                    <input class="form-control" type="file" name="documentos_upados"  id="documentos_upados" multiple>
+                                                                </div> 
                                                                 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+
                                                                     <button type="submit" class="btn btn-primary">
                                                                         <div class="d-flex align-items-center justify-content-center">
                                                                             <span>Confirmar</span>
@@ -295,16 +398,12 @@
                         Agendar novo serviço</button>
                 </a>
 
-                <a href="{{url_for('consultarMedicamento')}}" >
-                    <button style="margin-right: 20px; background-color: #22487B; border: none;" type="button" class="btn btn-primary btn-gerenc-new">
-                        <i class="bi bi-file-earmark-plus"></i>
-                        Consultar medicamento</button>
-                </a>
+               
                 
                 <div class="pagination">
                     {% if agendamentos.has_prev %}
                         <button style="border: none; background-color: #22487B;" type="button" class="btn btn-primary btn-custom btn1 mb-3 me-3">
-                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('meusagendamentos', page=agendamentos.prev_num) }}">
+                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('consultarMedicamento', page=agendamentos.prev_num) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                 </svg> 
@@ -315,7 +414,7 @@
                 
                     {% if agendamentos.has_next %}
                         <button style="border: none; background-color: #22487B;" type="button" class="btn btn-primary btn-custom btn1 mb-3">
-                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('meusagendamentos', page=agendamentos.next_num) }}">
+                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('consultarMedicamento', page=agendamentos.next_num) }}">
                                 <span> Próximo </span> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
@@ -364,11 +463,11 @@
     return data;
   }
 
-    document.getElementById('filtro').addEventListener('change', function () {
-    var filtro = this.value;
+    document.getElementById('filtroPesquisa').addEventListener('change', function () {
+    var filtroPesquisa = this.value;
     var campoPesquisa = document.getElementById('pesquisarBarra');
 
-    if (filtro === 'dataFiltro') {
+    if (filtroPesquisa === 'dataFiltro') {
       campoPesquisa.addEventListener('input', function formatarDataListener() {
         this.value = formatarData(this.value);
       });
