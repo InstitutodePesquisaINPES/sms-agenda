@@ -383,7 +383,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="serviço" id="serviço"
-                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"disabled>
+                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário">
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -392,7 +392,7 @@
                                                                     </span>
 
                                                                     <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
-                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" disabled>
+                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" >
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -400,8 +400,8 @@
                                                                         <b>Horario</b>*
                                                                     </span>
 
-                                                                    <input type="time" class="form-control" name="cpfPaciente" value="{{agendamento.horario_agendado}}"
-                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                    <input type="time" class="form-control" name="horario" value="{{agendamento.horario_agendado}}"
+                                                                        id="horario" aria-describedby="cpfPaciente" >
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -418,8 +418,8 @@
                                                                         <b>Retificação</b>*
                                                                     </span>
 
-                                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                                                    name="procedimento" disabled>teste</textarea>
+                                                                    <textarea class="form-control" id="retificacao" rows="3"
+                                                                    name="retificacao" disabled>teste</textarea>
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -428,8 +428,10 @@
                                                                     </span>
                                                                     
                                                                     <!-- Use a tag <embed> ou <iframe> aqui -->
-                                                                    <embed src="{{ url_for('servir_arquivo', filename='123.456.789-00/pdf.pdf') }}"
-                                                                           type="application/pdf" style="max-width: 100%; max-height: 600px; border-radius: 5px;" />
+                                                                        <embed src="{{ url_for('servir_arquivo', filename=session.cpf_usuario_logado|replace(".", "")|replace("-", ""), data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}"
+                                                                        type="application/pdf" style="max-width: 100%; max-height: 600px; border-radius: 5px;" />
+                                                                 
+                                                                 
                                                                 </div>
                                                                 
 
@@ -479,7 +481,7 @@
                 <div class="pagination">
                     {% if agendamentos.has_prev %}
                         <button style="border: none; background-color: #22487B;" type="button" class="btn btn-primary btn-custom btn1 mb-3 me-3">
-                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('meusagendamentos', page=agendamentos.prev_num) }}">
+                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('consultarMedicamento', page=agendamentos.prev_num) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                                     <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                                 </svg> 
@@ -490,7 +492,7 @@
                 
                     {% if agendamentos.has_next %}
                         <button style="border: none; background-color: #22487B;" type="button" class="btn btn-primary btn-custom btn1 mb-3">
-                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('meusagendamentos', page=agendamentos.next_num) }}">
+                            <a style="text-decoration: none; color: #fff !important;" href="{{ url_for('consultarMedicamento', page=agendamentos.next_num) }}">
                                 <span> Próximo </span> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                                     <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>

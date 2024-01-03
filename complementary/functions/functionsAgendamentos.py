@@ -1,8 +1,11 @@
 import uuid
 from flask import Request
+from PyPDF2 import PdfMerger
+from PIL import Image
 from app.models.model_user import *
 from werkzeug.utils import secure_filename #import de mexer com arquivos
 import os
+import time
 from run import app
 from datetime import datetime
 from app.controllers.googleCloud import *
@@ -122,36 +125,45 @@ def listaHorarios(id_servico):
     return lista_horarios
 
 
-def upar_documentos(documentos, nome_da_pasta):
-    lista_documentos = []
-
-    # Certifique-se de que o nome da pasta é seguro
+def converter_para_pdf(documento, nome_da_pasta, nome_do_arquivo):
+    # Garante que o nome da pasta é seguro
     nome_da_pasta = secure_filename(nome_da_pasta)
 
-    # Crie o caminho completo do diretório de upload
+    # Cria o caminho completo para a pasta de upload
     upload_path = os.path.join(app.config['UPLOAD_FOLDER'], nome_da_pasta)
+    os.makedirs(upload_path, exist_ok=True)
 
-    if not os.path.exists(upload_path):
-        os.makedirs(upload_path)
+    # Define o caminho de destino para o arquivo PDF resultante
+    destino = os.path.join(upload_path, secure_filename(nome_do_arquivo + '.pdf'))
 
-    for documento in documentos:
+    # Define o caminho para o arquivo temporário PDF
+    temp_pdf_path = os.path.join(upload_path, "temp.pdf")
+
+  
         
-        # Verificar se é um arquivo seguro
-        if documento.filename != '':
-            
-            # Gerar um nome de arquivo seguro usando secure_filename
-            filename = secure_filename(documento.filename)
 
-            # Salvar o arquivo na pasta de uploads
-            destino = os.path.join(upload_path, filename)
+    # Converte a imagem para PDF se for uma imagem
+    if documento.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+        Image.open(documento).save(temp_pdf_path, 'PDF', resolution=100.0)
+    
+    # Se for um PDF, salva diretamente
+    elif documento.filename.lower().endswith('.pdf'):
+        temp_pdf_path = os.path.join(upload_path, secure_filename(documento.filename))
+        documento.save(temp_pdf_path)
+    else:
+        raise ValueError("Tipo de arquivo não suportado.")
 
-            documento.save(destino)
+    # Cria um objeto PdfMerger para mesclar os PDFs
+    pdf_merger = PdfMerger()
+    pdf_merger.append(temp_pdf_path)
 
-            # Adicionar o caminho do arquivo à lista
-            lista_documentos.append(destino)
+    # Escreve o resultado no arquivo de destino
+    with open(destino, 'wb') as output_pdf:
+        pdf_merger.write(output_pdf)
 
+    
 
-    return lista_documentos
+    return destino
 
 def gerarSenhaDemandas():
     
