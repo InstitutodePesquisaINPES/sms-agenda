@@ -153,8 +153,21 @@ def gerar_pdf_logs():
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
+    
+    novo_agendamento = Agendamento.query.get(id)
+    novo_agendamento.servico_agendado = request.form.get('serviço')
+    novo_agendamento.data_agendada =  request.form.get('data_agendamento')
+    novo_agendamento.horario_agendado = request.form.get('horario')
+    novo_agendamento.status = request.form.get('status')
+    print(request.form.get('horario'),request.form.get('status'))
+
+    
+    db.session.commit()
+    #novo_agendamento.retificacao = request.form.get('retificacao')
+    #docs
    
-    return redirect(url_for('indexuser'))
+    flash('edição feita com sucesso')
+    return redirect(url_for('consultarMedicamento'))
 
 
 def registrar_log(descricao):
@@ -315,18 +328,25 @@ def horas_disponiveis():
         return jsonify({'error': str(e)}), 400
 
 
-@app.route('/uploads/<path:filename>')
-def servir_arquivo(filename):
-    return send_from_directory(os.path.join(app.root_path, 'uploads'), filename)
+@app.route('/uploads/<filename>/<data>/<horario>')
+def servir_arquivo(filename, data, horario):
+    horario_formatado = horario[:-2]
+
+    nome_arquivo = f'{data}{horario_formatado}.pdf'
+    print(nome_arquivo, filename,data,horario_formatado)
+    # Construa o caminho completo
+    caminho_completo = os.path.join(app.root_path, 'uploads', filename, nome_arquivo)
+
+    return send_from_directory(os.path.dirname(caminho_completo), os.path.basename(caminho_completo))
 # rota para autenticar o agendamento     
 @app.route('/autenticaragendamento', methods=['POST'])
 @login_required
 def autenticaragendamento():
-    documentos = request.files.getlist('documentos_upados[]')
+    documento = request.files.get('documentos_upados[]')
 
     cpf_usuario = session['cpf_usuario_logado']
     
-    lista_documentos = upar_documentos(documentos, cpf_usuario) # salvar documentos agendados na pasta raíz
+    
 
     try:
         if request.method == 'POST':
@@ -347,8 +367,24 @@ def autenticaragendamento():
                 
                 novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
 
+                data_formatada = data_agendada.replace("-", "")
+                horario_formatado = horario_agendado.replace(":", "")
+                cpf_usuario_formatado = cpf_usuario.replace(".","").replace("-","")
+                
+                nome_arquivo = f"{data_formatada}{horario_formatado}"
+                
+                print(cpf_usuario_formatado,nome_arquivo)
+                try:
+                    converter_para_pdf(documento, str(cpf_usuario_formatado), nome_arquivo)
+                except ValueError:
+                    flash('Insira um documento com extensão válida: .jpeg - .jpg - .pdf')
+                   
+                    return redirect(url_for('allservices'))
+                
                 db.session.add(novo_agendamento)
                 db.session.commit()
+                
+                    
 
             
                 return redirect(url_for('consultarMedicamento')) 
@@ -393,15 +429,9 @@ def autenticaragendamento():
             # db.session.commit()
             
 
-    except SQLAlchemyError as e:
-        # Se ocorrer um erro no banco de dados, você pode lançar uma mensagem de erro
-        # Aqui, você pode redirecionar para uma página de erro ou renderizar um template com a mensagem de erro
-        db.session.rollback()  # Desfaz qualquer alteração pendente no banco de dados
-        mensagem_erro = f"Erro ao adicionar agendamento: {str(e)}"
-        # Aqui você pode redirecionar para uma página de erro ou renderizar um template com a mensagem de erro
-        return render_template('errorPage.html', mensagem_erro=mensagem_erro)
-
-    return render_template('outra_pagina.html')
+    except Exception:
+        flash('Ocorreu um erro. Por favor, tente novamente.')
+        return redirect(url_for('indexuser'))
 
 def filtroAll():
     id_usuario_logado = session.get('id_usuario_logado')
