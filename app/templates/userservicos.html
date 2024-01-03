@@ -21,7 +21,7 @@
             </div>
             <div class="buttons-service"> 
                 {% if not session.usuario_logado%}
-                    <a class="needLogin" href="{{ url_for('/) }}"><button class="needLogin needLoginButton">
+                    <a class="needLogin" href="{{ url_for('/') }}"><button class="needLogin needLoginButton">
                         Faça o login para agendar o serviço </button></a>
                 {% else %}
                     <a href="{{ url_for('agendar', servico_id=info_servico.id) }}"><button class="buttonUserServicos"> Agendar <i class="bi bi-chevron-right"></i></button></a>
