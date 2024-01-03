@@ -70,14 +70,20 @@
                         
                     </div>
 
-                    <div class="options-logado">
+                    <div class="options-logado animate__animated animate__fadeInRightBig" style="animation-duration: 300ms;">
+                        <div class="iconCloseBase">
+                            <i class="bi bi-x-square"></i>
+                        </div>
+                        <div class="fullNameUserBase">
+                            <p> Emanuel Pinto Nogueira </p>
+                        </div>
                         <div class="menu-options">
                             <i class="bi bi-calendar-date"></i>
-                            <a href="{{ url_for('meusagendamentos')}}">Meus </br>Agendamentos </a>
+                            <a href="{{ url_for('meusagendamentos')}}">Meus Agendamentos </a>
                         </div>
                         {% if session.user_type_usuario_logado == "administrador" %}
                             <div class="menu-options">
-                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <i class="bi bi-person-vcard"></i>
                                 <a href="{{ url_for('cadastrouser')}}">Cadastrar servidor</a>
                             </div>
                         {% endif %}
@@ -182,6 +188,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="../static/js/index.js"></script>
+        <script src="../static/js/flashMessage.js"></script>
 
         <script>
             var swiper = new Swiper(".slide-content", {
