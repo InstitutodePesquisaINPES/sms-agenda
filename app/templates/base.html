@@ -70,6 +70,16 @@
                         <!-- <p class="nome-user"> {{session['usuario_logado']}} </p> -->
                         
                     </div>
+
+                    <!-- 
+                        <div class="options-logado animate__animated animate__fadeInRightBig" style="animation-duration: 300ms;">
+                        <div class="iconCloseBase">
+                            <i class="bi bi-x-square"></i>
+                        </div>
+                        <div class="fullNameUserBase">
+                            <p> Emanuel Pinto Nogueira </p>
+                        </div> 
+                    -->
                     
                     <div class="options-logado">
                         {% if session.user_type_usuario_logado == "usuario" %}
@@ -92,7 +102,7 @@
                         {% endif %}
                         {% if session.user_type_usuario_logado == "administrador" %}
                             <div class="menu-options">
-                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <i class="bi bi-person-vcard"></i>
                                 <a href="{{ url_for('cadastrouser')}}">Cadastrar servidor</a>
                             </div>
                             <div class="menu-options">
@@ -206,6 +216,7 @@
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="../static/js/index.js"></script>
         <script src="../static/js/adm_configs.js"></script>
+
 
         <script>
             var swiper = new Swiper(".slide-content", {

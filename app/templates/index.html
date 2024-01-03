@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block main %}
+    <div class="flash-success" style="display: none;">
+        <i class="bi bi-check-circle-fill" ></i>
+        <p>Login bem sucedido</p>
+    </div>
 
         <div class="corpo">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="flash-{{ category }}">{{ message }}</div>
+                        <div class="flash-{{ category }} animate__animated animate__bounceInLeft">{{ message }}</div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
@@ -45,4 +49,11 @@
 
         
         </div>
-    {% endblock %}
+
+
+{% endblock %}
+
+{% block javascript %}
+<script src="../static/js/flashMessage.js"></script>
+
+{% endblock %}

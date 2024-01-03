@@ -5,6 +5,7 @@ var horas_disponiveis = []
 // API PARA AS BUSCAS DAS DATAS DISPONIVEIS (CUIDADO AO MEXER)
 document.addEventListener('DOMContentLoaded', function () {
     var id_servico = document.getElementById('id_servico').value;
+    console.log(id_servico)
     var csrfToken = $('input[name=csrf_token]').val();
     
     // Fazer uma requisição AJAX para obter os dados dos agendamentos por dia
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             for (var i = 0; i < lista_datas.length; i++) {
                 diasDesativados.push(String(lista_datas[i]));
             }
-            console.log(lista_datas)
+            
             FunctDatePicker()
             
         },
@@ -291,9 +292,18 @@ function FunctDatePicker() {
                     return true;
                 }
 
+                function adicionarZero(numero) {
+                    if (numero < 10) {
+                        return '0' + numero;
+                    }
+                    return numero;
+                }
 
-                var dataAtualdt = date.getDate();
-                var mesAtualdt = date.getMonth() + 1;
+
+                var dataAtualdt = adicionarZero(date.getDate());
+                
+                
+                var mesAtualdt = adicionarZero(date.getMonth() + 1);
                 var anoAtualdt = date.getFullYear()
 
                 
@@ -305,6 +315,7 @@ function FunctDatePicker() {
 
                 console.log(data_atualdt)
                 console.log(diasDesativados)
+                console.log("desativado A")
 
                 
 
@@ -357,5 +368,31 @@ function FunctDatePicker() {
 //         return true;
 //     }
 
-//     return false;
-// }
+    //return false;
+//}
+
+function handleFileChange() {
+    var fileInput = document.getElementById('updoc');
+    var file = fileInput.files[0];
+
+    // Verifica se um arquivo foi selecionado
+    if (!file) {
+        alert('Selecione um arquivo.');
+        return;
+    }
+
+    // Verifica a extensão do arquivo
+    var allowedExtensions = ['jpg', 'jpeg','.pdf'];
+    var fileExtension = file.name.split('.').pop().toLowerCase();
+
+    if (allowedExtensions.indexOf(fileExtension) === -1) {
+        alert('Tipo de arquivo não permitido. Selecione um arquivo com extensão: ' + allowedExtensions.join(', '));
+
+        // Limpa o campo de arquivo
+        fileInput.value = '';
+        return;
+    }
+
+    // Continue com o processamento do arquivo, se necessário
+    // Você pode adicionar lógica adicional aqui, se desejar
+}

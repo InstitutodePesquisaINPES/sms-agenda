@@ -1,0 +1,19 @@
+{% comment %} <form action="/autenticarConfig1" method='POST'>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <label for="hora_inicio"> HORÁRIO DE INICIO DOS ATENDIMENTOS </label>
+                    <input type="text" name="hora_inicio" value="{{horarios.hora_inicio}}" placeholder="{{ horarios.hora_inicio }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                    <label for="hora_pausa"> HORÁRIO DE PAUSA DOS ATENDIMENTOS </label>
+                    <input type="text" name="hora_pausa" value="{{horarios.hora_pausa}}" placeholder="{{ horarios.hora_pausa }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                    <label for="hora_retomada"> HORÁRIO DE RETOMADA DOS ATENDIMENTOS </label>
+                    <input type="text" name="hora_retomada" value="{{horarios.hora_retomada}}" placeholder="{{ horarios.hora_retomada }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                    <label for="hora_final"> HORÁRIO DE FINALIZAR OS ATENDIMENTOS </label>
+                    <input type="text" name="hora_final" value="{{horarios.hora_final}}" placeholder="{{ horarios.hora_final }}" onfocus="this.type='time'" 
+                        onblur="if (!this.value) this.type='text'">
+                        <br>
+
+                    <button class="button-configs" type="submit"> SALVAR ALTERAÇÃO DE HORÁRIOS </button>
+                </form> {% endcomment %}

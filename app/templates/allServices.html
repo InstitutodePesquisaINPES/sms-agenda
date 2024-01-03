@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 
 {% block main %}
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="flash-{{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
     <div class="backgroundsMain">
         <div class="backgroundIndexOne"></div>
     </div>
 
     <div class="corpoServices">
+        <div class="titleFieldServices">
+            <h1> Serviços </h1>
+        </div>
         <div class="gallery-container ">
             <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
                 <div class="boxContentServices animate__animated animate__fadeInUp">
@@ -82,7 +91,22 @@
                         </div>
                     </div>
                 </div>
-                </a>
+            </a>
+            <a href="{{ url_for('userservicos', servico_id=6) }}" class="linkRedirectServices">
+                <div class="boxContentServices animate__animated animate__fadeInUp">
+                    <div class="fieldTextBoxServices">
+                        <i class='bx bxs-user-account'></i> 
+                        <p> {{ servico6.sobre }} </p>
+                    </div>
+                    
+                    <div class="contentServicesBarFive">
+                        <p> {{ servico6.nome }} </p>
+                        <div class="iconsReference">
+                           
+                        </div>
+                    </div>
+                </div>
+            </a>
             
         </div>
         
