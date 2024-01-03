@@ -85,18 +85,37 @@
                 </div>
                 <i class='bx bx-cloud-upload'></i>
                 
-                <div class="mb-3 form-check"> 
-                    <div class="checkbox-div">
-                        <div>
-                            <input type="checkbox" class="form-check-input form-control" name="i-confirm" id="">
-                            <label for="i-confirm" class="form-check-label-footer"> Eu confirmo que desejo agendar e estou ciente de que devo comparecer. </label>
-                            <br>
-                        </div>
-                        <div>
-                            <input type="checkbox" class="form-check-input form-control" name="li" id="">
-                            <label for="li" class="form-check-label-footer"> Li e confirmo que enviei os documentos necessários na etapa anterior. </label>
-                            <br>
-                        </div>
+                
+            </div>
+
+            <div class="mb-3">
+                <div> 
+                    <div class="div-hora" id="divHorarios">
+                    
+                    </div>
+                </div>
+            </div>
+
+            {% if info_servico.upload == "True" %}
+                <div class="documents">
+                    <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
+                    <div>
+                        <input class="form-control" class="updoc" type="file" name="documentos_upados[]" id="updoc" accept=".jpg, .jpeg, .pdf" multiple onchange="handleFileChange()">
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="mb-3 form-check"> 
+                <div class="checkbox-div">
+                    <div>
+                        <input type="checkbox" class="form-check-input form-control" name="i-confirm" id="">
+                        <label for="i-confirm" class="form-check-label"> Eu confirmo que desejo agendar e estou ciente de que devo comparecer. </label>
+                        <br>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form-check-input form-control" name="li" id="">
+                        <label for="li" class="form-check-label"> Li e confirmo que enviei os documentos necessários na etapa anterior. </label>
+                        <br>
                     </div>
                 </div>
             </div>

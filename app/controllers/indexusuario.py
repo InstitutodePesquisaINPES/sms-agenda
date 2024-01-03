@@ -21,6 +21,9 @@ servicos_card = {
        
     5:{'nome': 'CARTÃO DO SUS', 
        'sobre': 'Emissão ou atualização do Cartão Nacional de Saúde.'},
+
+    6:{'nome': 'BUSCAR MEDICAMENTOS', 
+       'sobre': 'Consultar disponibilidade e solicitar medicamentos para retirada na farmácia popular'}
 }
 
 
@@ -31,9 +34,10 @@ def indexuser():
     servico3 = servicos_card.get(3)
     servico4 = servicos_card.get(4)
     servico5 = servicos_card.get(5)
+    servico6 = servicos_card.get(6)
 
 
-    return render_template('index.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5)
+    return render_template('index.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5, servico6=servico6)
 
 
 @app.route('/allservices')
@@ -43,8 +47,9 @@ def allservices():
     servico3 = servicos_card.get(3)
     servico4 = servicos_card.get(4)
     servico5 = servicos_card.get(5) 
+    servico6 = servicos_card.get(6)
 
-    return render_template('allServices.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5)
+    return render_template('allServices.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5, servico6=servico6)
 
 
 
