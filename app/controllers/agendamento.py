@@ -155,9 +155,12 @@ def gerar_pdf_logs():
 def editar(id):
     
     novo_agendamento = Agendamento.query.get(id)
-    #novo_agendamento.servico_agendado = request.form.get('serviço')
+    novo_agendamento.servico_agendado = request.form.get('serviço')
     novo_agendamento.data_agendada =  request.form.get('data_agendamento')
     novo_agendamento.horario_agendado = request.form.get('horario')
+    novo_agendamento.status = request.form.get('status')
+    print(request.form.get('horario'),request.form.get('status'))
+
     
     db.session.commit()
     #novo_agendamento.retificacao = request.form.get('retificacao')
