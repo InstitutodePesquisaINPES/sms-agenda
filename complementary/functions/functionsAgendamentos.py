@@ -5,6 +5,8 @@ from werkzeug.utils import secure_filename #import de mexer com arquivos
 import os
 from run import app
 from datetime import datetime
+
+
 from app.controllers.googleCloud import *
 from complementary.servicos.servicos_data import *
 
@@ -16,14 +18,15 @@ def paraMinutos(hora):
 def calculaHoras(id_servico): # puxa do banco a quantidade de horas de cada horario de atendimento (intevalo de tempo), util na api do calendario
     servicos = servicos_data_function()
 
-    dia_atual = datetime.date.today()
+    dia_atual = datetime.today().date()
     numero_dia_atual = dia_atual.day
 
     print(numero_dia_atual)
 
     # e `hora_inicio` e `hora_pausa` são campos no seu modelo
     # horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
-    horario1 = Horario_Servico.query.filter_by(id = id_servico, dia_semana = numero_dia_atual).first()
+    horario1 = Horario_Servico.query.filter_by(id_servico = id_servico).first()
+    
     
     servico = servicos.get(int(id_servico))
     
@@ -60,17 +63,17 @@ def calculaHoras(id_servico): # puxa do banco a quantidade de horas de cada hora
 
     # soma do return da 4, usar um count com filtro por dia, para saber quantos agendamentos tem no dia pra saber se ta disponivel 
  
-def calculaHorarios(id_servico):
+def calculaHorarios(id_servico, dia):
 
     servicos = servicos_data_function()
     servico = servicos.get(int(id_servico))
 
-    dia_atual = datetime.date.today()
+    dia_atual = datetime.today().date()
     numero_dia_atual = dia_atual.day
 
     # e `hora_inicio` e `hora_pausa` são campos no seu modelo
     # horario1 = Horarios_disponiveis.query.filter_by(id=1).first()
-    horario1 = Horario_Servico.query.filter_by(id = id_servico, dia_semana = numero_dia_atual).first()
+    horario1 = Horario_Servico.query.filter_by(id_servico = id_servico, dia_semana = dia).first()
 
     # manha
     hora_inicio = horario1.hora_inicio
@@ -103,9 +106,18 @@ def calculaHorarios(id_servico):
                     #0                    #1                    #2                     #3                #4
     return [int(horarios_manha), int(horarios_tarde), int(minutos_atendimento), int(minutos_inicio), int(minutos_retomada)]
 
-def listaHorarios(id_servico):
+def numero_do_dia_da_semana(data_str):
+    # Converter a string da data para um objeto datetime
+    data = datetime.strptime(data_str, "%Y-%m-%d").date()
+    
+    # Obter o número do dia da semana (domingo = 0, segunda-feira = 1, ..., sábado = 6)
+    numero_dia_da_semana = data.weekday()
+    
+    return numero_dia_da_semana
+
+def listaHorarios(id_servico, dia):
     tempo = 0
-    horarios = calculaHorarios(int(id_servico))
+    horarios = calculaHorarios(int(id_servico), dia)
     print(horarios)
     lista_horarios = []
     

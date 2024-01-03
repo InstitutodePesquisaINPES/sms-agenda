@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             for (var i = 0; i < lista_datas.length; i++) {
                 diasDesativados.push(String(lista_datas[i]));
             }
-            // console.log(lista_datas)
+            
             FunctDatePicker()
             
         },
@@ -227,7 +227,7 @@ $(document).ready(function () {
 });
 
 // Código para puxar a data do calendar 
-document.addEventListener('DOMContentLoaded', function FunctDatePicker() {
+function FunctDatePicker() {
     // Obter a data atual
     var dataAtual = new Date();
     var diaAtual = dataAtual.getDate();
@@ -266,9 +266,18 @@ document.addEventListener('DOMContentLoaded', function FunctDatePicker() {
                     return true;
                 }
 
+                function adicionarZero(numero) {
+                    if (numero < 10) {
+                        return '0' + numero;
+                    }
+                    return numero;
+                }
 
-                var dataAtualdt = date.getDate();
-                var mesAtualdt = date.getMonth() + 1;
+
+                var dataAtualdt = adicionarZero(date.getDate());
+                
+                
+                var mesAtualdt = adicionarZero(date.getMonth() + 1);
                 var anoAtualdt = date.getFullYear()
 
                 
@@ -280,6 +289,7 @@ document.addEventListener('DOMContentLoaded', function FunctDatePicker() {
 
                 console.log(data_atualdt)
                 console.log(diasDesativados)
+                console.log("desativado A")
 
                 
 
@@ -318,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function FunctDatePicker() {
 
 
     // ... seu código existente
-});
+};
 
 function verificaCondicional(data) {
     // Extrai ano, mês e dia da data fornecida

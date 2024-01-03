@@ -147,6 +147,8 @@ def agendar(servico_id):
 def agendamentos_por_dia():
     id_servico = request.json.get('servico_id')
     info_servico = servicos.get(int(id_servico))
+    print(id_servico)
+    print(info_servico)
 
     # Obtém a data de hoje
     hoje = datetime.now().date()
@@ -169,7 +171,10 @@ def agendamentos_por_dia():
         filter(Agendamento.data_agendada.between(nova_data, data_30_dias_frente)).\
         group_by(Agendamento.data_agendada).all()
     
-
+    print(resultados)
+    
+    horario1 = Horario_Servico.query.filter_by(id_servico = 1, dia_semana = 4).first()
+    print(horario1)
     
     # Lista para armazenar os dias
     # dias_list = [(nova_data - timedelta(days=i)).day for i in range(dias_a_frente)]
@@ -205,12 +210,15 @@ def horas_disponiveis():
         data_selecionada_str = dados_json.get('data_selecionada')
         data_selecionada = datetime.strptime(data_selecionada_str, '%Y-%m-%d').date()
         
+        numero_dia = numero_do_dia_da_semana(data_selecionada_str) + 1
+        
+        print('num: ', numero_dia)
 
         servico_id = dados_json.get('servico')
         
         
         # Sua lista de horários disponíveis
-        horas_disp = listaHorarios(servico_id)
+        horas_disp = listaHorarios(servico_id, numero_dia)
 
         horarios_agendados = [agendamento.horario_agendado.strftime('%H:%M') for agendamento in Agendamento.query.filter_by(data_agendada=data_selecionada).all()]
         
