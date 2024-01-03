@@ -63,9 +63,11 @@ def autenticar_novas_configuracoes():
         tempo_atendimento = tempo_atendimento + ":00"
 
     servico_id = request.form['servicoSelect1'] 
+    dia_semana = request.form['diaSelect1']
 
     try:
-        horario = db.session.query(Horario_Servico).get(servico_id)
+        
+        horario = Horario_Servico.query.filter_by(id_servico = servico_id, dia_semana = dia_semana).first()
         
         horario.hora_inicio = hora_inicio
         horario.hora_pausa = hora_pausa
