@@ -20,9 +20,12 @@ servicos = {
             'descricao': 'Emissão ou atualização do Cartão Nacional de Saúde - SUS.', 
             'documentos': ['RG', 'CPF', 'Comprovante de residencia com CEP'], 'tempo_atendimento': '00:40:00', 'upload': "False", 'dias_minimos': 2},
 
-         6:{'id': 6, 'categoria': 'FARMÁCIA', 'nome': 'BUSCAR MEDICAMENTOS', 'descricao': 'Consultar disponibilidade e solicitar medicamentos para retirada na farmácia popular', 'documentos': ['RG', 'CPF', 'Cartão do SUS', 'Receita'], 'upload': "True", 'dias_minimos': 3}
+         6:{'id': 6, 'categoria': 'Medicamentos', 'nome': 'CONSULTAR MEDICAMENTOS',
+             'descrição': 'Ver a disponibilidade de medicamentos',
+             'documentos': ['RG', 'CPF', 'Pedido Médico', 'Cartão do SUS'], 'tempo_atendimento': '00:30:00', 'upload': "True",'dias_minimos': 2 }
 
       }
+
    
 def servicos_data_function():
    return servicos

@@ -22,8 +22,9 @@ servicos_card = {
     5:{'nome': 'CARTÃO DO SUS', 
        'sobre': 'Emissão ou atualização do Cartão Nacional de Saúde.'},
 
-    6:{'nome': 'BUSCAR MEDICAMENTOS', 
-       'sobre': 'Consultar disponibilidade e solicitar medicamentos para retirada na farmácia popular'}
+    6:{'nome': 'BUSCAR MEDICAMENTOS',
+       'sobre': 'Consultar  medicamentos disponiveis'},
+   
 }
 
 
