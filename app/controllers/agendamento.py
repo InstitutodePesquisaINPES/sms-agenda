@@ -254,7 +254,8 @@ def autenticaragendamento():
 
             nome_do_servico = request.form['nome_do_servico']
 
-            senha = gerarSenha(nome_do_servico, horario_agendado, id_servico)
+            numero_dia = numero_do_dia_da_semana(data_agendada) + 1
+            senha = gerarSenha(nome_do_servico, horario_agendado, id_servico, numero_dia)
 
             if nome_do_servico == "CARTÃO DO SUS":
                 status = 'analise'
