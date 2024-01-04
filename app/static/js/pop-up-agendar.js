@@ -119,6 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (date.getDay() === 0 || date.getDay() === 6) {
                     return true;
                 }
+            }
+        ]
+    });
+});
 // document.addEventListener('DOMContentLoaded', function() {
 
 //     console.log(diasDesativados),
@@ -371,28 +375,28 @@ function FunctDatePicker() {
     //return false;
 //}
 
-function handleFileChange() {
-    var fileInput = document.getElementById('updoc');
-    var file = fileInput.files[0];
+// function handleFileChange(){
+//     var fileInput = document.getElementById('updoc');
+//     var file = fileInput.files[0];
 
-    // Verifica se um arquivo foi selecionado
-    if (!file) {
-        alert('Selecione um arquivo.');
-        return;
-    }
+//     // Verifica se um arquivo foi selecionado
+//     if (!file) {
+//         alert('Selecione um arquivo.');
+//         return;
+//     }
 
-    // Verifica a extensão do arquivo
-    var allowedExtensions = ['jpg', 'jpeg','.pdf'];
-    var fileExtension = file.name.split('.').pop().toLowerCase();
+//     // Verifica a extensão do arquivo
+//     var allowedExtensions = ['jpg', 'jpeg','.pdf'];
+//     var fileExtension = file.name.split('.').pop().toLowerCase();
 
-    if (allowedExtensions.indexOf(fileExtension) === -1) {
-        alert('Tipo de arquivo não permitido. Selecione um arquivo com extensão: ' + allowedExtensions.join(', '));
+//     if (allowedExtensions.indexOf(fileExtension) === -1) {
+//         alert('Tipo de arquivo não permitido. Selecione um arquivo com extensão: ' + allowedExtensions.join(', '));
 
-        // Limpa o campo de arquivo
-        fileInput.value = '';
-        return;
-    }
+//         // Limpa o campo de arquivo
+//         fileInput.value = '';
+//         return;
+//     }
 
-    // Continue com o processamento do arquivo, se necessário
-    // Você pode adicionar lógica adicional aqui, se desejar
-}
+//     // Continue com o processamento do arquivo, se necessário
+//     // Você pode adicionar lógica adicional aqui, se desejar
+// }

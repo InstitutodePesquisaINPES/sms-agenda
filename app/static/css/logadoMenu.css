@@ -54,7 +54,7 @@
 .options-logado {
     display:none;
     position: fixed;
-    left: -100px;
+    left: -120px;
     transform: translateX(20px);
     top: 0px;
     background: linear-gradient(140deg, rgb(233, 233, 233) 0%, rgb(238, 238, 238) 49%, rgb(196, 196, 196) 100%);
@@ -95,10 +95,20 @@
     font-size: 1.6rem;
 }
 
+.iconCloseButton {
+    position: absolute;
+    left: 85%;
+}
 
 .fullNameUserBase {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    line-height: 2px;
+}
+
+.fullNameUserBase p:nth-child(1) {
+    font-weight: 700;
+    font-size: 0.7rem;
 }
 
 .fullNameUserBase i {
@@ -107,11 +117,20 @@
     align-items: center;
 }
 
+
 .menu-options {
     padding: 10px;
     cursor: pointer;
     align-items: center;
     display: flex;
+    margin: 3px 0px;
+    border-radius: 10px;
+}
+
+.menu-options:hover {
+    transition: 0.3s ease-in-out;
+    color: #121212 !important;
+    background-color: #bbbbbb;
 }
 
 .menu-options i {
@@ -131,16 +150,4 @@
     transition: 0.3s ease-in-out;
 }
 
-.menu-options:nth-child(1):hover,
-.menu-options:nth-child(1) a:hover {
-    transition: 0.3s ease-in-out;
-    color: #190783 !important;
-    filter: drop-shadow(0px 0px 3px #ffffff40);
-}
 
-.menu-options-three:hover,
-.menu-options-three a:hover {
-    transition: 0.3s ease-in-out;
-    color: #990b0b;
-    filter: drop-shadow(0px 0px 3px #ffffff40);
-}

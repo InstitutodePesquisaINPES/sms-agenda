@@ -21,10 +21,11 @@
             </div>
             <div class="buttons-service"> 
                 {% if not session.usuario_logado%}
-                    <a class="needLogin" href="{{ url_for('/') }}"><button class="needLogin needLoginButton">
+                    <a class="needLogin" href="{{ url_for('login') }}"><button class="needLogin needLoginButton">
                         Faça o login para agendar o serviço </button></a>
                 {% else %}
-                <a href="{{ url_for('agendar', servico_id=info_servico.id) }}"><button> AGENDAR </button></a>
+
+                    <a href="{{ url_for('agendar', servico_id=info_servico.id) }}"class="buttonUserServicos"> Agendar <i class="bi bi-chevron-right"></i></button></a>
                 <!--<button> SOLICITAR </button>--> 
                 {% endif %}
             </div>
@@ -40,9 +41,13 @@
                     <ul class="documents-list">
                         {% for documentos in info_servico.documentos %}
                             <li> 
-                                <i class="bi bi-file-person"></i>
-                                {{ documentos }}
-
+                                {%if documentos_Acompanhante%}
+                                <i class="bi bi-person-vcard"></i>
+                                    {{ documentos_Acompanhante }} 
+                                {%else%}
+                                <i class="bi bi-person-vcard"></i>
+                                    {{ documentos }} 
+                                {%endif%}
                             </li>
                         {% endfor %}
                         
