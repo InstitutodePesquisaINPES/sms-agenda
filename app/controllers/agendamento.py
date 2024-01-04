@@ -165,6 +165,7 @@ def editar(id):
         if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
             novo_agendamento.status = request.form.get('status_admin')
         else:
+            novo_agendamento.status = 'analise'
             pass
         print(request.form.get('horario_admin'),request.form.get('status_admin'))
 
