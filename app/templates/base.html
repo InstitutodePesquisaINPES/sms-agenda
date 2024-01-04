@@ -64,7 +64,7 @@
                     
                     <div class="buttons-logado">
                         <div class="iconFieldLogado">
-                            <p>E</p>
+                            <p>{{ session['usuario_logado'][0] }}</p>
                         </div>
                         
                         <!-- <p class="nome-user"> {{session['usuario_logado']}} </p> -->
@@ -81,7 +81,14 @@
                         </div> 
                     -->
                     
-                    <div class="options-logado">
+                    <div class="options-logado animate__animated animate__fadeInRightBig" style="animation-duration: 300ms;">
+                        <div class="iconCloseButton">
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                        </div>
+                        <div class=" fullNameUserBase">
+                            <p>Usuário:</p>
+                            <p>{{session['usuario_logado']}}</p>
+                        </div> 
                         {% if session.user_type_usuario_logado == "usuario" %}
                         <div class="menu-options">
                             <i class="bi bi-calendar-date"></i>
@@ -96,7 +103,7 @@
                         {% endif %}
                         {% if session.user_type_usuario_logado == "administrador" %}
                             <div class="menu-options">
-                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <i class="bi bi-person-fill-gear"></i>
                                 <a href="{{ url_for('areaServidor')}}">area do administrador</a>
                             </div>
                         {% endif %}
@@ -106,7 +113,7 @@
                                 <a href="{{ url_for('cadastrouser')}}">Cadastrar servidor</a>
                             </div>
                             <div class="menu-options">
-                                <img src="../static/assets/icons/meusAgendamentos.png" id="icon-userlogado" alt="" srcset="">
+                                <i class="bi bi-gear-fill"></i>
                                 <a href="{{ url_for('configUnidade')}}">Configurações de unidade</a>
                             </div>
                         {% endif %}
@@ -216,6 +223,7 @@
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="../static/js/index.js"></script>
         <script src="../static/js/adm_configs.js"></script>
+        <script src="../static/js/editar.js"></script>
 
 
         <script>
