@@ -218,11 +218,9 @@ def editar(id):
                 return redirect(url_for('meusagendamentos'))
         elif user_type_usuario_logado in ['servidor', 'administrador']:
             if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
-                try:
-                    db.session.commit()
-                except:
-                    print(e)
-                    return render_template('errorPage.html')
+               
+                db.session.commit()
+              
                 registrar_log(descricao_log)
                 flash('Edição feita com sucesso')
                 return redirect(url_for('consultarMedicamento'))
@@ -498,9 +496,16 @@ def autenticaragendamento():
 
             db.session.add(novo_agendamento)
             db.session.commit()
+            tipo = session['user_type_usuario_logado']
+            if tipo == 'usuario' :
+                return redirect(url_for('meusagendamentos'))
+            
+            
+            else:
+                return redirect(url_for('areaServidor'))
+           
 
-
-            return redirect(url_for('meusagendamentos'))
+            
             
 
             #|----------- Função de enviar para api do GCloud Suspensa, os métodos estão comentados abaixo ------------|#
