@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+buttonUserServicos
+
 *{
     margin: 0;
     padding: 0;
@@ -215,11 +217,16 @@ body{
     background-color: #1d6fba;
     font-size: 1.1rem;
     transition: 0.3s ease-in-out;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #fff;
 }
 
 .buttonUserServicos:hover {
     transform: scale(1.07);
     transition: 0.3s ease-in-out;
+    text-decoration: none;
+    color: #fff;
 }
 
 .buttonUserServicos i {
@@ -253,15 +260,28 @@ body{
 .documents-list {
     list-style: none;
     display: flex;
+    flex-direction: column;
     margin: 25px 0px 0px -30px;
 }
 
 .documents-list li {
-    margin: 0px 10px;
-    padding: 5px 15px;
-    border: 1px solid #ccc;
+    margin: 5px 10px;
+    padding: 10px 15px;
+    border: 1px solid #d6d6d6;
     background: #fff;
     border-radius: 10px;
+    width: 230px;
+    font-size: 0.9rem;
+    display: flex;
+    cursor: default;
+}
+
+.documents-list li:hover {
+    background: linear-gradient(90deg, #e4e4e4, #f7f7f7, #e0e0e0);
+}
+
+.documents-list li i {
+    margin-right: 10px;
 }
 
 .rodape{
