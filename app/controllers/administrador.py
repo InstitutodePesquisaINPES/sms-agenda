@@ -14,6 +14,32 @@ def configUnidade():
 
     return render_template('configUnidade.html', horarios=horarios, servicos=servicos, dias=dias)
 
+@app.route('/horarios')
+@login_required
+def horarios():
+    horario = Horario_Servico.query.filter_by(id_servico = 1).all()
+    print(horario)
+    horario2 = Horario_Servico.query.filter_by(id_servico = 2).all()
+    horario3 = Horario_Servico.query.filter_by(id_servico = 3).all()
+    horario4 = Horario_Servico.query.filter_by(id_servico = 4).all()
+    horario5 = Horario_Servico.query.filter_by(id_servico = 5).all()
+    horario6 = Horario_Servico.query.filter_by(id_servico = 6).all()
+
+    servicos = servicos_data_function() # objeto dos serviços
+    servico = servicos.get(1)
+    servico2 = servicos.get(2)
+    servico3 = servicos.get(3)
+    servico4 = servicos.get(4)
+    servico5 = servicos.get(5)
+    servico6 = servicos.get(6)
+    return render_template('horarios.html', horario=horario, horario_servico=servico, 
+                                            horario2 = horario2, horario_servico2 = servico2, 
+                                            horario3 = horario3, horario_servico3 = servico3,
+                                            horario4 = horario4, horario_servico4 = servico4,
+                                            horario5 = horario5, horario_servico5 = servico5,
+                                            horario6 = horario6, horario_servico6 = servico6,
+                           )
+
 @app.route('/api/obter_horario_e_tempo_atendimento', methods=['GET', 'POST'])
 def obter_horario_e_tempo_atendimento():
     try:

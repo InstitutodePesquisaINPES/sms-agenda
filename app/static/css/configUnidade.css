@@ -1,5 +1,9 @@
 .corpoUnidade{
-    margin: 80px;
+    margin: 5%;
+}
+
+.link-button{
+    font-size: 15px;
 }
 
 .button-configs{
@@ -8,5 +12,6 @@
     padding: 10px;
     border: none;
     border-radius: 10px;
+    font-size: 15px;
+    margin: 10px;
 }
-

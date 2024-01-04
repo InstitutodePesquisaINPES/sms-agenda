@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <main>
+        <div class="tabelas">
+            <div class="container mt-5 table-responsive">
+                <h2 class="nome_servico" >Horário do Serviço de {{ horario_servico.nome }}</h2>
+                <table class="table table-bordered">
+                  <thead  class="cabecalho_table_horarios">
+                    <tr class="cabecalho_table_horarios_tr">
+                      <th class="cabecalho_table_horarios_tr_th">ID</th>
+                      <th >ID do Serviço</th>
+                      <th >Nome do Serviço</th>
+                      <th >Hora de Início</th>
+                      <th >Hora de Pausa</th>
+                      <th >Hora de Retomada</th>
+                      <th >Hora Final</th>
+                      <th >Tempo de Atendimento</th>
+                      <th >Dia da Semana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Substitua as variáveis abaixo pelos dados reais ao renderizar a tabela -->
+                    {% for horarios in horario %}
+                        <tr>
+                            <td>{{ horarios.id }}</td>
+                            <td>{{ horarios.id_servico }}</td>
+                            <td>{{horario_servico.nome}}</td>
+                            <td>{{ horarios.hora_inicio }}</td>
+                            <td>{{ horarios.hora_pausa }}</td>
+                            <td>{{ horarios.hora_retomada }}</td>
+                            <td>{{ horarios.hora_final }}</td>
+                            <td>{{ horarios.tempo_atendimento }}</td>
+                            <td>{{ horarios.dia_semana }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
+                  </tbody>
+                </table>
+            </div>
+            <div class="container mt-5">
+                <h2 class="nome_servico">Horário do Serviço de {{ horario_servico2.nome }}</h2>
+                <table class="table table-bordered">
+                  <thead class="cabecalho_table">
+                    <tr>
+                      <th>ID</th>
+                      <th>ID do Serviço</th>
+                      <th>Nome do Serviço</th>
+                      <th>Hora de Início</th>
+                      <th>Hora de Pausa</th>
+                      <th>Hora de Retomada</th>
+                      <th>Hora Final</th>
+                      <th>Tempo de Atendimento</th>
+                      <th>Dia da Semana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Substitua as variáveis abaixo pelos dados reais ao renderizar a tabela -->
+                    {% for horarios in horario2 %}
+                        <tr>
+                        <td>{{ horarios.id }}</td>
+                        <td>{{ horarios.id_servico }}</td>
+                        <td>{{horario_servico2.nome}}</td>
+                        <td>{{ horarios.hora_inicio }}</td>
+                        <td>{{ horarios.hora_pausa }}</td>
+                        <td>{{ horarios.hora_retomada }}</td>
+                        <td>{{ horarios.hora_final }}</td>
+                        <td>{{ horarios.tempo_atendimento }}</td>
+                        <td>{{ horarios.dia_semana }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
+                  </tbody>
+                </table>
+            </div>
+            <div class="container mt-5">
+                <h2 class="nome_servico">Horário do Serviço de {{ horario_servico3.nome }}</h2>
+                <table class="table table-bordered">
+                  <thead class="cabecalho_table">
+                    <tr>
+                      <th>ID</th>
+                      <th>ID do Serviço</th>
+                      <th>Nome do Serviço</th>
+                      <th>Hora de Início</th>
+                      <th>Hora de Pausa</th>
+                      <th>Hora de Retomada</th>
+                      <th>Hora Final</th>
+                      <th>Tempo de Atendimento</th>
+                      <th>Dia da Semana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Substitua as variáveis abaixo pelos dados reais ao renderizar a tabela -->
+                    {% for horarios in horario3 %}
+                        <tr>
+                        <td>{{ horarios.id }}</td>
+                        <td>{{ horarios.id_servico }}</td>
+                        <td>{{horario_servico3.nome}}</td>
+                        <td>{{ horarios.hora_inicio }}</td>
+                        <td>{{ horarios.hora_pausa }}</td>
+                        <td>{{ horarios.hora_retomada }}</td>
+                        <td>{{ horarios.hora_final }}</td>
+                        <td>{{ horarios.tempo_atendimento }}</td>
+                        <td>{{ horarios.dia_semana }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
+                  </tbody>
+                </table>
+            </div>
+            <div class="container mt-5">
+                <h2 class="nome_servico">Horário do Serviço de {{ horario_servico4.nome }}</h2>
+                <table class="table table-bordered">
+                  <thead class="cabecalho_table">
+                    <tr>
+                      <th>ID</th>
+                      <th>ID do Serviço</th>
+                      <th>Nome do Serviço</th>
+                      <th>Hora de Início</th>
+                      <th>Hora de Pausa</th>
+                      <th>Hora de Retomada</th>
+                      <th>Hora Final</th>
+                      <th>Tempo de Atendimento</th>
+                      <th>Dia da Semana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Substitua as variáveis abaixo pelos dados reais ao renderizar a tabela -->
+                    {% for horarios in horario4 %}
+                        <tr>
+                        <td>{{ horarios.id }}</td>
+                        <td>{{ horarios.id_servico }}</td>
+                        <td>{{horario_servico4.nome}}</td>
+                        <td>{{ horarios.hora_inicio }}</td>
+                        <td>{{ horarios.hora_pausa }}</td>
+                        <td>{{ horarios.hora_retomada }}</td>
+                        <td>{{ horarios.hora_final }}</td>
+                        <td>{{ horarios.tempo_atendimento }}</td>
+                        <td>{{ horarios.dia_semana }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
+                  </tbody>
+                </table>
+            </div>
+            <div class="container mt-5">
+                <h2 class="nome_servico">Horário do Serviço de {{ horario_servico5.nome }}</h2>
+                <table class="table table-bordered">
+                  <thead class="cabecalho_table">
+                    <tr>
+                      <th>ID</th>
+                      <th>ID do Serviço</th>
+                      <th>Nome do Serviço</th>
+                      <th>Hora de Início</th>
+                      <th>Hora de Pausa</th>
+                      <th>Hora de Retomada</th>
+                      <th>Hora Final</th>
+                      <th>Tempo de Atendimento</th>
+                      <th>Dia da Semana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Substitua as variáveis abaixo pelos dados reais ao renderizar a tabela -->
+                    {% for horarios in horario5 %}
+                        <tr>
+                        <td>{{ horarios.id }}</td>
+                        <td>{{ horarios.id_servico }}</td>
+                        <td>{{horario_servico5.nome}}</td>
+                        <td>{{ horarios.hora_inicio }}</td>
+                        <td>{{ horarios.hora_pausa }}</td>
+                        <td>{{ horarios.hora_retomada }}</td>
+                        <td>{{ horarios.hora_final }}</td>
+                        <td>{{ horarios.tempo_atendimento }}</td>
+                        <td>{{ horarios.dia_semana }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
+                  </tbody>
+                </table>
+            </div>
+            <div class="container mt-5">
+                <h2 class="nome_servico">Horário do Serviço de {{ horario_servico6.nome }}</h2>
+                <table class="table table-bordered">
+                  <thead class="cabecalho_table">
+                    <tr>
+                      <th>ID</th>
+                      <th>ID do Serviço</th>
+                      <th>Nome do Serviço</th>
+                      <th>Hora de Início</th>
+                      <th>Hora de Pausa</th>
+                      <th>Hora de Retomada</th>
+                      <th>Hora Final</th>
+                      <th>Tempo de Atendimento</th>
+                      <th>Dia da Semana</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Substitua as variáveis abaixo pelos dados reais ao renderizar a tabela -->
+                    {% for horarios in horario6 %}
+                        <tr>
+                        <td>{{ horarios.id }}</td>
+                        <td>{{ horarios.id_servico }}</td>
+                        <td>{{horario_servico6.nome}}</td>
+                        <td>{{ horarios.hora_inicio }}</td>
+                        <td>{{ horarios.hora_pausa }}</td>
+                        <td>{{ horarios.hora_retomada }}</td>
+                        <td>{{ horarios.hora_final }}</td>
+                        <td>{{ horarios.tempo_atendimento }}</td>
+                        <td>{{ horarios.dia_semana }}</td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
+                  </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}
