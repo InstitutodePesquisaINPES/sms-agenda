@@ -176,3 +176,99 @@
         - user_type_usuario_logado: administrador
 ------------------------------------------------------------------
 
+2024-01-03 21:03:57 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: ATENDIMENTO FARMACÊUTICO
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-03 21:09:21 - Registro de edição: 
+        - id: 2
+        - id_usuario: 2
+        - nome_cliente: gumi
+        - data_agendada: 2024-03-08
+        - horario_agendado: 07:21:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-03 21:09:51 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: ATENDIMENTO FARMACÊUTICO
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-03 21:10:04 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: MARCAÇÃO DE EXAMES
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-03 21:11:33 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: MARCAÇÃO DE EXAMES
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-03 21:11:51 - Registro de edição: 
+        - id: 2
+        - id_usuario: 2
+        - nome_cliente: gumi
+        - data_agendada: 2024-03-08
+        - horario_agendado: 07:21:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: TRATAMENTO FORA DO DOMICÍLIO - TFD
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    

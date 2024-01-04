@@ -219,6 +219,7 @@
                                                     <form action="{{url_for('editar', id=agendamento.id)}}"  enctype="multipart/form-data" method="POST">
                                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                             <fieldset class="col-md-12">
+                                                                
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Senha</b>*
@@ -235,36 +236,67 @@
                                                                     <input type="text" class="form-control" name="nome_cliente" id='nome_cliente'
                                                                         value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" disabled>
                                                                 </div>
-
+                                                                
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Nome do Serviço</b>*
                                                                     </span>
+                                                                    
+                                                                   
+                                                                
+                                                                          <select name="serviço_admin" class="form-select me-1" aria-label="Default select example" id="serviço_admin" required>
+                                                                           
+                                                                        <option value="{{agendamento.servico_agendado}}" disabled hidden selected>{{agendamento.servico_agendado}}</option>
 
-                                                                    <input type="text" class="form-control" name="serviço" id="serviço"
-                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"disabled>
+                                                                        <option value="ATENDIMENTO FARMACÊUTICO">ATENDIMENTO FARMACÊUTICO</option>
+                                                                        <option value="MARCAÇÃO DE EXAMES">MARCAÇÃO DE EXAMES</option>
+                                                                        <option value="AUTORIZAÇÃO DE PROCEDIMENTOS">AUTORIZAÇÃO DE PROCEDIMENTOS</option>
+                                                                        <option value="TRATAMENTO FORA DO DOMICÍLIO - TFD">TRATAMENTO FORA DO DOMICÍLIO - TFD</option>
+                                                                        <option value="CARTÃO DO SUS">CARTÃO DO SUS</option>
+                                                                        <option value="CONSULTAR MEDICAMENTOS">CONSULTAR MEDICAMENTOS</option>
+                                                                    </select>
+                                                                   
+                                                                    
+                                                                </div>
+                                                                
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Data de solicitaçao</b>*
+                                                                    </span>
+
+                                                                    <input type="date" class="form-control" name="data_agendamento_admin" id="data_agendamento_admin"
+                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" >
                                                                 </div>
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Data de agendamento</b>*
+                                                                        <b>Horario</b>*
                                                                     </span>
 
-                                                                    <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
-                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" disabled>
-                                                                </div>
+                                                                    <input type="time" class="form-control" name="horario_admin" value="{{agendamento.horario_agendado}}"
+                                                                        id="horario_admin" aria-describedby="cpfPaciente" >
+                                                                </div>  
+
+                                                                
+                                                                    
+                                                                       
+                                                                   
+
+                                                               
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>horario agendado</b>*
+                                                                        <b>Retificação</b>*
                                                                     </span>
 
-                                                                    <input type="time" class="form-control" name="horario_agendado" value="{{agendamento.horario_agendado}}"
-                                                                        id="horario_agendado" aria-describedby="cpfPaciente" disabled>
-                                                                </div> 
+                                                                    <textarea class="form-control" id="retificacao" rows="3"
+                                                                    name="retificacao" >teste</textarea>
+                                                                </div>  
 
                                                                 
                                                                 
+
+                                                      
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
                                                                     <button type="submit" class="btn btn-primary">

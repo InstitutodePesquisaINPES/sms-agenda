@@ -153,21 +153,78 @@ def gerar_pdf_logs():
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
-    
-    novo_agendamento = Agendamento.query.get(id)
-    novo_agendamento.servico_agendado = request.form.get('serviço')
-    novo_agendamento.data_agendada =  request.form.get('data_agendamento')
-    novo_agendamento.horario_agendado = request.form.get('horario')
-    novo_agendamento.status = request.form.get('status')
-    print(request.form.get('horario'),request.form.get('status'))
+    try:
+        user_type_usuario_logado = session.get('user_type_usuario_logado')
+        usuario_logado = session.get('usuario_logado')
+        cpf_usuario_logado = session.get('cpf_usuario_logado')
+        novo_agendamento = Agendamento.query.get(id)
+        novo_agendamento.servico_agendado = request.form.get('serviço_admin')
+        novo_agendamento.data_agendada =  request.form.get('data_agendamento_admin')
+        novo_agendamento.horario_agendado = request.form.get('horario_admin')
+        if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+            novo_agendamento.status = request.form.get('status_admin')
+        else:
+            pass
+        print(request.form.get('horario_admin'),request.form.get('status_admin'))
+
+        # Adicione validações para campos obrigatórios
+        if novo_agendamento.servico_agendado is None or novo_agendamento.status is None:
+            raise ValueError('Os campos serviço e status são obrigatórios.')
+
+        descricao_log = f'''Registro de edição: 
+        - id: {novo_agendamento.id}
+        - id_usuario: {novo_agendamento.id_usuario}
+        - nome_cliente: {novo_agendamento.nome_cliente}
+        - data_agendada: {novo_agendamento.data_agendada}
+        - horario_agendado: {novo_agendamento.horario_agendado}
+        - senha: {novo_agendamento.senha}
+        - status: {novo_agendamento.status}
+        - servico_agendado: {novo_agendamento.servico_agendado}
+        - documentos: {novo_agendamento.documentos}
+        - Usuario editor: 
+            - usuario_logado: {usuario_logado}
+            - cpf_usuario_logado: {cpf_usuario_logado}
+            - user_type_usuario_logado: {user_type_usuario_logado}
+    ------------------------------------------------------------------
+    '''
+
+        db.session.commit()
+        registrar_log(descricao_log)
+        flash('Edição feita com sucesso')
+        if user_type_usuario_logado == 'usuario':
+            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+                
+                return redirect(url_for('consultarMedicamento'))
+            else:
+                
+                return redirect(url_for('meusagendamentos'))
+        elif user_type_usuario_logado in ['servidor', 'administrador']:
+            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+                
+                return redirect(url_for('consultarMedicamento'))
+            else:  
+                    
+                return redirect(url_for('areaServidor'))
+
+    except:
+        flash('Por favor, altere um serviço ou um status para concluir a edição. Essas informações são obrigatórias')
+        # Realize os redirecionamentos com base no tipo de serviço e tipo de usuário
+        if user_type_usuario_logado == 'usuario':
+            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+                
+                return redirect(url_for('consultarMedicamento'))
+            else:
+                
+                return redirect(url_for('meusagendamentos'))
+        elif user_type_usuario_logado in ['servidor', 'administrador']:
+            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+                
+                return redirect(url_for('consultarMedicamento'))
+            else:  
+                   
+                return redirect(url_for('areaServidor'))
 
     
-    db.session.commit()
-    #novo_agendamento.retificacao = request.form.get('retificacao')
-    #docs
-   
-    flash('edição feita com sucesso')
-    return redirect(url_for('consultarMedicamento'))
 
 
 def registrar_log(descricao):
@@ -338,12 +395,15 @@ def horas_disponiveis():
 
 @app.route('/uploads/<filename>/<data>/<horario>')
 def servir_arquivo(filename, data, horario):
+    instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
+    cpf = instancia_usuario_solicitante.usuario.cpf
+    cpf_formatado = cpf.replace(".", "").replace("-", "")
     horario_formatado = horario[:-2]
 
     nome_arquivo = f'{data}{horario_formatado}.pdf'
-    print(nome_arquivo, filename,data,horario_formatado)
+    print(nome_arquivo, cpf_formatado,data,horario_formatado)
     # Construa o caminho completo
-    caminho_completo = os.path.join(app.root_path, 'uploads', filename, nome_arquivo)
+    caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
 
     return send_from_directory(os.path.dirname(caminho_completo), os.path.basename(caminho_completo))
 # rota para autenticar o agendamento     
