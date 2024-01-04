@@ -162,10 +162,17 @@ def editar(id):
         novo_agendamento.data_agendada =  request.form.get('data_agendamento_admin')
         novo_agendamento.horario_agendado = request.form.get('horario_admin')
         if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
-            novo_agendamento.status = request.form.get('status_admin')
+           
+            if request.form.get('status_admin') :
+                 novo_agendamento.status = request.form.get('status_admin')
+                 documento = request.files.get('documentos_upados[]')
+                 converter_para_pdf_editar(novo_agendamento.data_agendada, novo_agendamento.horario_agendado, documento, request.form.get('data_agendamento_admin'), request.form.get('horario_admin'))
+            else:
+                novo_agendamento.status = 'analise'
         else:
             pass
         print(request.form.get('horario_admin'),request.form.get('status_admin'))
+        
 
         # Adicione validações para campos obrigatórios
         if novo_agendamento.servico_agendado is None or novo_agendamento.status is None:
@@ -232,8 +239,31 @@ def registrar_log(descricao):
         dataAlteraçao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         log = f'{dataAlteraçao} - {descricao}\n'
         f.write(log)
-@app.route('/deletar/<int:id>', methods=['GET', 'POST'])
-def deletar(id):
+
+
+def deletar_docs(filename, data, horario):
+    instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
+    cpf = instancia_usuario_solicitante.usuario.cpf
+    cpf_formatado = cpf.replace(".", "").replace("-", "")
+    horario_formatado = horario[:-2]
+
+    nome_arquivo = f'{data}{horario_formatado}.pdf'
+    print(nome_arquivo, cpf_formatado,data,horario_formatado)
+    # Construa o caminho completo
+    caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
+
+    for arquivo in os.listdir(os.path.dirname(caminho_completo)):
+        caminho_arquivo = os.path.join(os.path.dirname(caminho_completo), arquivo)
+        try:
+            if os.path.isfile(caminho_arquivo):
+                os.unlink(caminho_arquivo)
+        except Exception as e:
+            print(f'Erro ao excluir o arquivo {caminho_arquivo}: {e}')
+
+    return "Arquivos deletados com sucesso!"
+
+@app.route('/deletar/<int:id>/<filename>/<data>/<horario>', methods=['GET', 'POST'])
+def deletar(id, filename, data,horario):
     user_type_usuario_logado = session.get('user_type_usuario_logado')
     usuario_logado = session.get('usuario_logado')
     cpf_usuario_logado = session.get('cpf_usuario_logado')
@@ -242,6 +272,8 @@ def deletar(id):
     if documento:
         for doc in documento:
             db.session.delete(doc)
+    
+
 
     agendamento = Agendamento.query.get(id)
     descricao_log = descricao_log = f'''Registro excluído: 
@@ -266,11 +298,13 @@ def deletar(id):
         if agendamento.servico_agendado == 'CARTÃO DO SUS':
             db.session.delete(agendamento)
             db.session.commit()
+            deletar_docs(filename, data,horario)
             registrar_log(descricao_log)
             return redirect(url_for('consultarMedicamento'))
         else:
             db.session.delete(agendamento)
             db.session.commit()
+            deletar_docs(filename, data,horario)
             registrar_log(descricao_log)
             return redirect(url_for('meusagendamentos'))
         
@@ -278,11 +312,13 @@ def deletar(id):
         if agendamento.servico_agendado == 'CARTÃO DO SUS':
             db.session.delete(agendamento)
             db.session.commit()
+            deletar_docs(filename, data,horario)
             registrar_log(descricao_log)
             return redirect(url_for('consultarMedicamento'))
         else:  
             db.session.delete(agendamento)
             db.session.commit()
+            deletar_docs(filename, data,horario)
             registrar_log(descricao_log)   
             return redirect(url_for('areaServidor'))
 

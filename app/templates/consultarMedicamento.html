@@ -18,8 +18,13 @@
                 <path
                     d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
                 </svg>
-               
-                <span class="fs-4 cor1">Gerenciar consulta de medicamentos</span></a>
+                {%if session.user_type_usuario_logado == 'administrador'%}
+                    <span class="fs-4 cor1">Gerenciar consulta de medicamentos - Administrador </span></a>
+                {%elif session.user_type_usuario_logado == 'servidor'%}
+                    <span class="fs-4 cor1">Gerenciar consulta de medicamentos - Servidor </span></a>
+                {%else%}
+                    <span class="fs-4 cor1">Gerenciar consulta de medicamentos  </span></a>
+                {%endif%}
             </div>
         </div>
         
@@ -139,7 +144,7 @@
                                                 </button> 
                                             </a>
 
-                                            <a href="{{ url_for('deletar', id=agendamento.id) }}">
+                                            <a href="{{ url_for('deletar', id=agendamento.id, filename=agendamento.id_usuario, data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}">
                                                 <button style=" border-color: #dd5555; background-color: #dd5555; border: none; "
                                                     type="button" class="btn btn-secondary btn-custom btn1 mb-3 " data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop">

@@ -272,3 +272,51 @@
             - user_type_usuario_logado: administrador
     ------------------------------------------------------------------
     
+2024-01-04 10:07:51 - Registro de edição: 
+        - id: 2
+        - id_usuario: 2
+        - nome_cliente: gumi
+        - data_agendada: 2024-03-08
+        - horario_agendado: 07:24
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-04 10:11:12 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: TRATAMENTO FORA DO DOMICÍLIO - TFD
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-04 10:25:17 - Registro de edição: 
+        - id: 2
+        - id_usuario: 2
+        - nome_cliente: gumi
+        - data_agendada: 2024-03-08
+        - horario_agendado: 07:24:00
+        - senha: CDS_2
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
