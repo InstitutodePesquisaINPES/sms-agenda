@@ -50,8 +50,24 @@
                                 {%endif%}
                             </li>
                         {% endfor %}
+                        
                     </ul>
                 </div>
+                {% if info_servico.documentos_Acompanhante %}
+
+                    <div class="documentos-acompanhante">
+                        <h4 class="documents-title"> DOCUMENTOS NECESSÁRIOS PARA ACOMPANHANTES </h4>
+                        <ul class="documents-list">
+                            {% for doc in info_servico.documentos_Acompanhante %}
+                                <li>
+                                    <i class="bi bi-file-person"></i>
+                                    {{ doc }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                {% endif %}
             </div>
         </div>
         <script src="../static/js/pop-up-agendar.js"></script>

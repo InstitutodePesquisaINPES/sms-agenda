@@ -284,6 +284,10 @@ body{
     margin-right: 10px;
 }
 
+.documentos-acompanhante{
+    margin-top: 30px;
+}
+
 .rodape{
     background: #2a3f4a;
     border-top: 2px solid #405864;
@@ -412,3 +416,4 @@ body{
 ::-webkit-scrollbar-track {
     background-color: #fff; /* Cor da trilha */
 }
+
