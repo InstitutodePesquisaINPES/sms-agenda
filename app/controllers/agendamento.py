@@ -1,5 +1,5 @@
 import logging
-from run import app
+from run import app,db
 from fpdf import FPDF
 from flask import Flask, render_template, make_response,send_from_directory
 
@@ -8,8 +8,9 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import func
 from datetime import datetime
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, PendingRollbackError
 from sqlalchemy import desc, not_
+from flask_sqlalchemy import SQLAlchemy
 
 
 from app.models.User import *
@@ -69,81 +70,88 @@ def meusagendamentos():
 
 @app.route('/gerar_pdf/<int:id>', methods=['GET', 'POST'])
 def gerar_pdf(id):
-    agendamento = Agendamento.query.get(id)
+    try:
+        agendamento = Agendamento.query.get(id)
 
-    largura_pagina = 150
-    altura_pagina = 148
+        largura_pagina = 150
+        altura_pagina = 148
 
 
-    pdf = FPDF(format=(largura_pagina, altura_pagina))
-    pdf.add_page()
+        pdf = FPDF(format=(largura_pagina, altura_pagina))
+        pdf.add_page()
 
-   
-    pdf.set_fill_color(227, 222, 129)  
+    
+        pdf.set_fill_color(227, 222, 129)  
 
-    # Preencha o retângulo com a cor de fundo
-    pdf.rect(0, 0, largura_pagina, altura_pagina, 'F')
-    pdf.image(r'app\static\assets\images\prefeitura.jpeg', x=10, y=10, w=20)
+        # Preencha o retângulo com a cor de fundo
+        pdf.rect(0, 0, largura_pagina, altura_pagina, 'F')
+        pdf.image(r'app\static\assets\images\prefeitura.jpeg', x=10, y=10, w=20)
 
-    textoMedicamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
-SENHA: {agendamento.senha}
-SERVIÇO AGENDADO: {agendamento.servico_agendado}.
-STATUS: {agendamento.status}
-DATA AGENDADA: {agendamento.data_agendada}
-HORA AGENDADA: {agendamento.horario_agendado}"""
+        textoMedicamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
+    SENHA: {agendamento.senha}
+    SERVIÇO AGENDADO: {agendamento.servico_agendado}.
+    STATUS: {agendamento.status}
+    DATA AGENDADA: {agendamento.data_agendada}
+    HORA AGENDADA: {agendamento.horario_agendado}"""
 
-    textoAgendamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
-SENHA: {agendamento.senha}
-SERVIÇO AGENDADO: {agendamento.servico_agendado}.
-DATA AGENDADA: {agendamento.data_agendada}
-HORA AGENDADA: {agendamento.horario_agendado}"""
+        textoAgendamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
+    SENHA: {agendamento.senha}
+    SERVIÇO AGENDADO: {agendamento.servico_agendado}.
+    DATA AGENDADA: {agendamento.data_agendada}
+    HORA AGENDADA: {agendamento.horario_agendado}"""
 
-    pdf.set_font("Courier", size=12)
+        pdf.set_font("Courier", size=12)
 
-    # Configurar alinhamento central para o título
-    pdf.set_xy(10, 10)  # Defina as coordenadas iniciais para o título
+        # Configurar alinhamento central para o título
+        pdf.set_xy(10, 10)  # Defina as coordenadas iniciais para o título
 
-   
-    pdf.multi_cell(largura_pagina - 20, 10, "COMPROVANTE DE AGENDAMENTO", align='C')  # Largura ajustada para evitar margens
+    
+        pdf.multi_cell(largura_pagina - 20, 10, "COMPROVANTE DE AGENDAMENTO", align='C')  # Largura ajustada para evitar margens
 
-    # Configurar alinhamento à esquerda para o restante do texto
-    pdf.set_xy(10, 30)  # Defina as coordenadas iniciais para o texto restante
+        # Configurar alinhamento à esquerda para o restante do texto
+        pdf.set_xy(10, 30)  # Defina as coordenadas iniciais para o texto restante
 
-    if agendamento.servico_agendado != "CARTÃO DO SUS":
-        pdf.multi_cell(largura_pagina - 20, 10, textoAgendamento)  # Largura ajustada para evitar margens
-    else:
-        pdf.multi_cell(largura_pagina - 20, 10, textoMedicamento)  # Largura ajustada para evitar margens
+        if agendamento.servico_agendado != "CARTÃO DO SUS":
+            pdf.multi_cell(largura_pagina - 20, 10, textoAgendamento)  # Largura ajustada para evitar margens
+        else:
+            pdf.multi_cell(largura_pagina - 20, 10, textoMedicamento)  # Largura ajustada para evitar margens
 
-    temp_file_path = "Comprovante de agendamento.pdf"
-    pdf.output(temp_file_path)
+        temp_file_path = "Comprovante de agendamento.pdf"
+        pdf.output(temp_file_path)
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
     return send_file(temp_file_path, as_attachment=True)
 
 @app.route('/gerar_pdf_logs', methods=['POST'])
 def gerar_pdf_logs():
 
-    
+    try:    
 
-# Abre o arquivo em modo de leitura ('r')
-    with open('log.txt', 'r') as logs:
-    # Lê o conteúdo do arquivo e armazena na variável
-        log = logs.read()
-    # Crie um objeto FPDF
-        pdf = FPDF()
-        pdf.add_page()
+    # Abre o arquivo em modo de leitura ('r')
+        with open('log.txt', 'r') as logs:
+        # Lê o conteúdo do arquivo e armazena na variável
+            log = logs.read()
+        # Crie um objeto FPDF
+            pdf = FPDF()
+            pdf.add_page()
 
-        # Adicione o título
-        pdf.set_font("Courier", size=14)
-        pdf.cell(200, 10, txt="Logs do Sistema", ln=True, align='C')
+            # Adicione o título
+            pdf.set_font("Courier", size=14)
+            pdf.cell(200, 10, txt="Logs do Sistema", ln=True, align='C')
 
-        # Adicione os logs
-        pdf.set_font("Courier", size=6)
-    
-        pdf.multi_cell(0, 3, txt=log)
+            # Adicione os logs
+            pdf.set_font("Courier", size=6)
+        
+            pdf.multi_cell(0, 3, txt=log)
 
-        # Salve o arquivo PDF temporário
-        temp_file_path = "logs.pdf"
-        pdf.output(temp_file_path)
+            # Salve o arquivo PDF temporário
+            temp_file_path = "logs.pdf"
+            pdf.output(temp_file_path)
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
     # Envie o arquivo PDF como resposta
     return send_file(temp_file_path, as_attachment=True)
@@ -153,21 +161,88 @@ def gerar_pdf_logs():
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar(id):
-    
-    novo_agendamento = Agendamento.query.get(id)
-    novo_agendamento.servico_agendado = request.form.get('serviço')
-    novo_agendamento.data_agendada =  request.form.get('data_agendamento')
-    novo_agendamento.horario_agendado = request.form.get('horario')
-    novo_agendamento.status = request.form.get('status')
-    print(request.form.get('horario'),request.form.get('status'))
+    try:
+        user_type_usuario_logado = session.get('user_type_usuario_logado')
+        usuario_logado = session.get('usuario_logado')
+        cpf_usuario_logado = session.get('cpf_usuario_logado')
+        novo_agendamento = Agendamento.query.get(id)
+        
+        novo_agendamento.servico_agendado = request.form.get('serviço_admin')
+        novo_agendamento.data_agendada =  request.form.get('data_agendamento_admin')
+        novo_agendamento.horario_agendado = request.form.get('horario_admin')
+        if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+            if request.form.get('status_admin') != None :
+                print('0000')
+                novo_agendamento.status = request.form.get('status_admin')
+            else:
+                print('hfgs')
+                novo_agendamento.status = 'analise'
+
+        else:
+            print('fddsf')
+            novo_agendamento.status = 'analise'
+           
+           
+        print(request.form.get('horario_admin'),request.form.get('status_admin'))
+
+      
+
+        descricao_log = f'''Registro de edição: 
+        - id: {novo_agendamento.id}
+        - id_usuario: {novo_agendamento.id_usuario}
+        - nome_cliente: {novo_agendamento.nome_cliente}
+        - data_agendada: {novo_agendamento.data_agendada}
+        - horario_agendado: {novo_agendamento.horario_agendado}
+        - senha: {novo_agendamento.senha}
+        - status: {novo_agendamento.status}
+        - servico_agendado: {novo_agendamento.servico_agendado}
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: {usuario_logado}
+            - cpf_usuario_logado: {cpf_usuario_logado}
+            - user_type_usuario_logado: {user_type_usuario_logado}
+    ------------------------------------------------------------------
+    '''
+
+        
+        if user_type_usuario_logado == 'usuario':
+            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+                db.session.commit()
+                registrar_log(descricao_log)
+                flash('Edição feita com sucesso')
+                return redirect(url_for('consultarMedicamento'))
+            else:
+                db.session.commit()
+                registrar_log(descricao_log)
+                flash('Edição feita com sucesso')
+                return redirect(url_for('meusagendamentos'))
+        elif user_type_usuario_logado in ['servidor', 'administrador']:
+            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+                try:
+                    db.session.commit()
+                except:
+                    print(e)
+                    return render_template('errorPage.html')
+                registrar_log(descricao_log)
+                flash('Edição feita com sucesso')
+                return redirect(url_for('consultarMedicamento'))
+            else:  
+                if request.form.get('status_admin') != None and request.form.get('serviço_admin') != None:    
+                    db.session.commit()
+                    registrar_log(descricao_log)
+                    flash('Edição feita com sucesso')
+                    return redirect(url_for('areaServidor'))
+                else:
+                    flash('Por favor, altere um serviço ou um status para concluir a edição. Essas informações são obrigatórias')
+                    
+                    return redirect(url_for('consultarMedicamento'))
+                  
+
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
     
-    db.session.commit()
-    #novo_agendamento.retificacao = request.form.get('retificacao')
-    #docs
-   
-    flash('edição feita com sucesso')
-    return redirect(url_for('consultarMedicamento'))
 
 
 def registrar_log(descricao):
@@ -177,129 +252,144 @@ def registrar_log(descricao):
         f.write(log)
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
-    user_type_usuario_logado = session.get('user_type_usuario_logado')
-    usuario_logado = session.get('usuario_logado')
-    cpf_usuario_logado = session.get('cpf_usuario_logado')
+    try:
+        user_type_usuario_logado = session.get('user_type_usuario_logado')
+        usuario_logado = session.get('usuario_logado')
+        cpf_usuario_logado = session.get('cpf_usuario_logado')
 
-    documento = Documentos.query.filter_by(id_agendamento=id).all()
-    if documento:
-        for doc in documento:
-            db.session.delete(doc)
+        documento = Documentos.query.filter_by(id_agendamento=id).all()
+        if documento:
+            for doc in documento:
+                db.session.delete(doc)
 
-    agendamento = Agendamento.query.get(id)
-    descricao_log = descricao_log = f'''Registro excluído: 
-    - id: {agendamento.id}
-    - id_usuario: {agendamento.id_usuario}
-    - nome_cliente: {agendamento.nome_cliente}
-    - data_agendada: {agendamento.data_agendada}
-    - horario_agendado: {agendamento.horario_agendado}
-    - senha: {agendamento.senha}
-    - status: {agendamento.status}
-    - servico_agendado: {agendamento.servico_agendado}
-    - documentos: {agendamento.documentos}
-    - Usuario editor: 
-        - usuario_logado: {usuario_logado}
-        - cpf_usuario_logado: {cpf_usuario_logado}
-        - user_type_usuario_logado: {user_type_usuario_logado}
-------------------------------------------------------------------
-'''
+        agendamento = Agendamento.query.get(id)
+        descricao_log = descricao_log = f'''Registro excluído: 
+        - id: {agendamento.id}
+        - id_usuario: {agendamento.id_usuario}
+        - nome_cliente: {agendamento.nome_cliente}
+        - data_agendada: {agendamento.data_agendada}
+        - horario_agendado: {agendamento.horario_agendado}
+        - senha: {agendamento.senha}
+        - status: {agendamento.status}
+        - servico_agendado: {agendamento.servico_agendado}
+        - documentos: {agendamento.documentos}
+        - Usuario editor: 
+            - usuario_logado: {usuario_logado}
+            - cpf_usuario_logado: {cpf_usuario_logado}
+            - user_type_usuario_logado: {user_type_usuario_logado}
+    ------------------------------------------------------------------
+    '''
 
-    
-    if user_type_usuario_logado == 'usuario' :
-        if agendamento.servico_agendado == 'CARTÃO DO SUS':
-            db.session.delete(agendamento)
-            db.session.commit()
-            registrar_log(descricao_log)
-            return redirect(url_for('consultarMedicamento'))
-        else:
-            db.session.delete(agendamento)
-            db.session.commit()
-            registrar_log(descricao_log)
-            return redirect(url_for('meusagendamentos'))
         
-    elif user_type_usuario_logado == 'servidor' or  user_type_usuario_logado == 'administrador':
-        if agendamento.servico_agendado == 'CARTÃO DO SUS':
-            db.session.delete(agendamento)
-            db.session.commit()
-            registrar_log(descricao_log)
-            return redirect(url_for('consultarMedicamento'))
-        else:  
-            db.session.delete(agendamento)
-            db.session.commit()
-            registrar_log(descricao_log)   
-            return redirect(url_for('areaServidor'))
+        if user_type_usuario_logado == 'usuario' :
+            if agendamento.servico_agendado == 'CARTÃO DO SUS':
+                db.session.delete(agendamento)
+                db.session.commit()
+                registrar_log(descricao_log)
+                return redirect(url_for('consultarMedicamento'))
+            else:
+                db.session.delete(agendamento)
+                db.session.commit()
+                registrar_log(descricao_log)
+                return redirect(url_for('meusagendamentos'))
+            
+        elif user_type_usuario_logado == 'servidor' or  user_type_usuario_logado == 'administrador':
+            if agendamento.servico_agendado == 'CARTÃO DO SUS':
+                db.session.delete(agendamento)
+                db.session.commit()
+                registrar_log(descricao_log)
+                return redirect(url_for('consultarMedicamento'))
+            else:  
+                db.session.delete(agendamento)
+                db.session.commit()
+                registrar_log(descricao_log)   
+                return redirect(url_for('areaServidor'))
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
 # rota do card de informações do serviço, recebe um id e busca os dados no objeto
 @app.route('/servico/<int:servico_id>')
 def userservicos(servico_id):
-    info_servico = servicos.get(servico_id)
-    return render_template('userservicos.html', info_servico=info_servico) 
+    try:
+        info_servico = servicos.get(servico_id)
+        return render_template('userservicos.html', info_servico=info_servico) 
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
 # rota do formulario de agendamento, recebe um id, e busca os dados do serviço, para agendar.
 @app.route('/agendar/<int:servico_id>')
 @login_required
 def agendar(servico_id):
-    
-    form_agendamento = AgendamentoForm()
-    info_servico = servicos.get(servico_id)
+    try:
+        form_agendamento = AgendamentoForm()
+        info_servico = servicos.get(servico_id)
 
-    return render_template('formAgendamento.html', form_agendamento=form_agendamento, info_servico=info_servico)
+        return render_template('formAgendamento.html', form_agendamento=form_agendamento, info_servico=info_servico)
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
 # API de buscar quantidade de agendamentos em um único dia, acessada pelo js e retorna a lista dos dias disponiveis.
 @app.route('/api/agendamentos_por_dia', methods=['GET', 'POST'])
 def agendamentos_por_dia():
-    id_servico = request.json.get('servico_id')
-    info_servico = servicos.get(int(id_servico))
-    print(id_servico)
-    print(info_servico)
+    try:
+        id_servico = request.json.get('servico_id')
+        info_servico = servicos.get(int(id_servico))
+        print(id_servico)
+        print(info_servico)
 
-    # Obtém a data de hoje
-    hoje = datetime.now().date()
+        # Obtém a data de hoje
+        hoje = datetime.now().date()
 
-    # Número de dias a serem adicionados (regra de negócio de dias minimos)
-    dias_a_frente = info_servico['dias_minimos']
-    
+        # Número de dias a serem adicionados (regra de negócio de dias minimos)
+        dias_a_frente = info_servico['dias_minimos']
+        
 
-    # nova data com regra de negocio de dias minimos
-    nova_data = hoje + timedelta(days=dias_a_frente)
-    print(nova_data)
- 
-    # Obtém a data daqui a 30 dias
-    data_30_dias_frente = nova_data + timedelta(days=30)
-    print(data_30_dias_frente)
+        # nova data com regra de negocio de dias minimos
+        nova_data = hoje + timedelta(days=dias_a_frente)
+        print(nova_data)
     
+        # Obtém a data daqui a 30 dias
+        data_30_dias_frente = nova_data + timedelta(days=30)
+        print(data_30_dias_frente)
+        
 
-    # Query para contar o número de agendamentos por dia
-    resultados = db.session.query(func.count(Agendamento.id), Agendamento.data_agendada).\
-        filter(Agendamento.data_agendada.between(nova_data, data_30_dias_frente)).\
-        group_by(Agendamento.data_agendada).all()
-    
-    print(resultados)
-    
-    horario1 = Horario_Servico.query.filter_by(id_servico = 1, dia_semana = 4).first()
-    print(horario1)
-    
-    # Lista para armazenar os dias
-    # dias_list = [(nova_data - timedelta(days=i)).day for i in range(dias_a_frente)]
-    dias_list = []
-    for i in range(dias_a_frente + 1):
-        prox_data = hoje + timedelta(days=i)
-        dias_list.append(str(prox_data.strftime('%Y-%m-%d')))
+        # Query para contar o número de agendamentos por dia
+        resultados = db.session.query(func.count(Agendamento.id), Agendamento.data_agendada).\
+            filter(Agendamento.data_agendada.between(nova_data, data_30_dias_frente)).\
+            group_by(Agendamento.data_agendada).all()
+        
+        print(resultados)
+        
+        horario1 = Horario_Servico.query.filter_by(id_servico = 1, dia_semana = 4).first()
+        print(horario1)
+        
+        # Lista para armazenar os dias
+        # dias_list = [(nova_data - timedelta(days=i)).day for i in range(dias_a_frente)]
+        dias_list = []
+        for i in range(dias_a_frente + 1):
+            prox_data = hoje + timedelta(days=i)
+            dias_list.append(str(prox_data.strftime('%Y-%m-%d')))
 
-    # função que calcula quantos horarios pode ter agendado em um unico dia
-    qntHorarios = calculaHoras(id_servico)
-    
-
-    # Itera sobre os resultados da consulta
-    for count, data_agendada in resultados:
-        # Extrai o dia e adiciona à lista de dias
+        # função que calcula quantos horarios pode ter agendado em um unico dia
         qntHorarios = calculaHoras(id_servico)
         
-        if count == qntHorarios: # se count(quantidade de horarios agendadas, for igual ao maximo de horarios que pode ter nesse dia)
-            print(data_agendada.day)
-            dias_list.append(str(data_agendada)) # esse dia não estará disponivel
- 
-    print(dias_list)
+
+        # Itera sobre os resultados da consulta
+        for count, data_agendada in resultados:
+            # Extrai o dia e adiciona à lista de dias
+            qntHorarios = calculaHoras(id_servico)
+            
+            if count == qntHorarios: # se count(quantidade de horarios agendadas, for igual ao maximo de horarios que pode ter nesse dia)
+                print(data_agendada.day)
+                dias_list.append(str(data_agendada)) # esse dia não estará disponivel
+    
+        print(dias_list)
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
     
     return jsonify({'dias_list': dias_list})
@@ -338,25 +428,29 @@ def horas_disponiveis():
 
 @app.route('/uploads/<filename>/<data>/<horario>')
 def servir_arquivo(filename, data, horario):
+    instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
+    cpf = instancia_usuario_solicitante.usuario.cpf
+    cpf_formatado = cpf.replace(".", "").replace("-", "")
     horario_formatado = horario[:-2]
 
     nome_arquivo = f'{data}{horario_formatado}.pdf'
-    print(nome_arquivo, filename,data,horario_formatado)
+    print(nome_arquivo, cpf_formatado,data,horario_formatado)
     # Construa o caminho completo
-    caminho_completo = os.path.join(app.root_path, 'uploads', filename, nome_arquivo)
+    caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
 
     return send_from_directory(os.path.dirname(caminho_completo), os.path.basename(caminho_completo))
 # rota para autenticar o agendamento     
 @app.route('/autenticaragendamento', methods=['POST'])
 @login_required
 def autenticaragendamento():
-    documento = request.files.get('documentos_upados[]')
-
-    cpf_usuario = session['cpf_usuario_logado']
-    
-    
-
     try:
+        documento = request.files.get('documentos_upados[]')
+
+        cpf_usuario = session['cpf_usuario_logado']
+    
+    
+
+    
         if request.method == 'POST':
             data_atual = datetime.now().date().strftime('%Y-%m-%d')
             data_agendamento = data_atual
@@ -438,9 +532,9 @@ def autenticaragendamento():
             # db.session.commit()
             
 
-    except Exception:
-        flash('Ocorreu um erro. Por favor, tente novamente.')
-        return redirect(url_for('indexuser'))
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
 def filtroAll():
     id_usuario_logado = session.get('id_usuario_logado')
@@ -618,3 +712,6 @@ def consultarMedicamento():
     except:
         flash('digite um valor de campo valido')
         return redirect(url_for('consultarMedicamento'))
+@app.route('/erro')
+def erro():
+    return render_template('errorPage.html')

@@ -8,11 +8,16 @@ from complementary.servicos.servicos_data import *
 @app.route('/configUnidade')
 @login_required
 def configUnidade():
-    horarios = Horario_Servico.query.filter_by(id=1).first()
-    servicos = servicos_data_function() # objeto dos serviços
-    dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
+    try:
+        horarios = Horario_Servico.query.filter_by(id=1).first()
+        servicos = servicos_data_function() # objeto dos serviços
+        dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
     return render_template('configUnidade.html', horarios=horarios, servicos=servicos, dias=dias)
+    
 
 @app.route('/api/obter_horario_e_tempo_atendimento', methods=['GET', 'POST'])
 def obter_horario_e_tempo_atendimento():
@@ -42,6 +47,7 @@ def obter_horario_e_tempo_atendimento():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 400 
+    
 
 @app.route('/autenticar_novas_configuracoes', methods=['POST'])
 @login_required

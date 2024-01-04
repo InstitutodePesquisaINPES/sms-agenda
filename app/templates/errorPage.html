@@ -2,12 +2,20 @@
 
 {% block main %}
 
-    <div>
-        <div>
-            <h1>ERRO AO TENTAR REALIZAR O SERVIÇO!</h1> <br>
-            <h4> Contate o setor de TI do gabinete SMS, caso o sistema continue apresentando erros.</p>
-            <p> {{ mensagem_erro  }} </p>
-        </div>
-    </div>
+    <main class="main">
+        <section class="section">
+            <div class="left">
+                <p>Erro 500 </p>
+                <h4>Ops! Algo deu errado.</h4>
+                <h6>Tente novamente ou contate o serviço da SMS.</h6>
+                <a href="{{url_for('indexuser')}}" class="btn">Voltar ao início</a>
+            </div>
+            <div class="right">
+                <img src="../static/assets/images/Error 500.png" alt="imagem de erro 404">
+                <div class="shadow"></div>
+            </div>
+        </section>
+    </main>
+
 
 {% endblock %}

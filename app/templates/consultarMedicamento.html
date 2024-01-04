@@ -18,6 +18,7 @@
                 <path
                     d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
                 </svg>
+               
                 <span class="fs-4 cor1">Gerenciar consulta de medicamentos</span></a>
             </div>
         </div>
@@ -260,6 +261,7 @@
                                                     <form action="{{url_for('editar', id=agendamento.id)}}"  enctype="multipart/form-data" method="POST">
                                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                             <fieldset class="col-md-12">
+                                                            {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Senha</b>*
@@ -281,19 +283,21 @@
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Nome do Serviço</b>*
                                                                     </span>
-                                                                    {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
-                                                                    <select name="serviço" class="form-select me-1" aria-label="Default select example" id="serviço">
-                                                                        <option value="{{agendamento.servico_agendado}}" disabled hidden>{{agendamento.servico_agendado}}</option>
+                                                                    
+                                                                   
+                                                                
+                                                                          <select name="serviço_admin" class="form-select me-1" aria-label="Default select example" id="serviço_admin" required>
+                                                                           
+                                                                        <option value="{{agendamento.servico_agendado}}" disabled hidden selected>{{agendamento.servico_agendado}}</option>
+
                                                                         <option value="ATENDIMENTO FARMACÊUTICO">ATENDIMENTO FARMACÊUTICO</option>
                                                                         <option value="MARCAÇÃO DE EXAMES">MARCAÇÃO DE EXAMES</option>
                                                                         <option value="AUTORIZAÇÃO DE PROCEDIMENTOS">AUTORIZAÇÃO DE PROCEDIMENTOS</option>
                                                                         <option value="TRATAMENTO FORA DO DOMICÍLIO - TFD">TRATAMENTO FORA DO DOMICÍLIO - TFD</option>
                                                                         <option value="CARTÃO DO SUS">CARTÃO DO SUS</option>
+                                                                        <option value="CONSULTAR MEDICAMENTOS">CONSULTAR MEDICAMENTOS</option>
                                                                     </select>
-                                                                    {%else%}
-                                                                        <input type="text" class="form-control" name="serviço" id="serviço"
-                                                                        value="{{agendamento.servico_agendado}}" aria-describedby="NomedoPaciente" disabled>
-                                                                    {%endif%}
+                                                                   
                                                                     
                                                                 </div>
                                                                 
@@ -302,7 +306,7 @@
                                                                         <b>Data de solicitaçao</b>*
                                                                     </span>
 
-                                                                    <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
+                                                                    <input type="date" class="form-control" name="data_agendamento_admin" id="data_agendamento_admin"
                                                                         value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" >
                                                                 </div>
 
@@ -311,27 +315,26 @@
                                                                         <b>Horario</b>*
                                                                     </span>
 
-                                                                    <input type="time" class="form-control" name="horario" value="{{agendamento.horario_agendado}}"
-                                                                        id="horario" aria-describedby="cpfPaciente" >
+                                                                    <input type="time" class="form-control" name="horario_admin" value="{{agendamento.horario_agendado}}"
+                                                                        id="horario_admin" aria-describedby="cpfPaciente" >
                                                                 </div>  
 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Status</b>*
                                                                     </span>
-                                                                    {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
-                                                                    <select name="status" class="form-select me-1" aria-label="Default select example" id="status">
-                                                                        <option value="{{agendamento.status or ''}}" selected disabled hidden>{{agendamento.status or 'Selecione um status'}}</option>
+                                                                    
+                                                                    <select name="status_admin" class="form-select me-1" aria-label="Default select example" id="status_admin" required>
+                                                                        <option value="{{agendamento.status}}" disabled hidden selected>{{agendamento.status}}</option>
 
                                                                         <option value="analise">Analise</option>
                                                                         <option value="retificado">Retificado</option>
                                                                         <option value="aprovado">Aprovado</option>
                                                                         
                                                                     </select>
-                                                                    {%else%}
-                                                                        <input type="text" class="form-control" name="status" id="status"
-                                                                            value="{{agendamento.status}}" aria-describedby="NomedoPaciente" disabled>
-                                                                    {%endif%}
+                                                                    
+                                                                       
+                                                                   
 
                                                                 </div>  
 
@@ -350,40 +353,166 @@
                                                                     </span>
                                                                     
                                                                     <!-- Use a tag <embed> ou <iframe> aqui -->
-                                                                        <embed src="{{ url_for('servir_arquivo', filename=session.cpf_usuario_logado|replace(".", "")|replace("-", ""), data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}"
+                                                                        <embed src="{{ url_for('servir_arquivo', filename=agendamento.id_usuario, data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}"
                                                                         type="application/pdf" style="max-width: 100%; max-height: 600px; border-radius: 5px;" />
                                                                  
                                                                  
                                                                 </div>
                                                                 
 
-                                                                <div class="mb-4">
+                                                                <!-- <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
                                                                         <b>Substituir documentos</b>*
                                                                     </span>
 
                                                                     <input class="form-control" type="file" name="documentos_upados"  id="documentos_upados" multiple>
                                                                 </div> 
+                                                                 -->
                                                                 
+
+                                                            <!-- usuario comum -->
+                                                            {%else%}
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Senha</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="senha" id='senha'
+                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" disabled>
+                                                                </div>
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Nome do Usuário</b>*
+                                                                    </span>
+
+                                                                    <input type="text" class="form-control" name="nome_cliente" id='nome_cliente'
+                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" disabled>
+                                                                </div>
+                                                                
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Nome do Serviço</b>*
+                                                                    </span>
+                                                                    
+                                                                    
+                                                                        
+                                                                        <input type="text" class="form-control" name="serviço" id="serviço"
+                                                                        value="{{agendamento.servico_agendado}}" aria-describedby="NomedoPaciente" disabled>
+                                                                   
+                                                                    
+                                                                </div>
+                                                                
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Data de solicitaçao</b>*
+                                                                    </span>
+
+                                                                    <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
+                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" disabled>
+                                                                </div>
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Horario</b>*
+                                                                    </span>
+
+                                                                    <input type="time" class="form-control" name="horario" value="{{agendamento.horario_agendado}}"
+                                                                        id="horario" aria-describedby="cpfPaciente" disabled>
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Status</b>*
+                                                                    </span>
+                                                                   
+                                                                    
+                                                                    
+                                                                        <input type="text" class="form-control" name="status" id="status"
+                                                                            value="{{agendamento.status}}" aria-describedby="NomedoPaciente" disabled>
+                                                                   
+
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Retificação</b>*
+                                                                    </span>
+
+                                                                    <textarea class="form-control" id="retificacao" rows="3"
+                                                                    name="retificacao" disabled>teste</textarea >
+                                                                </div>  
+
+                                                                <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Visualizar Documento</b>*
+                                                                    </span>
+                                                                    
+                                                                    <!-- Use a tag <embed> ou <iframe> aqui -->
+                                                                        <embed src="{{ url_for('servir_arquivo', filename=agendamento.id_usuario, data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}"
+                                                                        type="application/pdf" style="max-width: 100%; max-height: 600px; border-radius: 5px;" />
+                                                                 
+                                                                 
+                                                                </div>
+                                                                
+
+                                                                <!-- <div class="mb-4">
+                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                        <b>Substituir documentos</b>*
+                                                                    </span>
+                                                                   
+                                                                        <input class="form-control" type="file" name="subistituir_documentos"  id="documentos_upados">
+                                                                    
+                                                                    
+                                                                </div>  -->
+                                                                {%endif%}
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
 
-                                                                    <button type="submit" class="btn btn-primary">
+                                                                    <button type="button" id="botao_salvar_editar" class="btn btn-primary">
                                                                         <div class="d-flex align-items-center justify-content-center">
-                                                                            <span>Confirmar</span>
+                                                                            <span>Salvar</span>
                                                                         </div>
                                                                     </button>
                                                                 </div>
 
+                                                                
+                                                                <!-- Modal para retificação -->
+                                                                <div class="modal fade" id="modalRetificacao" tabindex="-1" aria-labelledby="modalRetificacaoLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="modalRetificacaoLabel">Retificação</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <!-- Adicione aqui o campo de texto para a retificação -->
+                                                                                <textarea class="form-control" id="retificacaoSegundoModal" rows="3"></textarea>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                                <!-- Adicione um botão de submit para enviar o formulário -->
+                                                                                <button type="button" class="btn btn-primary" onclick="enviarComRetificacao()">Enviar com Retificação</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                             </fieldset>
+
+
                                                     </form>
                                                 </div> 
                                             </div>
                                         </div>
                                     </div>
+
+                                    
                                 </tbody>
                             {% endfor %}
                             </table>  
+
                         </div>
                     </div>
                 </div>

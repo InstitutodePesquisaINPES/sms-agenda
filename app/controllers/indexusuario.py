@@ -30,27 +30,36 @@ servicos_card = {
 
 @app.route('/')
 def indexuser():
-    servico1 = servicos_card.get(1)
-    servico2 = servicos_card.get(2)
-    servico3 = servicos_card.get(3)
-    servico4 = servicos_card.get(4)
-    servico5 = servicos_card.get(5)
-    servico6 = servicos_card.get(6)
+   try:
+      servico1 = servicos_card.get(1)
+      servico2 = servicos_card.get(2)
+      servico3 = servicos_card.get(3)
+      servico4 = servicos_card.get(4)
+      servico5 = servicos_card.get(5)
+      servico6 = servicos_card.get(6)
+   
 
 
-    return render_template('index.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5, servico6=servico6)
+      return render_template('index.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5, servico6=servico6)
+   except Exception as e:
+         print(e)
+         return render_template('errorPage.html')
 
 
 @app.route('/allservices')
 def allservices():
-    servico1 = servicos_card.get(1)
-    servico2 = servicos_card.get(2)
-    servico3 = servicos_card.get(3)
-    servico4 = servicos_card.get(4)
-    servico5 = servicos_card.get(5) 
-    servico6 = servicos_card.get(6)
+   try:
+      servico1 = servicos_card.get(1)
+      servico2 = servicos_card.get(2)
+      servico3 = servicos_card.get(3)
+      servico4 = servicos_card.get(4)
+      servico5 = servicos_card.get(5) 
+      servico6 = servicos_card.get(6)
 
-    return render_template('allServices.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5, servico6=servico6)
+      return render_template('allServices.html', servico1=servico1, servico2=servico2, servico3=servico3, servico4=servico4, servico5=servico5, servico6=servico6)
+   except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
 
 
 
