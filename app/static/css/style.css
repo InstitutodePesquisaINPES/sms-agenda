@@ -1,0 +1,243 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+
+body{
+    background: #fff;
+    overflow: hidden;
+}
+.header{
+    position: fixed;
+    width: 100%;
+    padding: 40px 50px;
+}
+.textNavBar a p {
+    padding: 5px;
+    border-radius: 15px;
+    border: 1px solid #0c91cf;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2a9bcf;
+    width: 150px;
+    text-align: center;
+    align-items: center;
+}
+.main{
+    overflow: hidden;
+}
+.section{
+    padding: 8rem;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.left p{
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #ff5347;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ffcaca;
+}
+.left h4{
+    font-size: 2.8rem;
+    color: #0c91cf;
+    margin-bottom: 0.3rem;
+}
+.left h6{
+    font-size: 1.1rem;
+    color: #0c91cf;
+    margin-bottom: 3rem;
+}
+
+.btn{
+    padding: 20px 50px;
+    background: #06608a;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+.btn:hover{
+    box-shadow: 0 1px 4px #063d57;
+}
+.right img{
+    width: 500px;
+    margin-bottom: 1rem;
+}
+
+@media (max-width:990px) { 
+
+    .section{
+        padding: 4rem;
+    }
+    .textNavBar a p {
+        align-items: center;
+        text-align: center;
+    }
+    .left p{
+        font-size: 1.9rem;
+        font-weight: 600;
+    }
+    .left h4{
+        font-size: 2.1rem;
+        margin-bottom: 0.3rem;
+    }
+    .left h6{
+        font-size: 0.9rem;
+        color: #0c91cf;
+        margin-bottom: 3rem;
+    }
+    .btn{
+        padding: 15px 40px;
+        font-size: 1rem;
+    }
+    .right img{
+        width: 350px;
+        margin-bottom: 1rem;
+    }
+
+}
+
+@media (max-width:700px) { 
+    .section{
+        padding: 3rem;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .textNavBar a p {
+        padding: 5px 3px;
+        font-size: 0.8rem;
+        width: 150px;
+    }
+    .left {
+        margin-top: 70px;
+        align-items: center;
+        text-align: center;
+    }
+    .left p{
+        font-size: 1.6rem;
+        font-weight: 600;
+
+    }
+    .left h4{
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+    }
+    .left h6{
+        font-size: 0.8rem;
+        color: #0c91cf;
+        margin-bottom: 3rem;
+    }
+    .btn{
+        padding: 10px 30px;
+        font-size: 0.9rem;
+    }
+    .right img{
+        width: 350px;
+        margin-bottom: 1rem;
+    }
+
+}
+
+@media (max-width:450px) { 
+    .section{
+        padding: 2rem;
+    }
+    .left p{
+        margin-top: 80px;
+        font-size: 1.3rem;
+        font-weight: 600;
+
+    }
+    .left h4{
+        font-size: 1.6rem;
+        margin-bottom: 1.4rem;
+    }
+    .left h6{
+        font-size: 0.8rem;
+        margin-bottom: 3rem;
+    }
+    .btn{
+        padding: 12px 25px;
+        font-size: 0.8rem;
+    }
+    .right img{
+        width: 280px;
+        margin-bottom: 1rem;
+    }
+
+}
+
+/* Acima de 1250px ---- */  
+
+
+@media (min-width:1500px) { 
+    .section{
+        padding: 8rem;
+    }
+    .left p{
+        margin-top: 80px;
+        font-size: 3.5rem;
+        font-weight: 600;
+
+    }
+    .left h4{
+        font-size: 4rem;
+    }
+    .left h6{
+        font-size: 1.6rem;
+        margin-bottom: 3rem;
+    }
+    .btn{
+        padding: 20px 60px;
+        font-size: 1.8rem;
+    }
+    .right img{
+        width: 500px;
+        margin-bottom: 1rem;
+    }
+
+}
+
+
+
+@media (min-width:1700px) { 
+    .section{
+        padding: 8rem;
+    }
+    .left p{
+        margin-top: 80px;
+        font-size: 4rem;
+        font-weight: 600;
+
+    }
+    .left h4{
+        font-size: 4.5rem;
+    }
+    .left h6{
+        font-size: 1.7rem;
+        margin-bottom: 3rem;
+    }
+    .btn{
+        padding: 20px 60px;
+        font-size: 1.8rem;
+    }
+    .right img{
+        width: 600px;
+        margin-bottom: 1rem;
+    }
+
+}
