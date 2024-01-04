@@ -195,46 +195,6 @@ def converter_para_pdf(documento, nome_da_pasta, nome_do_arquivo):
 
     return destino
 
-def converter_para_pdf_editar(nome_da_pasta_antigo, nome_do_arquivo_antigo, documento_novo, nome_da_pasta_novo, nome_do_arquivo_novo):
-    # Garante que o nome da pasta é seguro
-    nome_da_pasta = secure_filename(nome_da_pasta)
-
-    # Cria o caminho completo para a pasta de upload
-    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], nome_da_pasta)
-    os.makedirs(upload_path, exist_ok=True)
-
-    # Define o caminho de destino para o arquivo PDF resultante
-    destino = os.path.join(upload_path, secure_filename(nome_do_arquivo + '.pdf'))
-
-    # Define o caminho para o arquivo temporário PDF
-    temp_pdf_path = os.path.join(upload_path, "temp.pdf")
-
-  
-        
-
-    # Converte a imagem para PDF se for uma imagem
-    if documento.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-        Image.open(documento).save(temp_pdf_path, 'PDF', resolution=100.0)
-    
-    # Se for um PDF, salva diretamente
-    elif documento.filename.lower().endswith('.pdf'):
-        temp_pdf_path = os.path.join(upload_path, secure_filename(documento.filename))
-        documento.save(temp_pdf_path)
-    else:
-        raise ValueError("Tipo de arquivo não suportado.")
-
-    # Cria um objeto PdfMerger para mesclar os PDFs
-    pdf_merger = PdfMerger()
-    pdf_merger.append(temp_pdf_path)
-
-    # Escreve o resultado no arquivo de destino
-    with open(destino, 'wb') as output_pdf:
-        pdf_merger.write(output_pdf)
-
-    
-
-    return destino
-
 def gerarSenhaDemandas():
     
     texto_original = ""  # Substitua isso pela sua string original
