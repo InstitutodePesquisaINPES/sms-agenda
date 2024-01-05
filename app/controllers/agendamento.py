@@ -448,15 +448,19 @@ def horas_disponiveis():
 
 @app.route('/uploads/<filename>/<data>/<horario>')
 def servir_arquivo(filename, data, horario):
+    if filename:
+        print("Filename: " + filename)
+    else:
+        print("filename veio nulo")
     # instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
-    instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
+    instancia_usuario_solicitante = Usuario.query.filter_by(id=filename).first()
 
-    cpf = instancia_usuario_solicitante.usuario.cpf
+    cpf = instancia_usuario_solicitante.cpf
     cpf_formatado = cpf.replace(".", "").replace("-", "")
     horario_formatado = horario[:-2]
 
     nome_arquivo = f'{data}{horario_formatado}.pdf'
-    print(nome_arquivo, cpf_formatado,data,horario_formatado)
+    print("nome: " + nome_arquivo + " cpf: " + cpf_formatado +  " data:  " + data + " horario " + horario_formatado)
     # Construa o caminho completo
     caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
 
