@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <main>
+    <main class="horarios-tables-main">
+      <div class="background-horarios-i">
+        <i class="bi bi-clock-fill"></i>
+        <i class="bi bi-stopwatch"></i>
+      </div>
         <div class="tabelas">
             <div class="table-responsive">
                 <h2 class="nome_servico" >Horário do Serviço de {{ horario_servico.nome }}</h2>
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped table-bordered-rounded">
                   <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
                     <tr class="cabecalho_table_horarios_tr">
                       <th scope="col">ID</th>
