@@ -54,7 +54,7 @@ def meusagendamentos():
         agendamentos_filtrados = filtro()
         if agendamentos_filtrados.items:
            
-            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado != "CARTÃO DO SUS"]
+            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado != "CONSULTAR MEDICAMENTOS"]
             
             return render_template('agendamentos.html', agendamentos=agendamentos_filtrados)
         else:
@@ -178,10 +178,17 @@ def editar(id):
             novo_agendamento.retificacao = retificado
         else:
             retificacao = "null"
-            novo_agendamento.retificacao = "null"
+            novo_agendamento.retificacao = "Não retificado"
         
-        
-        if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+        print("user_type: " + user_type_usuario_logado + " user: " + usuario_logado + " cpf_user: " + cpf_usuario_logado + " [fim] ")
+        # print("novo_agendamento_query: " + novo_agendamento )
+        print("servico: " + novo_agendamento.servico_agendado + " data: " + novo_agendamento.data_agendada + " hora: " + novo_agendamento.horario_agendado + " [FIM] ")
+        if retificado:
+            print("Retificado: " + retificado)
+        else:
+            print("nulo")
+
+        if novo_agendamento.servico_agendado == 'CONSULTAR MEDICAMENTOS':
             if request.form.get('status_admin') != None :
                 print('0000')
                 novo_agendamento.status = request.form.get('status_admin')
@@ -191,10 +198,10 @@ def editar(id):
 
         else:
             print('fddsf')
-            novo_agendamento.status = 'analise'
+            novo_agendamento.status = 'aprovado'
            
            
-        print(request.form.get('horario_admin'),request.form.get('status_admin'))
+        print(request.form.get('horario_admin'), request.form.get('status_admin'))
 
 
         descricao_log = f'''Registro de edição: 
@@ -217,7 +224,7 @@ def editar(id):
 
         
         if user_type_usuario_logado == 'usuario':
-            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+            if novo_agendamento.servico_agendado == 'CONSULTAR MEDICAMENTOS':
                 db.session.commit()
                 registrar_log(descricao_log)
                 flash('Edição feita com sucesso')
@@ -228,7 +235,7 @@ def editar(id):
                 flash('Edição feita com sucesso')
                 return redirect(url_for('meusagendamentos'))
         elif user_type_usuario_logado in ['servidor', 'administrador']:
-            if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
+            if novo_agendamento.servico_agendado == 'CONSULTAR MEDICAMENTOS':
                
                 db.session.commit()
               
@@ -236,7 +243,7 @@ def editar(id):
                 flash('Edição feita com sucesso')
                 return redirect(url_for('consultarMedicamento'))
             else:  
-                if request.form.get('status_admin') == None and request.form.get('serviço_admin') == None:
+                if request.form.get('status_admin') == None and request.form.get('serviço_admin') != None:
                     novo_agendamento.status = 'analise'    
                     db.session.commit()
                     registrar_log(descricao_log)
@@ -262,6 +269,7 @@ def registrar_log(descricao):
         dataAlteraçao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         log = f'{dataAlteraçao} - {descricao}\n'
         f.write(log)
+
 @app.route('/deletar/<int:id>', methods=['GET', 'POST'])
 def deletar(id):
     try:
@@ -440,7 +448,9 @@ def horas_disponiveis():
 
 @app.route('/uploads/<filename>/<data>/<horario>')
 def servir_arquivo(filename, data, horario):
+    # instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
     instancia_usuario_solicitante = Agendamento.query.filter_by(id=filename).first()
+
     cpf = instancia_usuario_solicitante.usuario.cpf
     cpf_formatado = cpf.replace(".", "").replace("-", "")
     horario_formatado = horario[:-2]
@@ -477,7 +487,7 @@ def autenticaragendamento():
             numero_dia = numero_do_dia_da_semana(data_agendada) + 1
             senha = gerarSenha(nome_do_servico, horario_agendado, id_servico, numero_dia)
 
-            if nome_do_servico == "CARTÃO DO SUS":
+            if nome_do_servico == "CONSULTAR MEDICAMENTOS":
                 status = 'analise'
                 
                 novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
@@ -488,7 +498,19 @@ def autenticaragendamento():
                 
                 nome_arquivo = f"{data_formatada}{horario_formatado}"
                 
-                print(cpf_usuario_formatado,nome_arquivo)
+                
+
+                if cpf_usuario_formatado:
+                    print("cpf: " + cpf_usuario_formatado)
+                else:
+                    print("cpf nulo")
+
+
+                if nome_arquivo:
+                    print("nome do arquivo: " + nome_arquivo)
+                else:
+                    print("nome do arquivo nulo")
+
                 try:
                     converter_para_pdf(documento, str(cpf_usuario_formatado), nome_arquivo)
                 except ValueError:
@@ -589,7 +611,7 @@ def areaServidor():
         agendamentos_filtrados = filtroAll()
 
         if agendamentos_filtrados.items:
-            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado != "CARTÃO DO SUS"]
+            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado != "CONSULTAR MEDICAMENTOS"]
             
             return render_template('areaServidor.html', agendamentos=agendamentos_filtrados)
         else:
@@ -654,11 +676,11 @@ def filtroConsultarMedicamento():
                     agendamentos = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise",  Agendamento.data_agendada.ilike(f"%{data_formatada}%")).order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
                 else:
                     flash('por favor preencha os dois campos de filtro')
-                    agendamentos  = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                    agendamentos  = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise", Agendamento.servico_agendado == "CONSULTAR MEDICAMENTOS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
             
             else:
                     
-                    agendamentos  = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                    agendamentos  = Agendamento.query.filter(Agendamento.id_usuario == id_usuario_logado, Agendamento.status == "analise", Agendamento.servico_agendado == "CONSULTAR MEDICAMENTOS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
 ################
     elif user_type_usuario_logado == "servidor" or user_type_usuario_logado == "administrador":
          
@@ -707,11 +729,11 @@ def filtroConsultarMedicamento():
                 
                 else:
                     flash('por favor preencha os dois campos de filtro')
-                    agendamentos  = Agendamento.query.filter( Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                    agendamentos  = Agendamento.query.filter( Agendamento.status == "analise", Agendamento.servico_agendado == "CONSULTAR MEDICAMENTOS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
             
             else:
                     
-                    agendamentos  = Agendamento.query.filter( Agendamento.status == "analise", Agendamento.servico_agendado == "CARTÃO DO SUS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
+                    agendamentos  = Agendamento.query.filter( Agendamento.status == "analise", Agendamento.servico_agendado == "CONSULTAR MEDICAMENTOS").order_by(Agendamento.data_agendada).paginate(page=page, per_page=registros_por_pagina, error_out=False)
     
     return agendamentos
 
@@ -720,7 +742,7 @@ def consultarMedicamento():
     try:
         agendamentos_filtrados = filtroConsultarMedicamento()
         if agendamentos_filtrados.items:
-            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado == "CARTÃO DO SUS"]
+            agendamentos_filtrados.items = [servico for servico in agendamentos_filtrados.items if servico.servico_agendado == "CONSULTAR MEDICAMENTOS"]
             
             return render_template('consultarMedicamento.html', agendamentos=agendamentos_filtrados)
         else:

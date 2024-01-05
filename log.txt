@@ -936,3 +936,273 @@
 ------------------------------------------------------------------
 
 >>>>>>> feature/front-end-reformulaÃ§ao
+2024-01-05 11:34:58 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: None
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 11:35:34 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 11:36:31 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: None
+        - retificacao: k.jhkjhkj      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:03:36 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: None
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:05:42 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: ATENDIMENTO FARMACÊUTICO
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:06:31 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: AUTORIZAÇÃO DE PROCEDIMENTOS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:06:47 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-08
+        - horario_agendado: 07:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:07:14 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-09
+        - horario_agendado: 08:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:21:41 - Registro excluído: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-09
+        - horario_agendado: 08:00:00
+        - senha: CDS_1
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 12:35:01 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-18
+        - horario_agendado: 10:00:00
+        - senha: CM_10
+        - status: analise
+        - servico_agendado: None
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: Servidor SMS
+            - cpf_usuario_logado: 934.652.132-87
+            - user_type_usuario_logado: servidor
+    ------------------------------------------------------------------
+    
+2024-01-05 12:39:39 - Registro excluído: 
+        - id: 3
+        - id_usuario: 3
+        - nome_cliente: Usuario SMS
+        - data_agendada: 2024-01-09
+        - horario_agendado: 08:40:00
+        - senha: CDS_6
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: Usuario SMS
+            - cpf_usuario_logado: 934.652.132-82
+            - user_type_usuario_logado: usuario
+    ------------------------------------------------------------------
+    
+2024-01-05 13:19:33 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-18
+        - horario_agendado: 10:00:00
+        - senha: CM_10
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 13:39:36 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-18
+        - horario_agendado: 10:00
+        - senha: CM_10
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 13:42:30 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-18
+        - horario_agendado: 10:00:00
+        - senha: CM_10
+        - status: aprovado
+        - servico_agendado: ATENDIMENTO FARMACÊUTICO
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 13:47:01 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-18
+        - horario_agendado: 10:00:00
+        - senha: CM_10
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 13:51:09 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-18
+        - horario_agendado: 10:00:00
+        - senha: CM_10
+        - status: aprovado
+        - servico_agendado: ATENDIMENTO FARMACÊUTICO
+        - retificacao: MOTIVO DESCONHECIDO      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    

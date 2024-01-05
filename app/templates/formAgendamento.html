@@ -70,23 +70,23 @@
                     </div>
                 </div>
 
-            <div class="documents">
-                <div class="documents-field">
-                    <div class="fielcontentdocuments">
-                        <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
-                    <div>
-                        <input class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
-                    </div>
-                    </div>
-                    <div class="fieldimgdocuments">
-                        <img src="../static/assets/images/Vetores/note-taking-apps.png" alt="">
-                    </div>
+                {% if info_servico.upload == "True" %}
+                    <div class="documents">
+                        <div class="documents-field">
+                            <div class="fielcontentdocuments">
+                                <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
+                            <div>
+                                <input class="updoc" type="file" name="documentos_upados[]" id="updoc" multiple>
+                            </div>
+                            </div>
+                            <div class="fieldimgdocuments">
+                                <img src="../static/assets/images/Vetores/note-taking-apps.png" alt="">
+                            </div>
 
-                </div>
-                <i class='bx bx-cloud-upload'></i>
-                
-                
-            </div>
+                        </div>
+                        <i class='bx bx-cloud-upload'></i>
+                    </div>
+                {% endif %}
 
             <div class="mb-3">
                 <div> 
@@ -96,14 +96,6 @@
                 </div>
             </div>
 
-            {% if info_servico.upload == "True" %}
-                <div class="documents">
-                    <h2 class="subtitle-formAgendamento"> Envie os seus documentos </h2>
-                    <div>
-                        <input class="form-control" class="updoc" type="file" name="documentos_upados[]" id="updoc" accept=".jpg, .jpeg, .pdf" multiple onchange="handleFileChange()">
-                    </div>
-                </div>
-            {% endif %}
 
             <!-- <div class=""> 
                 <div class="checkbox-div  form-check-inline">

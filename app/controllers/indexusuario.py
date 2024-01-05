@@ -22,7 +22,7 @@ servicos_card = {
     5:{'nome': 'CARTÃO DO SUS', 
        'sobre': 'Emissão ou atualização do Cartão Nacional de Saúde.'},
 
-    6:{'nome': 'BUSCAR MEDICAMENTOS',
+    6:{'nome': 'CONSULTAR MEDICAMENTOS',
        'sobre': 'Consultar  medicamentos disponiveis'},
    
 }
