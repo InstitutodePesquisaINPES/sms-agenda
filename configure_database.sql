@@ -6,6 +6,7 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `nome` varchar(255) NOT NULL,
+  `telefone` varchar(255) NOT NULL,
   `cpf` varchar(14),
   `sus` varchar(19),
   `senha` varchar(50) NOT NULL,
@@ -112,4 +113,4 @@ CREATE TABLE `documentos` (
   FOREIGN KEY (`id_agendamento`) REFERENCES `agendamentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-insert into usuario (id, email, nome, cpf, sus, senha, user_type) values (1, "admin@gmail.com", "admin", "211.111.111-11", "211.111.111.1111-11", "12345678", "administrador");
+insert into usuario (id, email, nome, telefone, cpf, sus, senha, user_type) values (1, "admin@gmail.com", "admin",'5577900000000', "211.111.111-11", "211.111.111.1111-11", "12345678", "administrador");

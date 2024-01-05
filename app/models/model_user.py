@@ -6,6 +6,7 @@ class Usuario(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), nullable=False) 
     nome = db.Column(db.String(255), nullable=False) 
+    telefone = db.Column(db.String(255), nullable=False) 
     cpf = db.Column(db.String(14), nullable=False)
     sus = db.Column(db.String(19), nullable=False)
     senha = db.Column(db.String(50), nullable=False)
