@@ -24,6 +24,7 @@ CREATE TABLE `agendamentos` (
   `data_agendamento` date NOT NULL,
   `senha` varchar(10) NOT NULL,
   `status` varchar(25) NOT NULL,
+  `retificacao` varchar(255),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_usuario` (`id_usuario`,`data_agendada`,`horario_agendado`),
   CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)

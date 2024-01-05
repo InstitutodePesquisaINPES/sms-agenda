@@ -94,6 +94,7 @@
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none;">Data de agendamentos </a></th>
                                         <th class="configfont" scope="col">Horario agendado</th>
                                         <th class="configfont" scope="col">Status</th>
+                                        <th class="configfont" scope="col">Retificação</th>
                                         <th class="configfont" scope="col">Ações</th>
                                     </tr>
                                 </thead>
@@ -107,6 +108,11 @@
                                     <td>{{ agendamento.data_agendada }}</td>
                                     <td>{{ agendamento.horario_agendado }}</td>
                                     <td>{{ agendamento.status }}</td>
+                                    {% if agendamento.retificacao == None%}
+                                        <td> Não retificado </td>
+                                    {% else %}
+                                        <td>{{ agendamento.retificacao }}</td>
+                                    {% endif %}
                                     <td>
                                        
                                         <div class="d-flex justify-content-center">
@@ -302,7 +308,7 @@
                                                                     
                                                                    
                                                                 
-                                                                          <select name="serviço_admin" class="form-select me-1" aria-label="Default select example" id="serviço_admin" required>
+                                                                    <select name="serviço_admin" class="form-select me-1" aria-label="Default select example" id="serviço_admin" required>
                                                                            
                                                                         <option value="{{agendamento.servico_agendado}}" disabled hidden selected>{{agendamento.servico_agendado}}</option>
 
