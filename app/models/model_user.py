@@ -6,6 +6,7 @@ class Usuario(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), nullable=False) 
     nome = db.Column(db.String(255), nullable=False) 
+    telefone = db.Column(db.String(255), nullable=False) 
     cpf = db.Column(db.String(14), nullable=False)
     sus = db.Column(db.String(19), nullable=False)
     senha = db.Column(db.String(50), nullable=False)
@@ -27,9 +28,9 @@ class Agendamento(db.Model):
     nome_cliente = db.Column(db.String(255), nullable=False)
     data_agendamento = db.Column(db.Date, nullable=False)
     senha = db.Column(db.String(10), nullable=False)
-    status = db.Column(db.String(25), nullable=False)
-    
-    servico_agendado = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(25))
+    retificacao = db.Column(db.String(255))
+    servico_agendado = db.Column(db.String(255))
     usuario = db.relationship('Usuario', backref='agendamentos')
     documentos = db.relationship('Documentos', backref='agendamento', cascade='all, delete-orphan')
     
