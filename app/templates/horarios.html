@@ -3,20 +3,20 @@
 {% block main %}
     <main>
         <div class="tabelas">
-            <div class="container mt-5 table-responsive">
+            <div class="table-responsive">
                 <h2 class="nome_servico" >Horário do Serviço de {{ horario_servico.nome }}</h2>
-                <table class="table table-bordered">
-                  <thead  class="cabecalho_table_horarios">
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
                     <tr class="cabecalho_table_horarios_tr">
-                      <th class="cabecalho_table_horarios_tr_th">ID</th>
-                      <th >ID do Serviço</th>
-                      <th >Nome do Serviço</th>
-                      <th >Hora de Início</th>
-                      <th >Hora de Pausa</th>
-                      <th >Hora de Retomada</th>
-                      <th >Hora Final</th>
-                      <th >Tempo de Atendimento</th>
-                      <th >Dia da Semana</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Número do Serviço</th>
+                      <th scope="col">Nome do Serviço</th>
+                      <th scope="col">Hora de Início</th>
+                      <th scope="col">Hora de Pausa</th>
+                      <th scope="col">Hora de Retomada</th>
+                      <th scope="col">Hora Final</th>
+                      <th scope="col">Tempo de Atendimento</th>
+                      <th scope="col">Dia da Semana</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -31,7 +31,7 @@
                             <td>{{ horarios.hora_retomada }}</td>
                             <td>{{ horarios.hora_final }}</td>
                             <td>{{ horarios.tempo_atendimento }}</td>
-                            <td>{{ horarios.dia_semana }}</td>
+                            <td>{{ dias_da_semana[horarios.dia_semana] }}</td>
                         </tr>
                     {% endfor %}
                     <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
@@ -40,18 +40,18 @@
             </div>
             <div class="container mt-5">
                 <h2 class="nome_servico">Horário do Serviço de {{ horario_servico2.nome }}</h2>
-                <table class="table table-bordered">
-                  <thead class="cabecalho_table">
-                    <tr>
-                      <th>ID</th>
-                      <th>ID do Serviço</th>
-                      <th>Nome do Serviço</th>
-                      <th>Hora de Início</th>
-                      <th>Hora de Pausa</th>
-                      <th>Hora de Retomada</th>
-                      <th>Hora Final</th>
-                      <th>Tempo de Atendimento</th>
-                      <th>Dia da Semana</th>
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
+                    <tr class="cabecalho_table_horarios_tr">
+                      <th scope="col">ID</th>
+                      <th scope="col">Número do Serviço</th>
+                      <th scope="col">Nome do Serviço</th>
+                      <th scope="col">Hora de Início</th>
+                      <th scope="col">Hora de Pausa</th>
+                      <th scope="col">Hora de Retomada</th>
+                      <th scope="col">Hora Final</th>
+                      <th scope="col">Tempo de Atendimento</th>
+                      <th scope="col">Dia da Semana</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -66,7 +66,7 @@
                         <td>{{ horarios.hora_retomada }}</td>
                         <td>{{ horarios.hora_final }}</td>
                         <td>{{ horarios.tempo_atendimento }}</td>
-                        <td>{{ horarios.dia_semana }}</td>
+                        <td>{{ dias_da_semana[horarios.dia_semana] }}</td>
                         </tr>
                     {% endfor %}
                     <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
@@ -75,18 +75,18 @@
             </div>
             <div class="container mt-5">
                 <h2 class="nome_servico">Horário do Serviço de {{ horario_servico3.nome }}</h2>
-                <table class="table table-bordered">
-                  <thead class="cabecalho_table">
-                    <tr>
-                      <th>ID</th>
-                      <th>ID do Serviço</th>
-                      <th>Nome do Serviço</th>
-                      <th>Hora de Início</th>
-                      <th>Hora de Pausa</th>
-                      <th>Hora de Retomada</th>
-                      <th>Hora Final</th>
-                      <th>Tempo de Atendimento</th>
-                      <th>Dia da Semana</th>
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
+                    <tr class="cabecalho_table_horarios_tr">
+                      <th scope="col">ID</th>
+                      <th scope="col">Número do Serviço</th>
+                      <th scope="col">Nome do Serviço</th>
+                      <th scope="col">Hora de Início</th>
+                      <th scope="col">Hora de Pausa</th>
+                      <th scope="col">Hora de Retomada</th>
+                      <th scope="col">Hora Final</th>
+                      <th scope="col">Tempo de Atendimento</th>
+                      <th scope="col">Dia da Semana</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -101,7 +101,7 @@
                         <td>{{ horarios.hora_retomada }}</td>
                         <td>{{ horarios.hora_final }}</td>
                         <td>{{ horarios.tempo_atendimento }}</td>
-                        <td>{{ horarios.dia_semana }}</td>
+                        <td>{{ dias_da_semana[horarios.dia_semana] }}</td>
                         </tr>
                     {% endfor %}
                     <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
@@ -110,18 +110,18 @@
             </div>
             <div class="container mt-5">
                 <h2 class="nome_servico">Horário do Serviço de {{ horario_servico4.nome }}</h2>
-                <table class="table table-bordered">
-                  <thead class="cabecalho_table">
-                    <tr>
-                      <th>ID</th>
-                      <th>ID do Serviço</th>
-                      <th>Nome do Serviço</th>
-                      <th>Hora de Início</th>
-                      <th>Hora de Pausa</th>
-                      <th>Hora de Retomada</th>
-                      <th>Hora Final</th>
-                      <th>Tempo de Atendimento</th>
-                      <th>Dia da Semana</th>
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
+                    <tr class="cabecalho_table_horarios_tr">
+                      <th scope="col">ID</th>
+                      <th scope="col">Número do Serviço</th>
+                      <th scope="col">Nome do Serviço</th>
+                      <th scope="col">Hora de Início</th>
+                      <th scope="col">Hora de Pausa</th>
+                      <th scope="col">Hora de Retomada</th>
+                      <th scope="col">Hora Final</th>
+                      <th scope="col">Tempo de Atendimento</th>
+                      <th scope="col">Dia da Semana</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -136,7 +136,7 @@
                         <td>{{ horarios.hora_retomada }}</td>
                         <td>{{ horarios.hora_final }}</td>
                         <td>{{ horarios.tempo_atendimento }}</td>
-                        <td>{{ horarios.dia_semana }}</td>
+                        <td>{{ dias_da_semana[horarios.dia_semana] }}</td>
                         </tr>
                     {% endfor %}
                     <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
@@ -145,18 +145,18 @@
             </div>
             <div class="container mt-5">
                 <h2 class="nome_servico">Horário do Serviço de {{ horario_servico5.nome }}</h2>
-                <table class="table table-bordered">
-                  <thead class="cabecalho_table">
-                    <tr>
-                      <th>ID</th>
-                      <th>ID do Serviço</th>
-                      <th>Nome do Serviço</th>
-                      <th>Hora de Início</th>
-                      <th>Hora de Pausa</th>
-                      <th>Hora de Retomada</th>
-                      <th>Hora Final</th>
-                      <th>Tempo de Atendimento</th>
-                      <th>Dia da Semana</th>
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
+                    <tr class="cabecalho_table_horarios_tr">
+                      <th scope="col">ID</th>
+                      <th scope="col">Número do Serviço</th>
+                      <th scope="col">Nome do Serviço</th>
+                      <th scope="col">Hora de Início</th>
+                      <th scope="col">Hora de Pausa</th>
+                      <th scope="col">Hora de Retomada</th>
+                      <th scope="col">Hora Final</th>
+                      <th scope="col">Tempo de Atendimento</th>
+                      <th scope="col">Dia da Semana</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -171,7 +171,7 @@
                         <td>{{ horarios.hora_retomada }}</td>
                         <td>{{ horarios.hora_final }}</td>
                         <td>{{ horarios.tempo_atendimento }}</td>
-                        <td>{{ horarios.dia_semana }}</td>
+                        <td>{{ dias_da_semana[horarios.dia_semana] }}</td>
                         </tr>
                     {% endfor %}
                     <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
@@ -180,18 +180,18 @@
             </div>
             <div class="container mt-5">
                 <h2 class="nome_servico">Horário do Serviço de {{ horario_servico6.nome }}</h2>
-                <table class="table table-bordered">
-                  <thead class="cabecalho_table">
-                    <tr>
-                      <th>ID</th>
-                      <th>ID do Serviço</th>
-                      <th>Nome do Serviço</th>
-                      <th>Hora de Início</th>
-                      <th>Hora de Pausa</th>
-                      <th>Hora de Retomada</th>
-                      <th>Hora Final</th>
-                      <th>Tempo de Atendimento</th>
-                      <th>Dia da Semana</th>
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color:#fff;" class="cabecalho_table_horarios table-primary ">
+                    <tr class="cabecalho_table_horarios_tr">
+                      <th scope="col">ID</th>
+                      <th scope="col">Número do Serviço</th>
+                      <th scope="col">Nome do Serviço</th>
+                      <th scope="col">Hora de Início</th>
+                      <th scope="col">Hora de Pausa</th>
+                      <th scope="col">Hora de Retomada</th>
+                      <th scope="col">Hora Final</th>
+                      <th scope="col">Tempo de Atendimento</th>
+                      <th scope="col">Dia da Semana</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -206,7 +206,7 @@
                         <td>{{ horarios.hora_retomada }}</td>
                         <td>{{ horarios.hora_final }}</td>
                         <td>{{ horarios.tempo_atendimento }}</td>
-                        <td>{{ horarios.dia_semana }}</td>
+                        <td>{{ dias_da_semana[horarios.dia_semana] }}</td>
                         </tr>
                     {% endfor %}
                     <!-- Repita esta linha para cada objeto de horário que você deseja exibir -->
