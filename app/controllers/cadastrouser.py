@@ -37,6 +37,7 @@ def cadastrar():
                 novo_usuario = Usuario(
                     email=form_cadastrouser.email.data,
                     nome=form_cadastrouser.nome.data,
+                    telefone=form_cadastrouser.telefone.data,
                     cpf=form_cadastrouser.cpf.data,
                     sus=form_cadastrouser.sus.data,
                     senha=form_cadastrouser.senha.data,
@@ -48,6 +49,7 @@ def cadastrar():
                 novo_usuario = Usuario(
                     email=form_cadastrouser.email.data,
                     nome=form_cadastrouser.nome.data,
+                    telefone=form_cadastrouser.telefone.data,
                     cpf=form_cadastrouser.cpf.data,
                     sus=form_cadastrouser.sus.data,
                     senha=form_cadastrouser.senha.data,

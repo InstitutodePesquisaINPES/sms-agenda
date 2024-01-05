@@ -42,6 +42,7 @@ def autenticarlogin():
 
         if user:
             session['usuario_logado'] = user.nome
+            session['usuario_telefone'] = user.telefone
             session['id_usuario_logado'] = user.id
             session['cpf_usuario_logado'] = user.cpf  
             session['user_type_usuario_logado'] = user.user_type 
