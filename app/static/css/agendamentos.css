@@ -7,11 +7,12 @@
 }
 
 body{
- 
     display: flex;
     flex-direction: column;
-    background-color: white;
-    
+}
+
+.mainAgendamentos {
+    background: linear-gradient(0deg, #3f50b3 0%,#3c55c2 21%,#24a3b1 56%,#54a4d3 100%);
 }
 
 .cabecalho{
@@ -32,16 +33,220 @@ body{
     margin: 80px 0px 60px 0px;
 }
 
-
-
-.p1{
-    color: #A6C546;
-    font-family: 'Anton', sans-serif;
-    font-size: 50px;
-    text-align: left;
-    margin: 40px;
-    margin-left: 100px;
+/* --- title ---- */ 
+.indexTextAgendamentos {
+    align-items: center;
+    text-align: center;
 }
+
+.titleAgendamentos {
+    align-items: center;
+    color: #fff;
+}
+
+.spanTextTitle {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
+/* --- Field Content --- */ 
+
+.fieldContentAgendamentos {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px 5px;
+}
+
+
+/* ---- Field Cabeçalho ---- */ 
+
+.input-group {
+    align-items: center;
+    background-color: #e9e9e9;
+    padding: 5px 5px;
+    border-radius: 10px;
+    height: 50px;
+    margin: 0px 0px 20px 0px;
+}
+
+.input-group-text {
+    height: 38px !important;
+}
+
+.searchFilter select {
+    width: 180px !important;
+    outline: none !important;
+}
+
+#btnpesquisar {
+    background:rgb(252,214,117) !important;
+    color: #63470c !important;
+    transition: 0.2s ease;
+}
+
+#btnpesquisar:hover {
+    transition: 0.2s ease;
+    filter: drop-shadow(0px 0px 5px #1d62a770);
+}
+
+/* ---- Content field ---- */ 
+
+.table{
+    width: 100%; 
+    background:  #e9e9e9;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 20px;
+}
+
+
+.tableContentAgendamentos {
+    padding: 5px 4px;
+}
+
+.tableContentAgendamentos thead {
+    margin-bottom: 100px !important;
+    border-radius: 20px;
+}
+
+
+.tableContentAgendamentos thead tr th {
+    border: none !important;
+    min-width: 50px;
+    align-items: center;
+    color: #474747;
+    background: transparent !important;
+}
+
+.tableContentAgendamentos {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    width: 100%;
+}
+
+
+.tableContentAgendamentos {
+
+}
+.tableContentAgendamentos thead {
+    margin-bottom: 100px !important;
+    border-radius: 20px;
+}
+
+.tableContentAgendamentos thead tr th {
+    border: none !important;
+    min-width: 50px;;
+    color: #474747;
+    text-align: center;
+    vertical-align: middle; /* Centraliza verticalmente */
+    background: transparent !important;
+    font-size: 0.85rem;
+
+}
+
+.tableContentAgendamentos tbody {
+    filter: drop-shadow(2px 2px 1px #00000030);
+}
+
+.tableContentAgendamentos tbody td {
+    border: none;
+    padding: 5px; 
+    align-items: center;
+    min-width: 50px;
+    text-align: center; /* Alinha o texto no centro horizontalmente */
+    vertical-align: middle; /* Centraliza verticalmente */
+    font-size: 0.85rem;
+}
+
+
+.tableContentAgendamentos tbody td:nth-child(1){
+    border-radius: 5px 0px 0px 5px;
+}
+
+.tableContentAgendamentos tbody td:nth-child(6){
+    border-radius: 0px 5px 5px 0px;
+}
+
+
+.tableContentAgendamentos tbody tr {
+    border-bottom: 1px solid #ddd; 
+}
+
+.fieldButtonsTableAgendamentos a {
+    display: inline-block; 
+    text-align: center; 
+    vertical-align: middle; 
+    padding: 10px 5px 0px 20px; 
+    color: white; 
+    text-decoration: none; /
+}
+
+tbody:hover {
+    background-color: #ff0000 !important; /* ou outra cor que deseje para o fundo ao passar o mouse */
+}
+
+.fieldButtonsAgendamentoFooter {
+    width: 100%;
+}
+
+.fieldContentButtonsAgendamentoFooter {
+    width: 100%;
+    margin: 0px 3% !important;
+}
+
+.btn-gerenc-new {
+    background:rgb(252,214,117) !important;
+    color: #63470c !important;
+    font-size: 1rem;
+    padding: 5px 25px !important;
+    transition: 0.3s ease !important;
+}
+
+.btn-gerenc-new:hover {
+    transition: 0.3s ease !important;
+    transform: scale(1.06) !important;
+}
+
+.btn-gerenc-new i {
+    font-size: 1.1rem;
+}
+
+/* ------- Spacing table ---- */
+
+
+.tableContentAgendamentos thead th:first-child,
+.tableContentAgendamentos tbody td:first-child {
+    padding-left: 40px; /* Espaço lateral para a primeira coluna */
+}
+.tableContentAgendamentos thead th:nth-child(2),
+.tableContentAgendamentos tbody td:nth-child(2) {
+    padding-left: 40px; /* Espaço lateral para a segunda coluna */
+}
+.tableContentAgendamentos thead th:nth-child(3),
+.tableContentAgendamentos tbody td:nth-child(3) {
+    padding-left: 50px; /* Espaço lateral para a segunda coluna */
+}
+
+.tableContentAgendamentos thead th:nth-child(4),
+.tableContentAgendamentos tbody td:nth-child(4) {
+    padding-left: 50px; /* Espaço lateral para a segunda coluna */
+}
+
+.tableContentAgendamentos thead th:nth-child(5),
+.tableContentAgendamentos tbody td:nth-child(5) {
+    padding-left: 50px; /* Espaço lateral para a segunda coluna */
+}
+
+.tableContentAgendamentos thead th:nth-child(6),
+.tableContentAgendamentos tbody td:nth-child(6) {
+    padding-left: 50px; /* Espaço lateral para a segunda coluna */
+}
+
+
+
+
 
 .pesquisa{
     background-color: #15457c;
@@ -69,12 +274,6 @@ body{
     margin:100px;
 }
 
-.table{
-    width: 100%; 
-    background-color: #1d62a7; 
-    color: #ffffff;
-    text-align: center;
-}
 
 .tr-head{
     background-color: #15457c;

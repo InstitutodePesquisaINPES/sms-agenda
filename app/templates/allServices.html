@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
 {% block main %}
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-{{ category }} flashMessage animate__animated animate__fadeInLeftBig">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
     <div class="backgroundsMain">
         <div class="backgroundIndexOne"></div>
     </div>
@@ -20,8 +29,8 @@
         <div class="gallery-container ">
             <a href="{{ url_for('userservicos', servico_id=1) }}" class="linkRedirectServices">
                 <div class="boxContentServices animate__animated animate__fadeInUp">
-                    <div class="fieldTextBoxServices">
-                        <i class='bx bx-plus-medical'></i>
+                    <div class="fieldTextBoxServices contentServicesBarOneColor">
+                        <i class='bx bx-plus-medical '></i>
                         <p> {{ servico1.sobre }} </p>
                     </div>
                     
@@ -35,7 +44,7 @@
             </a>
             <a href="{{ url_for('userservicos', servico_id=2) }}" class="linkRedirectServices">
                 <div class="boxContentServices animate__animated animate__fadeInUp">
-                    <div class="fieldTextBoxServices"> 
+                    <div class="fieldTextBoxServices contentServicesBarTwoColor"> 
                         <i class='bx bx-receipt'></i>
                         <p> {{ servico2.sobre }} </p>
                     </div>
@@ -50,7 +59,7 @@
             </a>
             <a href="{{ url_for('userservicos', servico_id=3) }}" class="linkRedirectServices">
             <div class="boxContentServices animate__animated animate__fadeInUp">
-                <div class="fieldTextBoxServices">
+                <div class="fieldTextBoxServices contentServicesBarThreeColor">
                     <i class='bx bxs-user-check'></i>
                     <p> {{ servico3.sobre }} </p>
                 </div>
@@ -65,7 +74,7 @@
             </a>
             <a href="{{ url_for('userservicos', servico_id=4) }}" class="linkRedirectServices">
             <div class="boxContentServices animate__animated animate__fadeInUp">
-                <div class="fieldTextBoxServices">
+                <div class="fieldTextBoxServices contentServicesBarFourColor">
                     <i class='bx bxs-user-account'></i> 
                     <p> {{ servico4.sobre }} </p>
                 </div>
@@ -80,8 +89,8 @@
             </a>
             <a href="{{ url_for('userservicos', servico_id=5) }}" class="linkRedirectServices">
                 <div class="boxContentServices animate__animated animate__fadeInUp">
-                    <div class="fieldTextBoxServices">
-                        <i class='bx bxs-user-account'></i> 
+                    <div class="fieldTextBoxServices contentServicesBarFiveColor">
+                        <i class="bi bi-person-vcard-fill"></i>
                         <p> {{ servico5.sobre }} </p>
                     </div>
                     
@@ -95,12 +104,12 @@
             </a>
             <a href="{{ url_for('userservicos', servico_id=6) }}" class="linkRedirectServices">
                 <div class="boxContentServices animate__animated animate__fadeInUp">
-                    <div class="fieldTextBoxServices">
-                        <i class='bx bxs-user-account'></i> 
-                        <p> {{ servico6.sobre }} </p>
+                    <div class="fieldTextBoxServices contentServicesBarSixColor">
+                        <i class="bi bi-capsule"></i>
+                        <p class=""> {{ servico6.sobre }} </p>
                     </div>
                     
-                    <div class="contentServicesBarFive">
+                    <div class="contentServicesBarSix">
                         <p> {{ servico6.nome }} </p>
                         <div class="iconsReference">
                            
@@ -112,4 +121,12 @@
         </div>
         
     </div>
+
+    <script>
+        /* --- Função que retira o flash após 5 segundos --- */ 
+        setTimeout(function() {
+            var setFunction = document.querySelector(".flashMessage");
+            setFunction.style.display = 'none'
+        }, 5000)
+    </script>
 {% endblock %}
