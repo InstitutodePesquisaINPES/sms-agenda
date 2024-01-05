@@ -105,17 +105,36 @@
                 </div>
             {% endif %}
 
-            <div class="mb-3 form-check"> 
-                <div class="checkbox-div">
-                    <div>
-                        <input type="checkbox" class="form-check-input form-control" name="i-confirm" id="">
+            <!-- <div class=""> 
+                <div class="checkbox-div  form-check-inline">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="i-confirm" id="">
                         <label for="i-confirm" class="form-check-label"> Eu confirmo que desejo agendar e estou ciente de que devo comparecer. </label>
                         <br>
                     </div>
-                    <div>
-                        <input type="checkbox" class="form-check-input form-control" name="li" id="">
+                    <div class="form-check  form-check-inline">
+                        <input type="checkbox" class="form-check-input" name="li" id="">
                         <label for="li" class="form-check-label"> Li e confirmo que enviei os documentos necessários na etapa anterior. </label>
                         <br>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-div form-check-inline">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="i-confirm" id="i-confirm">
+                            <label for="i-confirm" class="form-check-label" style="white-space: nowrap;"> Eu confirmo que desejo agendar e estou ciente de que devo comparecer. </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox-div form-check-inline">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="li" id="li">
+                            <label for="li" class="form-check-label" style="white-space: nowrap;"> Li e confirmo que enviei os documentos necessários na etapa anterior. </label>
+                        </div>
                     </div>
                 </div>
             </div>
