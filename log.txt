@@ -587,3 +587,220 @@
             - user_type_usuario_logado: administrador
     ------------------------------------------------------------------
     
+2024-01-05 03:59:50 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:00:18 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:05:23 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:07:22 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:50:02 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: falta sus      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:51:53 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: analise
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:56:45 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: aprovado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:57:10 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:57:47 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 04:59:49 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: falta sus      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 05:00:15 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 07:20:00
+        - senha: CDS_2
+        - status: aprovado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 05:39:44 - Registro de edição: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-17
+        - horario_agendado: 08:20:00
+        - senha: CDS_5
+        - status: aprovado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-05 05:44:29 - Registro de edição: 
+        - id: 2
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-23
+        - horario_agendado: 08:40:00
+        - senha: CDS_6
+        - status: retificado
+        - servico_agendado: CARTÃO DO SUS
+        - retificacao: falta o sus      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    

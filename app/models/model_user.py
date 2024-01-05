@@ -29,7 +29,7 @@ class Agendamento(db.Model):
     data_agendamento = db.Column(db.Date, nullable=False)
     senha = db.Column(db.String(10), nullable=False)
     status = db.Column(db.String(25))
-    
+    retificacao = db.Column(db.String(255))
     servico_agendado = db.Column(db.String(255))
     usuario = db.relationship('Usuario', backref='agendamentos')
     documentos = db.relationship('Documentos', backref='agendamento', cascade='all, delete-orphan')

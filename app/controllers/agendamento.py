@@ -170,6 +170,17 @@ def editar(id):
         novo_agendamento.servico_agendado = request.form.get('serviço_admin')
         novo_agendamento.data_agendada =  request.form.get('data_agendamento_admin')
         novo_agendamento.horario_agendado = request.form.get('horario_admin')
+        
+        retificado = request.form.get('retificacaoTexto')
+        
+        if retificado:
+            retificacao = retificado
+            novo_agendamento.retificacao = retificado
+        else:
+            retificacao = "null"
+            novo_agendamento.retificacao = "null"
+        
+        
         if novo_agendamento.servico_agendado == 'CARTÃO DO SUS':
             if request.form.get('status_admin') != None :
                 print('0000')
@@ -185,7 +196,6 @@ def editar(id):
            
         print(request.form.get('horario_admin'),request.form.get('status_admin'))
 
-      
 
         descricao_log = f'''Registro de edição: 
         - id: {novo_agendamento.id}
@@ -196,6 +206,7 @@ def editar(id):
         - senha: {novo_agendamento.senha}
         - status: {novo_agendamento.status}
         - servico_agendado: {novo_agendamento.servico_agendado}
+        - retificacao: {retificacao}      
         - documentos: 
         - Usuario editor: 
             - usuario_logado: {usuario_logado}
