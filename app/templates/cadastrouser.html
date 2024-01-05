@@ -10,6 +10,16 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
+
+    <!-- Boostrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+    <!-- Animated.Css -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
 </head>
 <body>
     <nav> 
@@ -33,7 +43,10 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="flash-{{ category }}">{{ message }}</div>
+                    <div class="flash-{{ category }} flashMessage animate__animated animate__fadeInLeftBig">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                        {{ message }}
+                    </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
@@ -95,9 +108,17 @@
     </div>
 </body>
     <script>
+        /* --- Função que retira o flash após 5 segundos --- */ 
+        setTimeout(function() {
+            var setFunction = document.querySelector(".flashMessage");
+            setFunction.style.display = 'none'
+        }, 5000)
+        /* ----------- */ 
+
         $(document).ready(function(){
             $('#cpf').mask('000.000.000-00');
         });
+
     </script>
     <script>
         $(document).ready(function(){

@@ -1,12 +1,66 @@
+.mainConfigUnidade {
+    padding: 10% 10%;
+    background: linear-gradient(0deg, #3f50b3 0%,#3c55c2 21%,#24a3b1 56%,#54a4d3 100%);
+}
+
+.backgroundConfigUnidade i {
+    position: absolute;
+    left: 0;
+    font-size: 15rem;
+    color: #ffffff20;
+    animation: floaticon 6s ease-in-out infinite;
+
+}
+
+.backgroundConfigUnidade i:nth-child(2) {
+    position: absolute;
+    left: 85%;
+    margin-top: -10;
+    font-size: 12rem;
+    color: #ffffff17;
+    animation: floaticon 4s ease-in-out infinite;
+}
+
+@keyframes floaticon {
+    0% {
+        transform: translateY(0);
+    } 50% {
+        transform: translateY(-40px);
+    } 100% {
+        transform: translateY(0);
+    }
+}
+
+.titleIndexConfig {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+}
+
+.titleIndexConfig p{
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: -5px;
+}
+
 .corpoUnidade{
-    margin: 80px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px 0px 10px;
 }
 
 .button-configs{
-    background-color: #A6C546;
-    color: #0d0d5c;
-    padding: 10px;
+    background: rgb(252,214,117);
+    color: #684a0b;
+    padding: 15px 25px;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin: 10px 0px;
 }
+
+
 

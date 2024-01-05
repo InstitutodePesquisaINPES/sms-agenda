@@ -169,7 +169,8 @@ body{
 .contentServicesBarTwo,
 .contentServicesBarThree, 
 .contentServicesBarFour,
-.contentServicesBarFive {
+.contentServicesBarFive, 
+.contentServicesBarSix  {
     padding: 5px 10px 40px 20px;
     text-align: left;
     display: flex;
@@ -179,31 +180,54 @@ body{
     
 }
 
+.contentServicesBarOneColor i {
+    color: #155896 !important;
+}
 .contentServicesBarOne {
-    background-color: #1d6fba;
+    background-color: #155896;
 }
 
+.contentServicesBarTwoColor i {
+    color: #1eb2ea !important;
+}
 .contentServicesBarTwo {
-    background-color: #d25ab2;
+    background-color: #1eb2ea ;
 }
 
+.contentServicesBarThreeColor i {
+    color: #e7a477 !important;
+}
 .contentServicesBarThree {
-    background-color: #1eb2ea;
+    background-color: #e7a477;
 }
 
+.contentServicesBarFourColor i {
+    color: #e4d61b !important;
+}
 .contentServicesBarFour {
     background-color: #e4d61b;
 }
 
+.contentServicesBarFiveColor i {
+    color: #6ee651 !important;
+}
 .contentServicesBarFive {
     background-color: #6ee651;
+}
+
+.contentServicesBarSixColor i {
+    color: #e04b4b !important;
+}
+.contentServicesBarSix {
+    background-color: #e04b4b;
 }
 
 .contentServicesBarOne p,
 .contentServicesBarTwo p,
 .contentServicesBarThree p,
 .contentServicesBarFour p,
-.contentServicesBarFive {
+.contentServicesBarFive, 
+.contentServicesBarSix  {
     color: #fff !important;
 }
 
@@ -236,3 +260,43 @@ body{
     text-align: center;
     font-family: "Poppins", sans-serif;
 }
+
+
+/* -------- Flash ---- */ 
+
+
+/* Adicione estas regras de estilo ao seu arquivo de estilo CSS */
+
+.flash-success,
+.flashMessage {
+    position: fixed;
+    display: flex;
+
+    left: 3%;
+    top: 14%;
+    padding: 9px 25px 9px 15px;
+
+        /*
+    left: 5%;
+    top: 82%;
+    padding: 15px;
+        */
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    filter: drop-shadow(2px 2px 1px #00000060);
+    border-left: 7px solid #3498db;
+    background-color: #ffffff;
+    color: #121212; 
+    font-weight: 500;
+    font-size: 1rem;
+    width: 25%;
+    align-items: center;
+    z-index: 10000;
+}
+
+.flashMessage i {
+    font-size: 1.4rem;
+    color: #3498db;
+    margin-right: 10px;
+}
+

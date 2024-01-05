@@ -93,3 +93,43 @@
     margin: 60px;
 }
 
+
+
+/* -------- Flash ---- */ 
+
+
+/* Adicione estas regras de estilo ao seu arquivo de estilo CSS */
+
+.flash-success,
+.flashMessage {
+    position: fixed;
+    display: flex;
+
+    left: 3%;
+    top: 14%;
+    padding: 9px 25px 9px 15px;
+
+        /*
+    left: 5%;
+    top: 82%;
+    padding: 15px;
+        */
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    filter: drop-shadow(2px 2px 1px #00000060);
+    border-left: 7px solid #3498db;
+    background-color: #ffffff;
+    color: #121212; 
+    font-weight: 500;
+    font-size: 1rem;
+    width: 25%;
+    align-items: center;
+    z-index: 10000;
+}
+
+.flashMessage i {
+    font-size: 1.4rem;
+    color: #3498db;
+    margin-right: 10px;
+}
+

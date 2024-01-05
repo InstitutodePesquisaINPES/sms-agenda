@@ -2,29 +2,28 @@
 
 {% block main %}
 
-<main>
-    <div class="container pt-4  col-md-10 meusAgendamentosIndex">
+<main class="mainAgendamentos">
+    <div class="container pt-4  col-md-10 meusAgendamentosIndex ">
         <div class="pb-2 mb-2 border-bottom">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="flash-{{ category }}">{{ message }}</div>
+                    <div class="flash-{{ category }} flashMessage animate__animated animate__fadeInLeftBig">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                        {{ message }}
+                    </div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-            <div class="d-flex align-items-center text-dark text-decoration-none ">
-                <a style="text-decoration: none;" href="{{url_for('consultarMedicamento')}}"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#22487B " class="bi bi-hdd-stack-fill me-2"
-                viewBox="0 0 16 16">
-                <path
-                    d="M2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm.5 3a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm2 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z" />
-                </svg>
-                <span class="fs-4 cor1">Gerenciar consulta de medicamentos</span></a>
-            </div>
+        <div class="indexTextAgendamentos d-flex align-items-center text-dark text-decoration-none ">
+            <a style="text-decoration: none;" href="{{url_for('meusagendamentos')}}">
+            <h2 class="titleAgendamentos">Gerenciar consulta de medicamentos</h2></a>
+        </div>
         </div>
         
-        <span class="mb-2">Relação de todos os seus agendamentos de horario cadastrados no sistema de agendamento - Facilita Saude.</span>
+        <span class="mb-2 spanTextTitle">Relação de todos os seus agendamentos de horario cadastrados no sistema de agendamento - Facilita Saude.</span>
 
-        <div class="mt-3">
+        <div class="mt-3 fieldContentAgendamentos">
             <div class="container-fluid py-4 bg-fundo px-4 mb-2 ">
                 <div class="">
                     <div class="">
@@ -39,7 +38,7 @@
                                     </svg>
                                 </span>
 
-                                <div class="form-group flex-grow-1">
+                                <div class="form-group flex-grow-1 searchFilter">
                                     <select name="filtroStatus" class="form-select me-1" aria-label="Default select example" id="filtro">
                                         <option selected disabled hidden>Filtrar status</option>
                                         <option value="aprovadosFiltro">~Aprovados</option>
@@ -84,7 +83,7 @@
                         </form>
                 
                         <div class="table-responsive">
-                            <table class="table  table-bordered table-hover">
+                            <table class="table  table-bordered table-hover tableContentAgendamentos">
                                 <thead style="background-color:#fff;" class="">
                                     <tr class="headertr">
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Senha </a></th>
@@ -97,7 +96,7 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody class="contentFieldIndexagendamentos">
                                 {% for agendamento in agendamentos %}
                                 <tr data-bs-toggle="modal" data-bs-target="#staticBackdrop2{{ agendamento.id }}">
                                     <td>{{ agendamento.senha }}</td>
@@ -115,7 +114,7 @@
                                            
                 
 
-                                            <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"
+                                            <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar fieldButtonsTableAgendamentos"
                                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id }}">
                                                 <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
                                             </button>
@@ -389,9 +388,9 @@
                 </div>
             </div>
 
-            <div style="justify-content: space-between;" class=" d-flex">
+            <div style="justify-content: space-between;" class=" d-flex fieldButtonsAgendamentoFooter">
 
-            <div style="display: flex;"> 
+            <div class="fieldContentButtonsAgendamentoFooter" style="display: flex; "> 
                 <a href="{{url_for('allservices')}}" >
                     <button style="margin-right: 20px; background-color: #22487B; border: none;" type="button" class="btn btn-primary btn-gerenc-new">
                         <i class="bi bi-file-earmark-plus"></i>
@@ -479,7 +478,13 @@
     });
 </script>
 
-
+<script>
+    /* --- Função que retira o flash após 5 segundos --- */ 
+    setTimeout(function() {
+        var setFunction = document.querySelector(".flashMessage");
+        setFunction.style.display = 'none'
+    }, 5000)
+</script>
 
 
 

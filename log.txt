@@ -192,3 +192,115 @@
         - user_type_usuario_logado: administrador
 ------------------------------------------------------------------
 
+2024-01-04 12:20:37 - Registro excluído: 
+    - id: 1
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-10
+    - horario_agendado: 10:00:00
+    - senha: AF_10
+    - status: 
+    - servico_agendado: ATENDIMENTO FARMACÊUTICO
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2024-01-04 12:21:39 - Registro excluído: 
+    - id: 2
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-10
+    - horario_agendado: 10:00:00
+    - senha: CDS_10
+    - status: analise
+    - servico_agendado: CARTÃO DO SUS
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2024-01-04 21:46:52 - Registro excluído: 
+    - id: 7
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-16
+    - horario_agendado: 07:00:00
+    - senha: AF_1
+    - status: 
+    - servico_agendado: ATENDIMENTO FARMACÊUTICO
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2024-01-04 23:58:19 - Registro excluído: 
+    - id: 8
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-15
+    - horario_agendado: 07:00:00
+    - senha: AF_1
+    - status: 
+    - servico_agendado: ATENDIMENTO FARMACÊUTICO
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2024-01-04 23:58:23 - Registro excluído: 
+    - id: 5
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-12
+    - horario_agendado: 09:00:00
+    - senha: AF_7
+    - status: 
+    - servico_agendado: ATENDIMENTO FARMACÊUTICO
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2024-01-04 23:58:24 - Registro excluído: 
+    - id: 3
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-12
+    - horario_agendado: 07:20:00
+    - senha: AF_2
+    - status: 
+    - servico_agendado: ATENDIMENTO FARMACÊUTICO
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+
+2024-01-04 23:58:27 - Registro excluído: 
+    - id: 9
+    - id_usuario: 1
+    - nome_cliente: admin
+    - data_agendada: 2024-01-10
+    - horario_agendado: 08:20:00
+    - senha: AF_5
+    - status: 
+    - servico_agendado: ATENDIMENTO FARMACÊUTICO
+    - documentos: []
+    - Usuario editor: 
+        - usuario_logado: admin
+        - cpf_usuario_logado: 211.111.111-11
+        - user_type_usuario_logado: administrador
+------------------------------------------------------------------
+

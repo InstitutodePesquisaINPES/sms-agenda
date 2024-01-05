@@ -1,19 +1,18 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <div class="flash-success" style="display: none;">
-        <i class="bi bi-check-circle-fill" ></i>
-        <p>Login bem sucedido</p>
-    </div>
 
         <div class="corpo">
             {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="flash-{{ category }} animate__animated animate__bounceInLeft">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-{{ category }} flashMessage animate__animated animate__bounceInLeft">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
             <div class="box-img">
                 <div class=" text-img">
                     <p class="text-p animate__animated animate__fadeInLeft"> <span> AGENDE </span> SEUS SERVIÇOS </br> SEM PERDER TEMPO</p>
@@ -55,5 +54,13 @@
 
 {% block javascript %}
 <script src="../static/js/flashMessage.js"></script>
+<script>
+    /* --- Função que retira o flash após 5 segundos --- */ 
+    setTimeout(function() {
+        var setFunction = document.querySelector(".flashMessage");
+        setFunction.style.display = 'none'
+    }, 5000)
+</script>
+
 
 {% endblock %}

@@ -201,6 +201,16 @@
 
 
         <script>
+            /* --- Função que retira o flash após 5 segundos --- */ 
+            setTimeout(function() {
+                var setFunction = document.querySelector(".flashMessage");
+                setFunction.style.display = 'none'
+            }, 5000)
+        </script>
+        
+
+
+        <script>
             // Adicione um evento de clique à div do menu logado
             document.addEventListener('DOMContentLoaded', function () {
                 var menuLogado = document.querySelector('.logado');
@@ -258,6 +268,7 @@
             }
             });
         </script>
+
 
 
     </body>

@@ -39,12 +39,12 @@ def autenticarlogin():
         session['id_usuario_logado'] = user.id
         session['cpf_usuario_logado'] = user.cpf  
         session['user_type_usuario_logado'] = user.user_type 
-        print(user.user_type ) 
+        print(user.user_type)
 
         login_user(user)
-        flash('Login realizado!', 'sucesso')
-
+        flash('Login realizado!', 'sucesso')  # Certifique-se de passar 'sucesso' como categoria
         return redirect(url_for('indexuser')) 
+
     flash('Falha no login. Verifique suas credenciais.', 'negado')
     return redirect(url_for('login'))
 
