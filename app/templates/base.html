@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../static/css/logadoMenu.css">
     <link rel="stylesheet" href="../static/css/formAgendamento.css">
     <link rel="stylesheet" href="../static/css/configUnidade.css">
+    <link rel="stylesheet" href="../static/css/horarios.css">
     
     <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
 
@@ -106,7 +107,7 @@
                         {% if session.user_type_usuario_logado == "administrador" %}
                             <div class="menu-options">
                                 <i class="bi bi-person-fill-gear"></i>
-                                <a href="{{ url_for('areaServidor')}}">area do administrador</a>
+                                <a href="{{ url_for('areaServidor')}}">Todos os Agendamentos</a>
                             </div>
                         {% endif %}
                         {% if session.user_type_usuario_logado == "administrador" %}

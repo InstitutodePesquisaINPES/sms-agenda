@@ -1,16 +1,34 @@
 {% extends "base.html" %}
 
 {% block main %}
-<main>
+
+<main class="mainConfigUnidade">
+    <div class="backgroundConfigUnidade">
+        <i class="bi bi-gear-fill"></i>
+        <i class="bi bi-gear-fill"></i>
+    </div>
+
+    <div class="titleIndexConfig">
+        <h1>Configurações de Unidade</h1>
+        <p>Selecione os botões abaixo para obter as configurações</p>
+    </div>
     <div class="container pt-4 col-md-10 corpoUnidade">
         <button type="button" class="button-configs" data-toggle="modal" data-target="#configUnidadeModal">
+            <i class="bi bi-gear-fill"></i>
             CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE
         </button>
         <button type="button" class="button-configs" data-toggle="modal" data-target="#configRelatorioModal">
+            <i class="bi bi-file-earmark-bar-graph-fill"></i>
             GERAR RELATORIO DE LOGS DO SISTEMA
         </button>
+        <a class="link_button" href="/horarios">
+        <button type="button" class="button-configs">
+            <i class="bi bi-clock-fill"></i>
+            VER O HORÁRIO DE FUNCIONAMENTO DE TODOS OS SERVIÇOS
+        </button>
+    </a>
     </div>
-    
+
     <!-- Modal para CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE -->
     <div class="modal fade" id="configUnidadeModal" tabindex="-1" role="dialog" aria-labelledby="configUnidadeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -21,7 +39,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+<
+                <div class="modal-body modal-config-unidade">
+
                     <!-- Conteúdo do modal para CONFIGURAÇÕES DE FUNCIONAMENTO DA UNIDADE -->
                     <div class="alert alert-danger" role="alert">
                         Estes dados são sensíveis, confirme que tenha certeza das alterações antes de salvar. <br>
@@ -80,7 +100,8 @@
                                 onblur="if (!this.value) this.type='text'"> <br>
                             </div>
                             <div>
-                                <button type="submit" class="button-configs"> SALVAR ALTERAÇÕES </button>
+                                <button type="submit" class="button-configs botao-modal-configs"> SALVAR ALTERAÇÕES </button>
+
                             </div>
                         </div>
                         <br>
@@ -92,7 +113,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal para CONFIGURAÇÕES DE TEMPO DE ATENDIMENTO -->
     <div class="modal fade" id="configRelatorioModal" tabindex="-1" role="dialog" aria-labelledby="configRelatorioModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -124,11 +145,7 @@
         </div>
     </div>
 
-    <div>
-
-    </div>
 </main>
-
 
 <script>
     var servicos = {{ servicos|tojson|safe }};

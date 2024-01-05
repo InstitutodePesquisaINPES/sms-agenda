@@ -1,0 +1,50 @@
+.horarios-tables-main{
+    padding: 5% 10%;
+    background: linear-gradient(0deg, #3f50b3 0%,#3c55c2 21%, #566ac3 40%,#24a3b1 56%,#54a4d3 100%);
+}
+
+.background-horarios-i i {
+    position:fixed;
+    left: 0;
+    font-size: 15rem;
+    color: #ffffff20;
+    animation: floaticon 6s ease-in-out infinite;
+
+}
+
+.background-horarios-i i:nth-child(2) {
+    position: fixed;
+    left: 85%;
+    margin-top: -10;
+    font-size: 12rem;
+    color: #ffffff17;
+    animation: floaticon 4s ease-in-out infinite;
+}
+
+.tabelas{
+    
+    padding: 50px;
+}
+
+.nome_servico{
+    margin: 15px;
+    color: #fff;
+}
+
+.table{
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.cabecalho_table_horarios{
+    
+}
+
+.cabecalho_table_horarios_tr{
+    
+}
+
+.cabecalho_table_horarios_tr_th{
+    
+}
