@@ -1,32 +1,38 @@
-$(document).ready(function () {
-    console.log("func1")
-    // Quando o botão de salvar for clicado
-    $("#botao_salvar_editar").on("click", function () {
-        console.log("func2")
-        // Obter o valor do campo 'status'
-        var statusValue = $("#status").val();
-        console.log("func3")
-        // Verificar se o status é "Retificado"
-        if (statusValue == "retificado") {
-            // Se sim, mostrar o segundo modal
-            console.log("func4")
-            $("#modalRetificacao").modal("show");
-        } else {
-            // Se não, enviar o formulário normalmente
-            console.log("func1")
-            $("form").submit();
+document.addEventListener('DOMContentLoaded', function () {
+    // Adicione um ouvinte de evento para o botão de retificação
+    document.getElementById('botao_salvar_editar').addEventListener('click', function () {
+        // Verifica se a opção selecionada é "retificado"
+        if (document.getElementById('status_admin').value === 'retificado') {
+            // Exibe o modal de retificação
+            $('#retificacaoModal').modal('show');
 
+        } else {
+            // Se não for "retificado", fecha o modal de retificação (caso esteja aberto)
+            $('#retificacaoModal').modal('hide');
+            
+            // Envie o formulário diretamente
+            document.getElementById('form-editar').submit();
         }
     });
+
+    // Adicione um ouvinte de evento para o botão de confirmar retificação
+    document.getElementById('botao_confirmar_retificacao').addEventListener('click', function () {
+        // Adicione aqui a lógica para salvar a retificação, se necessário
+        // ...
+
+        // Fecha o modal de retificação
+        $('#retificacaoModal').modal('hide');
+
+        // Envie o formulário ao clicar no botão de confirmar no modal da retificação
+        document.getElementById('form-editar').submit();
+    });
+
+    // // Adicione um ouvinte de evento para o botão de salvar
+    // document.getElementById('botao_salvar_editar').addEventListener('click', function () {
+    //     // Adicione aqui a lógica para salvar os dados, se necessário
+    //     // ...
+
+    //     // Envie o formulário
+    //     document.getElementById('form-editar').submit();
+    // });
 });
-
-function enviarComRetificacao() {
-    // Adicione aqui qualquer lógica adicional antes de enviar o formulário
-    // ...
-
-    // Enviar o formulário
-    $("form").submit();
-
-    // Fechar o segundo modal
-    $("#modalRetificacao").modal("hide");
-}

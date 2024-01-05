@@ -265,8 +265,8 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 
-                                                <div class="modal-body">
-                                                    <form action="{{url_for('editar', id=agendamento.id)}}"  enctype="multipart/form-data" method="POST">
+                                                <div class="modal-body" id="modal-body">
+                                                    <form action="{{url_for('editar', id=agendamento.id)}}" id="form-editar" enctype="multipart/form-data" method="POST">
                                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                             <fieldset class="col-md-12">
                                                             {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
@@ -352,15 +352,6 @@
                                                                        
                                                                    
 
-                                                                </div>  
-
-                                                                <div class="mb-4">
-                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Retificação</b>*
-                                                                    </span>
-
-                                                                    <textarea class="form-control" id="retificacao" rows="3"
-                                                                    name="retificacao" disabled>teste</textarea>
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -489,39 +480,44 @@
                                                                     
                                                                 </div>  -->
                                                                 {%endif%}
+
+                                                                <div class="modal fade" id="retificacaoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="retificacaoModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h1 class="modal-title fs-5" id="retificacaoModalLabel">Retificação</h1>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <!-- Adicione um formulário para o campo de retificação -->
+                                                                                
+                                                                                    <div class="mb-4">
+                                                                                        <label for="retificacaoTexto" class="form-label">Retificação</label>
+                                                                                        <textarea class="form-control" id="retificacaoTexto" rows="3" name="retificacaoTexto"></textarea>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                                        <button type="button" class="btn btn-primary" id="botao_confirmar_retificacao">Confirmar</button>
+                                                                                    </div>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-
                                                                     <button type="button" id="botao_salvar_editar" class="btn btn-primary">
                                                                         <div class="d-flex align-items-center justify-content-center">
                                                                             <span>Salvar</span>
                                                                         </div>
                                                                     </button>
+                                                                    
                                                                 </div>
 
                                                                 
-                                                                <!-- Modal para retificação -->
-                                                                <div class="modal fade" id="modalRetificacao" tabindex="-1" aria-labelledby="modalRetificacaoLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="modalRetificacaoLabel">Retificação</h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <!-- Adicione aqui o campo de texto para a retificação -->
-                                                                                <textarea class="form-control" id="retificacaoSegundoModal" rows="3"></textarea>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                                <!-- Adicione um botão de submit para enviar o formulário -->
-                                                                                <button type="button" class="btn btn-primary" onclick="enviarComRetificacao()">Enviar com Retificação</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                
 
                                                             </fieldset>
 
@@ -536,6 +532,8 @@
                                 </tbody>
                             {% endfor %}
                             </table>  
+
+                            
 
                         </div>
                     </div>
