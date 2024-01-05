@@ -804,3 +804,20 @@
             - user_type_usuario_logado: administrador
     ------------------------------------------------------------------
     
+2024-01-05 10:57:47 - Registro de edição: 
+        - id: 2
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-09
+        - horario_agendado: 08:00:00
+        - senha: ADP_4
+        - status: analise
+        - servico_agendado: MARCAÇÃO DE EXAMES
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    

@@ -236,13 +236,16 @@ def editar(id):
                 flash('Edição feita com sucesso')
                 return redirect(url_for('consultarMedicamento'))
             else:  
-                if request.form.get('status_admin') != None and request.form.get('serviço_admin') != None:    
+                if request.form.get('status_admin') == None and request.form.get('serviço_admin') == None:
+                    novo_agendamento.status = 'analise'    
                     db.session.commit()
                     registrar_log(descricao_log)
                     flash('Edição feita com sucesso')
                     return redirect(url_for('areaServidor'))
                 else:
-                    flash('Por favor, altere um serviço ou um status para concluir a edição. Essas informações são obrigatórias')
+                   
+                    db.session.commit()
+                    registrar_log(descricao_log)
                     
                     return redirect(url_for('consultarMedicamento'))
                   
