@@ -1,13 +1,13 @@
 .mainConfigUnidade {
     padding: 10% 10%;
-    background: linear-gradient(0deg, #3f50b3 0%,#3c55c2 21%,#24a3b1 56%,#54a4d3 100%);
+    background: #f5f5f5;
 }
 
 .backgroundConfigUnidade i {
     position: absolute;
     left: 0;
     font-size: 15rem;
-    color: #ffffff20;
+    color: #00000010;
     animation: floaticon 6s ease-in-out infinite;
 
 }
@@ -17,7 +17,7 @@
     left: 85%;
     margin-top: -10;
     font-size: 12rem;
-    color: #ffffff17;
+    color: #00000010;
     animation: floaticon 4s ease-in-out infinite;
 }
 
@@ -35,7 +35,7 @@
     width: 100%;
     text-align: center;
     align-items: center;
-    color: #fff;
+    color: #121212;
 }
 
 .titleIndexConfig p{
