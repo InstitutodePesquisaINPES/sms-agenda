@@ -166,16 +166,18 @@ def converter_para_pdf(documento, nome_da_pasta, nome_do_arquivo):
     # Define o caminho de destino para o arquivo PDF resultante
     destino = os.path.join(upload_path, secure_filename(nome_do_arquivo + '.pdf'))
 
+    # Verifica se o arquivo PDF de destino já existe
+    if os.path.exists(destino):
+        print(f"O arquivo {nome_do_arquivo}.pdf já existe. Substituindo por um novo.")
+        os.remove(destino)  # Remove o arquivo existente
+
     # Define o caminho para o arquivo temporário PDF
     temp_pdf_path = os.path.join(upload_path, "temp.pdf")
-
-  
-        
 
     # Converte a imagem para PDF se for uma imagem
     if documento.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
         Image.open(documento).save(temp_pdf_path, 'PDF', resolution=100.0)
-    
+
     # Se for um PDF, salva diretamente
     elif documento.filename.lower().endswith('.pdf'):
         temp_pdf_path = os.path.join(upload_path, secure_filename(documento.filename))
@@ -190,8 +192,6 @@ def converter_para_pdf(documento, nome_da_pasta, nome_do_arquivo):
     # Escreve o resultado no arquivo de destino
     with open(destino, 'wb') as output_pdf:
         pdf_merger.write(output_pdf)
-
-    
 
     return destino
 

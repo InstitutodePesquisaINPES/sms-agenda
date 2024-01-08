@@ -74,6 +74,7 @@
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Serviço </a></th>
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none;">Data de agendamentos </a></th>
                                         <th class="configfont" scope="col">Horario agendado</th>
+                                        <th class="configfont" scope="col">Status</th>
                                         <th class="configfont" scope="col">Ações</th>
                                     </tr>
                                 </thead>
@@ -86,6 +87,11 @@
                                     <td>{{ agendamento.servico_agendado }}</td>
                                     <td>{{ agendamento.data_agendada }}</td>
                                     <td>{{ agendamento.horario_agendado }}</td>
+                                    {% if agendamento.status != "concluido" %}
+                                        <td>Pendente</td>
+                                    {% elif agendamento.status == "concluido" %}
+                                        <td>Concluído</td>
+                                    {% endif %}
                                     <td>
                                         <div class="d-flex justify-content-center fieldButtonsTableAgendamentos">
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar"

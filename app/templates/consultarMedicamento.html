@@ -45,10 +45,11 @@
 
                                 <div class="form-group flex-grow-1 searchFilter">
                                     <select name="filtroStatus" class="form-select me-1" aria-label="Default select example" id="filtro">
-                                        <option selected disabled hidden>Filtrar status</option>
+                                        <option selected readonly hidden>Filtrar status</option>
                                         <option value="aprovadosFiltro">~Aprovados</option>
                                         <option value="retificadosFiltro">~Retificados</option>
                                         <option value="analiseFiltro">~Em análise</option>
+                                        
                                        
                                        
                                         
@@ -56,7 +57,7 @@
                                 </div>
                                 <div class="form-group flex-grow-1">
                                     <select name="filtroPesquisa" class="form-select me-1" aria-label="Default select example" id="filtroPesquisa">
-                                        <option selected disabled hidden>Filtrar pesquisa</option>
+                                        <option selected readonly hidden>Filtrar pesquisa</option>
                                         <option value="todosFiltro">~Todos</option>
                                         {% if session.user_type_usuario_logado == "administrador" or session.user_type_usuario_logado == "servidor" %}
                                             <option value="usuarioFiltro">~Usuario</option>
@@ -94,7 +95,7 @@
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Senha </a></th>
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Nome do usuario </a></th>
                                         <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none; ">Nome do Serviço </a></th>
-                                        <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none;">Data de agendamentos </a></th>
+                                        <th class="configfont" scope="col"><a class="configfont" style="text-decoration: none;">Data de agendamento </a></th>
                                         <th class="configfont" scope="col">Horario agendado</th>
                                         <th class="configfont" scope="col">Status</th>
                                         <th class="configfont" scope="col">Retificação</th>
@@ -108,27 +109,43 @@
                                     <td>{{ agendamento.senha }}</td>
                                     <td>{{ agendamento.nome_cliente }}</td>
                                     <td>{{ agendamento.servico_agendado }}</td>
-                                    <td>{{ agendamento.data_agendada }}</td>
+
+                                    <td>{{ agendamento.data_agendada.strftime('%d-%m-%Y') }}</td>
+
                                     <td>{{ agendamento.horario_agendado }}</td>
-                                    <td>{{ agendamento.status }}</td>
-                                    {% if agendamento.retificacao == None%}
+
+                                    {% if agendamento.status == "retificado" %}
+                                        <td> Retificar </td>
+                                    {% elif agendamento.status == "analise" %}
+                                        <td> Em análise </td>
+                                    {% elif agendamento.status == "aprovado" %}
+                                        <td> Aprovado </td>
+                                    {% endif %}
+
+                                    {% if agendamento.retificacao == None %}
                                         <td> Não retificado </td>
                                     {% else %}
-                                        <td>{{ agendamento.retificacao }}</td>
+                                        <td> Faltando documento </td>
                                     {% endif %}
                                     <td>
                                        
                                         <div class="d-flex justify-content-center">
                                         
                                            
-
-                                           
-                
-
                                             <button style="border: 0; background-color: transparent;" class="btn hovergrupo btn-editar fieldButtonsTableAgendamentos"
                                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ agendamento.id }}">
                                                 <img width="24" height="24" src="\static\assets\icons\editar.png" alt="">
                                             </button>
+                                           
+                                            <a href="{{ url_for('confirmarAgendamento', id=agendamento.id) }}">
+                                                <button style="margin-left: 15px; margin-right: 25px;" type="button" class="btn btn-success btn-custom btn1 mb-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+                                                        <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"></path>
+                                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"></path>
+                                                    </svg>
+                                                    <span> Confirmar atendimento </span>
+                                                </button>
+                                            </a>
 
                                             <a href="{{url_for('gerar_pdf', id=agendamento.id)}}">
                                                 <button style=" border-color: #78abee; background-color: #4179c2; border: none; "
@@ -189,7 +206,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="senha" id='senha'
-                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" disabled>
+                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" readonly>
                                                                 </div>
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -197,7 +214,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
-                                                                    value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário"disabled>
+                                                                    value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário"readonly>
                                                                 </div>
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -205,7 +222,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
-                                                                    value="{{session.usuario_telefone}}" aria-describedby="NomedoUsuário"disabled>
+                                                                    value="{{session.usuario_telefone}}" aria-describedby="NomedoUsuário"readonly>
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -214,7 +231,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
-                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"disabled>
+                                                                    value="{{agendamento.servico_agendado}}" aria-describedby="NomedoUsuário"readonly>
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -223,7 +240,7 @@
                                                                     </span>
 
                                                                     <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
-                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" disabled>
+                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" readonly>
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -232,7 +249,7 @@
                                                                     </span>
 
                                                                     <input type="time" class="form-control" name="cpfPaciente" value="{{agendamento.horario_agendado}}"
-                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" readonly>
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -241,7 +258,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="cpfPaciente" value="{{agendamento.status}}"
-                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" disabled>
+                                                                        id="inputCpfPaciente" aria-describedby="cpfPaciente" readonly>
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -250,7 +267,7 @@
                                                                     </span>
 
                                                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                                                    name="procedimento" disabled>teste</textarea>
+                                                                    name="procedimento" readonly>teste</textarea>
                                                                 </div>  
 
                                                             </fieldset>
@@ -285,7 +302,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="senha" id='senha'
-                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" disabled>
+                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" readonly>
                                                                 </div>
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -293,7 +310,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id='nome_cliente'
-                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" disabled>
+                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" readonly>
                                                                 </div>
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -301,7 +318,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
-                                                                    value="{{session.usuario_telefone}}" aria-describedby="NomedoUsuário"disabled>
+                                                                    value="{{session.usuario_telefone}}" aria-describedby="NomedoUsuário"readonly>
                                                                 </div>
                                                                 
                                                                 <div class="mb-4">
@@ -313,7 +330,7 @@
                                                                 
                                                                     <select name="serviço_admin" class="form-select me-1" aria-label="Default select example" id="serviço_admin" required>
                                                                            
-                                                                        <option value="{{agendamento.servico_agendado}}" disabled hidden selected>{{agendamento.servico_agendado}}</option>
+                                                                        <option value="{{agendamento.servico_agendado}}" readonly hidden selected>{{agendamento.servico_agendado}}</option>
 
                                                                         <option value="ATENDIMENTO FARMACÊUTICO">ATENDIMENTO FARMACÊUTICO</option>
                                                                         <option value="MARCAÇÃO DE EXAMES">MARCAÇÃO DE EXAMES</option>
@@ -350,7 +367,7 @@
                                                                     </span>
                                                                     
                                                                     <select name="status_admin" class="form-select me-1" aria-label="Default select example" id="status_admin" required>
-                                                                        <option value="{{agendamento.status}}" disabled hidden selected>{{agendamento.status}}</option>
+                                                                        <option value="{{agendamento.status}}" readonly hidden selected>{{agendamento.status}}</option>
 
                                                                         <option value="analise">Analise</option>
                                                                         <option value="retificado">Retificado</option>
@@ -394,7 +411,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="senha" id='senha'
-                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" disabled>
+                                                                        value="{{agendamento.senha}}" aria-describedby="NomedoUsuário" readonly>
                                                                 </div>
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -402,7 +419,7 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id='nome_cliente'
-                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" disabled>
+                                                                        value="{{agendamento.nome_cliente}}" aria-describedby="NomedoUsuário" readonly>
                                                                 </div>
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -410,8 +427,8 @@
                                                                     </span>
 
                                                                     <input type="text" class="form-control" name="nome_cliente" id="nome_cliente"
-                                                                    value="{{session.usuario_telefone}}" aria-describedby="NomedoUsuário"disabled>
-                                                                </div>
+                                                                    value="{{session.usuario_telefone}}" aria-describedby="NomedoUsuário" readonly>
+                                                                </div> 
                                                                 
                                                                 <div class="mb-4">
                                                                     <span style="font-size:small;" class="d-block text-secondary mb-1">
@@ -421,7 +438,7 @@
                                                                     
                                                                         
                                                                         <input type="text" class="form-control" name="serviço" id="serviço"
-                                                                        value="{{agendamento.servico_agendado}}" aria-describedby="NomedoPaciente" disabled>
+                                                                        value="{{agendamento.servico_agendado}}" aria-describedby="NomedoPaciente" readonly>
                                                                    
                                                                     
                                                                 </div>
@@ -432,7 +449,7 @@
                                                                     </span>
 
                                                                     <input type="date" class="form-control" name="data_agendamento" id="data_agendamento"
-                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" disabled>
+                                                                        value="{{agendamento.data_agendada}}" aria-describedby="NomedoPaciente" readonly>
                                                                 </div>
 
                                                                 <div class="mb-4">
@@ -441,7 +458,7 @@
                                                                     </span>
 
                                                                     <input type="time" class="form-control" name="horario" value="{{agendamento.horario_agendado}}"
-                                                                        id="horario" aria-describedby="cpfPaciente" disabled>
+                                                                        id="horario" aria-describedby="cpfPaciente" readonly>
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -452,18 +469,9 @@
                                                                     
                                                                     
                                                                         <input type="text" class="form-control" name="status" id="status"
-                                                                            value="{{agendamento.status}}" aria-describedby="NomedoPaciente" disabled>
+                                                                            value="{{agendamento.status}}" aria-describedby="NomedoPaciente" readonly>
                                                                    
 
-                                                                </div>  
-
-                                                                <div class="mb-4">
-                                                                    <span style="font-size:small;" class="d-block text-secondary mb-1">
-                                                                        <b>Retificação</b>*
-                                                                    </span>
-
-                                                                    <textarea class="form-control" id="retificacao" rows="3"
-                                                                    name="retificacao" disabled>teste</textarea >
                                                                 </div>  
 
                                                                 <div class="mb-4">
@@ -474,9 +482,32 @@
                                                                     <!-- Use a tag <embed> ou <iframe> aqui -->
                                                                         <embed src="{{ url_for('servir_arquivo', filename=agendamento.id_usuario, data=agendamento.data_agendada|replace("-", ""), horario=agendamento.horario_agendado|replace(":", "")) }}"
                                                                         type="application/pdf" style="max-width: 100%; max-height: 600px; border-radius: 5px;" />
-                                                                 
-                                                                 
                                                                 </div>
+        
+                                                                {% if agendamento.status == "retificado" %}
+
+                                                                    <div class="mb-4">
+                                                                        <span style="font-size:small;" class="d-block text-secondary mb-1">
+                                                                            <b>Retificação </b>*
+                                                                        </span>
+
+                                                                        
+                                                                        <div class="alert alert-danger" role="alert">
+                                                                            {{ agendamento.retificacao }}
+                                                                        </div>
+
+                                                                        
+                                                                    </div>  
+
+                                                                    <div class="mb-4">
+                                                                        <span style="font-size: small;" class="d-block text-secondary mb-1">
+                                                                            <b> Substitua o documento enviado anterior, atendendo o pedido de retificação.</b>*
+                                                                        </span>
+
+                                                                        <input type="file" name="documentos_upados[]" id="updoc" multiple>
+                                                                    </div>
+
+                                                                {%endif%}
                                                                 
 
                                                                 <!-- <div class="mb-4">

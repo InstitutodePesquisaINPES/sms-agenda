@@ -76,54 +76,57 @@ def gerar_pdf(id):
         largura_pagina = 150
         altura_pagina = 148
 
-
         pdf = FPDF(format=(largura_pagina, altura_pagina))
         pdf.add_page()
 
-    
-        pdf.set_fill_color(227, 222, 129)  
+        pdf.set_fill_color(245, 245, 245)
 
-        # Preencha o retângulo com a cor de fundo
+        # Desenha um retângulo que cobre toda a largura da página
         pdf.rect(0, 0, largura_pagina, altura_pagina, 'F')
         pdf.image(r'app\static\assets\images\prefeitura.jpeg', x=10, y=10, w=20)
 
-        textoMedicamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
+        pdf.set_font("Courier", size=12)
+
+        # Título
+        pdf.set_xy(10, 10)
+        pdf.multi_cell(largura_pagina - 20, 10, "COMPROVANTE DE AGENDAMENTO", align='C')
+
+        # Coordenadas iniciais para o texto restante
+        x = 10
+        y = 30
+
+        # Função para adicionar bordas ao redor do texto
+        def add_bordered_text(text):
+            nonlocal x, y
+            # Desenha um retângulo ao redor do texto
+            pdf.rect(x, y, largura_pagina - 20, 70)
+            pdf.set_xy(x + 5, y + 5)  # Ajusta a posição para o início do texto dentro do retângulo
+            pdf.multi_cell(largura_pagina - 30, 10, text)
+            y += 80  # Ajusta a posição para o próximo bloco de texto
+
+        if agendamento.servico_agendado != "CONSULTAR MEDICAMENTOS":
+            textoAgendamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
+    SENHA: {agendamento.senha}
+    SERVIÇO AGENDADO: {agendamento.servico_agendado}.
+    DATA AGENDADA: {agendamento.data_agendada}
+    HORA AGENDADA: {agendamento.horario_agendado}"""
+            add_bordered_text(textoAgendamento)
+        else:
+            textoMedicamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
     SENHA: {agendamento.senha}
     SERVIÇO AGENDADO: {agendamento.servico_agendado}.
     STATUS: {agendamento.status}
     DATA AGENDADA: {agendamento.data_agendada}
     HORA AGENDADA: {agendamento.horario_agendado}"""
+            add_bordered_text(textoMedicamento)
 
-        textoAgendamento = f"""LOCAL DO SERVIÇO: FACILITA SAÚDE
-    SENHA: {agendamento.senha}
-    SERVIÇO AGENDADO: {agendamento.servico_agendado}.
-    DATA AGENDADA: {agendamento.data_agendada}
-    HORA AGENDADA: {agendamento.horario_agendado}"""
-
-        pdf.set_font("Courier", size=12)
-
-        # Configurar alinhamento central para o título
-        pdf.set_xy(10, 10)  # Defina as coordenadas iniciais para o título
-
-    
-        pdf.multi_cell(largura_pagina - 20, 10, "COMPROVANTE DE AGENDAMENTO", align='C')  # Largura ajustada para evitar margens
-
-        # Configurar alinhamento à esquerda para o restante do texto
-        pdf.set_xy(10, 30)  # Defina as coordenadas iniciais para o texto restante
-
-        if agendamento.servico_agendado != "CARTÃO DO SUS":
-            pdf.multi_cell(largura_pagina - 20, 10, textoAgendamento)  # Largura ajustada para evitar margens
-        else:
-            pdf.multi_cell(largura_pagina - 20, 10, textoMedicamento)  # Largura ajustada para evitar margens
-
-        temp_file_path = "Comprovante de agendamento.pdf"
+        temp_file_path = "Comprovante_de_agendamento.pdf"
         pdf.output(temp_file_path)
     except Exception as e:
         print(e)
         return render_template('errorPage.html')
 
     return send_file(temp_file_path, as_attachment=True)
-
 @app.route('/gerar_pdf_logs', methods=['POST'])
 def gerar_pdf_logs():
 
@@ -165,12 +168,34 @@ def editar(id):
         user_type_usuario_logado = session.get('user_type_usuario_logado')
         usuario_logado = session.get('usuario_logado')
         cpf_usuario_logado = session.get('cpf_usuario_logado')
+        
         novo_agendamento = Agendamento.query.get(id)
+
+        if user_type_usuario_logado == "usuario":
+
+            print(request.form.get('serviço'))
+            print(request.form.get('data_agendamento'))
+            print(request.form.get('horario'))
+            
+            novo_agendamento.servico_agendado = request.form.get('serviço')
+            novo_agendamento.data_agendada =  request.form.get('data_agendamento')
+            novo_agendamento.horario_agendado = request.form.get('horario')
+            novo_agendamento.status = "analise"
+            novo_agendamento.retificacao = None
+
+            
+
+            files = request.files.get('documentos_upados[]')
+            data_formatada = novo_agendamento.data_agendada.replace("-", "")
+            horario_formatado = novo_agendamento.horario_agendado.replace(":", "")
+            cpf_usuario_formatado = cpf_usuario_logado.replace(".","").replace("-","")
+            nome_arquivo = f"{data_formatada}{horario_formatado}"
         
-        novo_agendamento.servico_agendado = request.form.get('serviço_admin')
-        novo_agendamento.data_agendada =  request.form.get('data_agendamento_admin')
-        novo_agendamento.horario_agendado = request.form.get('horario_admin')
-        
+            try:
+                converter_para_pdf(files, str(cpf_usuario_formatado), nome_arquivo)
+            except ValueError:
+                flash('Insira um documento com extensão válida: .jpeg - .jpg - .pdf')
+
         retificado = request.form.get('retificacaoTexto')
         
         if retificado:
@@ -182,7 +207,7 @@ def editar(id):
         
         print("user_type: " + user_type_usuario_logado + " user: " + usuario_logado + " cpf_user: " + cpf_usuario_logado + " [fim] ")
         # print("novo_agendamento_query: " + novo_agendamento )
-        print("servico: " + novo_agendamento.servico_agendado + " data: " + novo_agendamento.data_agendada + " hora: " + novo_agendamento.horario_agendado + " [FIM] ")
+        # print("servico: " + novo_agendamento.servico_agendado + " data: " + novo_agendamento.data_agendada + " hora: " + novo_agendamento.horario_agendado + " [FIM] ")
         if retificado:
             print("Retificado: " + retificado)
         else:
@@ -302,7 +327,7 @@ def deletar(id):
 
         
         if user_type_usuario_logado == 'usuario' :
-            if agendamento.servico_agendado == 'CARTÃO DO SUS':
+            if agendamento.servico_agendado == 'CONSULTAR MEDICAMENTOS':
                 db.session.delete(agendamento)
                 db.session.commit()
                 registrar_log(descricao_log)
@@ -314,7 +339,7 @@ def deletar(id):
                 return redirect(url_for('meusagendamentos'))
             
         elif user_type_usuario_logado == 'servidor' or  user_type_usuario_logado == 'administrador':
-            if agendamento.servico_agendado == 'CARTÃO DO SUS':
+            if agendamento.servico_agendado == 'CONSULTAR MEDICAMENTOS':
                 db.session.delete(agendamento)
                 db.session.commit()
                 registrar_log(descricao_log)
@@ -459,8 +484,8 @@ def servir_arquivo(filename, data, horario):
     cpf_formatado = cpf.replace(".", "").replace("-", "")
     horario_formatado = horario[:-2]
 
-    nome_arquivo = f'{data}{horario_formatado}.pdf'
-    print("nome: " + nome_arquivo + " cpf: " + cpf_formatado +  " data:  " + data + " horario " + horario_formatado)
+    nome_arquivo = f'{data}{horario_formatado}00.pdf'
+    print("nome: " + nome_arquivo + " cpf: " + cpf_formatado + " ou " + cpf + " data:  " + data + " horario " + horario_formatado)
     # Construa o caminho completo
     caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
 
@@ -753,10 +778,11 @@ def consultarMedicamento():
             
             flash('Nenhum resultado encontrado')
             return render_template('consultarMedicamento.html', agendamentos=agendamentos_filtrados)
-       
+        
     except:
         flash('digite um valor de campo valido')
         return redirect(url_for('consultarMedicamento'))
+    
 @app.route('/erro')
 def erro():
     return render_template('errorPage.html')

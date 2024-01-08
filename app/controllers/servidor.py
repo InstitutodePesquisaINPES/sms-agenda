@@ -10,7 +10,6 @@ from datetime import datetime
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import desc
 
-
 from app.models.User import *
 from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
@@ -22,4 +21,14 @@ import os
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename #import de mexer com arquivos
 
-
+@app.route('/confirmarAgendamento/<int:id>', methods=['GET', 'POST'])
+def confirmarAgendamento(id):
+    try:
+        agendamento = Agendamento.query.get(id)
+        agendamento.status = "concluido"
+        db.session.commit()
+        return redirect(url_for('consultarMedicamento'))
+    except Exception as e:
+        print(e)
+        return render_template('errorPage.html')
+    
