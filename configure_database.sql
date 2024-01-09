@@ -17,6 +17,7 @@ CREATE TABLE `usuario` (
 CREATE TABLE `agendamentos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int DEFAULT NULL,
+  `id_servico` int NOT NULL,
   `data_agendada` date NOT NULL, 
   `horario_agendado` time NOT NULL,
   `nome_cliente` varchar(255) NOT NULL,
@@ -115,3 +116,5 @@ CREATE TABLE `documentos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 insert into usuario (id, email, nome, telefone, cpf, sus, senha, user_type) values (1, "admin@gmail.com", "admin",'5577900000000', "211.111.111-11", "211.111.111.1111-11", "12345678", "administrador");
+insert into usuario (id, email, nome, telefone, cpf, sus, senha, user_type) values (2, "servidor@gmail.com", "servidor",'5577900000090', "211.111.111-01", "221.111.111.1111-11", "12345678", "servidor");
+insert into usuario (id, email, nome, telefone, cpf, sus, senha, user_type) values (3, "usuario@gmail.com", "usuario",'5577900000009', "211.111.111-10", "212.111.111.1111-11", "12345678", "usuario");

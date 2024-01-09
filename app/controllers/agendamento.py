@@ -174,7 +174,7 @@ def editar(id):
         if user_type_usuario_logado == "usuario":
 
             print(request.form.get('serviço'))
-            print(request.form.get('data_agendamento'))
+            print('s: ' + request.form.get('data_agendamento'))
             print(request.form.get('horario'))
             
             novo_agendamento.servico_agendado = request.form.get('serviço')
@@ -182,7 +182,7 @@ def editar(id):
             novo_agendamento.horario_agendado = request.form.get('horario')
             novo_agendamento.status = "analise"
             novo_agendamento.retificacao = None
-
+            
             
 
             files = request.files.get('documentos_upados[]')
@@ -196,6 +196,28 @@ def editar(id):
             except ValueError:
                 flash('Insira um documento com extensão válida: .jpeg - .jpg - .pdf')
 
+        nome_do_servico = request.form.get('serviço_admin')
+        print('n: ' + nome_do_servico)
+        horario_agendado = request.form.get('horario_admin')
+        horario_agendado = horario_agendado[:-3]
+        print('h: ' + horario_agendado)
+        data_agendamento = request.form.get('data_agendamento_admin')
+        print('d: ' + data_agendamento)
+        
+        # print('hora: ' + request.form.get('horario'))
+        servico = servicos_data_function()
+        print('111')
+        servico_id = servico.get(nome_do_servico)
+        print('222')
+        servico_id = novo_agendamento.id_servico
+        print('id: ' + servico_id)
+        numero_dia = numero_do_dia_da_semana(data_agendamento) + 1
+        print(numero_dia)
+            
+        senha = gerarSenha(nome_do_servico, horario_agendado, servico_id, numero_dia)
+        print('s: ' + senha)
+        novo_agendamento.senha = senha
+        
         retificado = request.form.get('retificacaoTexto')
         
         if retificado:
@@ -488,8 +510,14 @@ def servir_arquivo(filename, data, horario):
     print("nome: " + nome_arquivo + " cpf: " + cpf_formatado + " ou " + cpf + " data:  " + data + " horario " + horario_formatado)
     # Construa o caminho completo
     caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
-
-    return send_from_directory(os.path.dirname(caminho_completo), os.path.basename(caminho_completo))
+    
+    if os.path.exists(caminho_completo):
+        return send_from_directory(os.path.dirname(caminho_completo), os.path.basename(caminho_completo))
+    else:
+        nome_arquivo = f'{data}{horario_formatado}.pdf'
+        caminho_completo = os.path.join(app.root_path, 'uploads', cpf_formatado, nome_arquivo)
+        return send_from_directory(os.path.dirname(caminho_completo), os.path.basename(caminho_completo))
+    
 # rota para autenticar o agendamento     
 @app.route('/autenticaragendamento', methods=['POST'])
 @login_required
@@ -519,7 +547,7 @@ def autenticaragendamento():
             if nome_do_servico == "CONSULTAR MEDICAMENTOS":
                 status = 'analise'
                 
-                novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
+                novo_agendamento = Agendamento(id_usuario=id_usuario, id_servico=id_servico, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
 
                 data_formatada = data_agendada.replace("-", "")
                 horario_formatado = horario_agendado.replace(":", "")
@@ -557,7 +585,7 @@ def autenticaragendamento():
             
             status = ''
                 
-            novo_agendamento = Agendamento(id_usuario=id_usuario, nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
+            novo_agendamento = Agendamento(id_usuario=id_usuario, id_servico=id_servico,nome_cliente=nome_cliente, servico_agendado=nome_do_servico, data_agendada=data_agendada, horario_agendado=horario_agendado, data_agendamento=data_agendamento, senha=senha,status=status)
 
             db.session.add(novo_agendamento)
             db.session.commit()

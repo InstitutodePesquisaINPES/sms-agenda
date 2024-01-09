@@ -1663,3 +1663,156 @@
             - user_type_usuario_logado: usuario
     ------------------------------------------------------------------
     
+2024-01-08 22:03:17 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_14
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: novo dicumento       
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:03:51 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_14
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: Dovani Pacheco Lenares
+            - cpf_usuario_logado: 100.108.715-19
+            - user_type_usuario_logado: usuario
+    ------------------------------------------------------------------
+    
+2024-01-08 22:22:06 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_14
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: marrom      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:40:38 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_14
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: Froids      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:41:33 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_0
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: kj      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:42:36 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_0
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: kj      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:47:18 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_0
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: kj      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:48:33 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_0
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: jnj      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 22:49:14 - Registro de edição: 
+        - id: 3
+        - id_usuario: 2
+        - nome_cliente: Dovani Pacheco Lenares
+        - data_agendada: 2024-01-31
+        - horario_agendado: 13:20:00
+        - senha: CM_14
+        - status: retificado
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - retificacao: çk      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    

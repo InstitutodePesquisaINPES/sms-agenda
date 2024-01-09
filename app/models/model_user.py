@@ -23,6 +23,7 @@ class Agendamento(db.Model):
     __tablename__ = 'agendamentos'
     id = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'))
+    id_servico = db.Column(db.Integer, nullable=False)
     data_agendada = db.Column(db.Date, nullable=False)
     horario_agendado = db.Column(db.Time, nullable=False)
     nome_cliente = db.Column(db.String(255), nullable=False)
