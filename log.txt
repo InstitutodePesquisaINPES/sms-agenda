@@ -1223,3 +1223,52 @@
             - user_type_usuario_logado: administrador
     ------------------------------------------------------------------
     
+2024-01-08 21:30:38 - Registro excluído: 
+        - id: 1
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 14:20:00
+        - senha: CM_17
+        - status: analise
+        - servico_agendado: CONSULTAR MEDICAMENTOS
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 21:46:16 - Registro de edição: 
+        - id: 4
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 14:20:00
+        - senha: CM_17
+        - status: aprovado
+        - servico_agendado: TRATAMENTO FORA DO DOMICÍLIO - TFD
+        - retificacao: null      
+        - documentos: 
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    
+2024-01-08 21:46:43 - Registro excluído: 
+        - id: 4
+        - id_usuario: 1
+        - nome_cliente: admin
+        - data_agendada: 2024-01-11
+        - horario_agendado: 14:20:00
+        - senha: CM_17
+        - status: analise
+        - servico_agendado: TRATAMENTO FORA DO DOMICÍLIO - TFD
+        - documentos: []
+        - Usuario editor: 
+            - usuario_logado: admin
+            - cpf_usuario_logado: 211.111.111-11
+            - user_type_usuario_logado: administrador
+    ------------------------------------------------------------------
+    

@@ -18,6 +18,7 @@ from app.controllers.googleCloud import *
 from complementary.flask_wtf.flaskform_login import *
 from complementary.flask_wtf.flaskform_agendamento import * 
 from complementary.functions.functionsAgendamentos import *
+from complementary.functions.mensagens_whatsApp import *
 
 from complementary.servicos.servicos_data import *
 import os
@@ -159,12 +160,13 @@ def gerar_pdf_logs():
    
 
 
-@app.route('/editar/<int:id>', methods=['GET', 'POST'])
-def editar(id):
+@app.route('/editar/<int:id>/<int:idusuario>', methods=['GET', 'POST'])
+def editar(id, idusuario):
     try:
         user_type_usuario_logado = session.get('user_type_usuario_logado')
         usuario_logado = session.get('usuario_logado')
         cpf_usuario_logado = session.get('cpf_usuario_logado')
+        usuario_telefone = session.get('usuario_telefone')
         novo_agendamento = Agendamento.query.get(id)
         
         novo_agendamento.servico_agendado = request.form.get('serviço_admin')
@@ -236,10 +238,21 @@ def editar(id):
                 return redirect(url_for('meusagendamentos'))
         elif user_type_usuario_logado in ['servidor', 'administrador']:
             if novo_agendamento.servico_agendado == 'CONSULTAR MEDICAMENTOS':
+
+                instancia_usuario_solicitante = Usuario.query.filter_by(id=idusuario).first()
+
+                telefone = instancia_usuario_solicitante.telefone
                
                 db.session.commit()
               
                 registrar_log(descricao_log)
+
+                zap = enviar_mensagem_whatsapp(telefone, retificado)
+                if zap == 'enviado':
+                    flash('Mensagem enviada')
+                else:
+                    flash('Envio da mensagem falhou')
+
                 flash('Edição feita com sucesso')
                 return redirect(url_for('consultarMedicamento'))
             else:  
@@ -247,12 +260,15 @@ def editar(id):
                     novo_agendamento.status = 'analise'    
                     db.session.commit()
                     registrar_log(descricao_log)
+
+
                     flash('Edição feita com sucesso')
                     return redirect(url_for('areaServidor'))
                 else:
                    
                     db.session.commit()
                     registrar_log(descricao_log)
+                  
                     
                     return redirect(url_for('consultarMedicamento'))
                   
